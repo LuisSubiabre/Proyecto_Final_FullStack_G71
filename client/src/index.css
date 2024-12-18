@@ -1,0 +1,33 @@
+/* Fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Epilogue:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap');
+
+/* font-family: "Epilogue", "Arvo", "Oswald", sans-serif; */
+
+/* tailwind css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    /* Paleta de Colores */
+    /* Colores Primarios */
+    --color-primary-light: #A5327F;
+    --color-primary: #8256A5;
+    --color-primary-dark: #522675;
+  
+    /* Colores Secundarios */
+    --color-secondary-light: #FEE9FC;
+    --color-secondary: #C8ACD4;
+    --color-secondary-dark: #44449C;
+  
+    /* Colores Neutros */
+    --color-neutral-light: #FCFDF7;
+    --color-neutral-dark: #1c1c1c;
+  
+    /* Colores de Resalte, fondo y texto */
+    --color-highlight: #A5327F;
+    --color-background-light: #FEE9FC;
+    --color-background-dark: #1c1c1c;
+  }
+
+
