@@ -1,8 +1,6 @@
 /* Fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Epilogue:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap');
 
-/* font-family: "Epilogue", "Arvo", "Oswald", sans-serif; */
-
 /* tailwind css */
 @tailwind base;
 @tailwind components;
@@ -29,5 +27,12 @@
     --color-background-light: #FEE9FC;
     --color-background-dark: #1c1c1c;
   }
+
+/* Main grid for the application*/
+.gridApp {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
 
 
