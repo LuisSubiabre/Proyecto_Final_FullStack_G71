@@ -1,24 +1,22 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-const CustomButton = React.forwardRef(({ children, to, ...props }, ref) => {
+const CustomButton = React.forwardRef(({ children, className, onClick, ...props }, ref) => {
     return (
-        <NavLink
+        <button
             ref={ref}
-            to={to}
+            onClick={onClick}
             {...props}
-            className={({ isActive }) =>
-                isActive
-                    ? 'bg-[--color-secondary-light] text-[--color-highlight] font-bold uppercase rounded-lg flex items-center justify-between px-4'
-                    : 'bg-[--color-primary-dark] hover:bg-[--color-primary] text-white font-bold uppercase rounded-lg flex items-center justify-between px-4'
-            }
+            className={`bg-[--color-primary-dark] hover:bg-[--color-primary] text-white font-oswald font-bold uppercase rounded-lg flex items-center justify-between px-4 py-2 gap-2 transition-all focus:bg-[--color-secondary] focus:text-[--color-primary-light] hover:underline ${className}`}
         >
             {children}
-        </NavLink>
+            <FontAwesomeIcon icon={faChevronDown} className="w-4 h-4" />
+        </button>
     );
 });
 
 CustomButton.displayName = 'CustomButton';
 
-export default CustomButton;
 
+export default CustomButton;
