@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import registerRoute from "./routes/register.route.js";
+import authRoute from "./routes/auth.route.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ app.use(cors());
 
 // Rutas
 app.use("/register", registerRoute); // Ajustado a convención REST
+app.use("/login", authRoute); // Ajustado a convención REST
 
 // Error Handling Global
 app.use((err, req, res, next) => {
