@@ -11,7 +11,7 @@ const DropdownMenuComponent = () => {
     }, []);
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+        <div className="flex justify-around w-full">
             {menus.map((menu) => (
                 <Dropdown key={menu.id}>
                     <DropdownTrigger>

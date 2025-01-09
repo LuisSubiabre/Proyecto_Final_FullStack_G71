@@ -101,11 +101,12 @@ export default function App() {
                     ))}
                 </NavbarMenu>
             </Navbar>
-
-            {/* Dropdown debajo del Navbar */}
-            <div className="w-full flex justify-center mt-2">
+            <div
+                className="w-full flex justify-center mt-1 bg-[--color-background-light] py-1 border-b-4 border-[--color-primary-dark]"
+            >
                 <DropdownMenuComponent />
             </div>
+
         </div>
     );
 }
