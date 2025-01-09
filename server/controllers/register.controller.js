@@ -3,24 +3,25 @@ import registerModel from "../models/register.model.js";
 
 const register = async (req, res) => {
   try {
-    const { email, password, rut } = req.body;
-    if (!email || !password || !rut) {
-      return res.status(400).send("Faltan campos");
+    const { username, rut, birth_date, email, phone, password } = req.body;
+    if (!username || !rut || !birth_date || !email || !phone || !password) {
+      return res.status(400).send("Faltan campos por llenar");
     }
 
     const newUser = {
-      email,
-      password: bcrypt.hashSync(password, 10),
+      username,
       rut,
-      username: email,
-      birth_date: new Date(),
-      phone: 0,
+      birth_date,
+      email,
+      phone,
+      password: bcrypt.hashSync(password, 10),
       role: "user",
-      status: "1",
+      status: true,
     };
+
     await registerModel.register(newUser);
 
-    return res.status(200).send("Usuario creado");
+    return res.status(200).send("Usuario creado correctamente");
   } catch (error) {
     console.log(error);
     return res.status(500).send("Error en el body: " + error);
