@@ -8,7 +8,7 @@ const CustomButton = React.forwardRef(({ children, className, onClick, ...props 
             ref={ref}
             onClick={onClick}
             {...props}
-            className={`bg-[--color-primary-dark] hover:bg-[--color-primary] text-white font-oswald font-bold uppercase rounded-lg flex items-center justify-around px-6 py-2 gap-8 transition-all focus:bg-[--color-secondary] focus:text-[--color-primary-light] hover:underline ${className}`}
+            className={`bg-[--color-primary-dark] hover:bg-[--color-primary] text-white font-oswald font-bold uppercase rounded-lg flex items-center px-2 py-1 gap-2 transition-all focus:bg-[--color-secondary] focus:text-[--color-primary-light] hover:underline text-xs lg:text-lg lg:px-6 lg:py-1.5 lg:gap-8 ${className}`}
         >
             {children}
             <FontAwesomeIcon icon={faChevronDown} className="w-4 h-4" />

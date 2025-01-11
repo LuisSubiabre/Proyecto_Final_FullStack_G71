@@ -24,27 +24,39 @@
                 "Cuadernos y Apuntes",
                 "Embalaje y Etiquetado",
                 "Herramientas de medición",
-                "Insumos y Accesorios"
+                "Insumos y Accesorios",
+                "Lápices y Accesorios",
+                "Marcadores y Destacadores",
+                "Papelería",
+                "Para el Estuche",
+                "Pizarras y Borradores",
+                "Globo terráqueo"
             ]
         },
         {
             "id": 3,
             "title": "OFICINA",
             "items": [
-                "Lápices y Accesorios",
+                "Carpeta y Archivos",
+                "Insumos y Accesorios",
+                "Embalaje y Etiquetado",
                 "Marcadores y Destacadores",
-                "Papelería",
-                "Para el Estuche"
+                "Planificación y Organización",
+                "Lápices y Accesorios"
             ]
         },
         {
             "id": 4,
             "title": "ARTE Y MANUALIDADES",
             "items": [
-                "Pizarras y Borradores",
-                "Herramientas de medición",
-                "Lápices y Accesorios",
-                "Marcadores y Destacadores"
+                "Block y Croqueras de Dibujo",
+                "Masas y Decorativos",
+                "Para Pegar y Fijar",
+                "Pinturas y Pinceles",
+                "Tijeras y Cortadores",
+                "Tintas y Colores",
+                "Papeles y Cartulinas",
+                "Acabado para Pintar"
             ]
         }
     ]
