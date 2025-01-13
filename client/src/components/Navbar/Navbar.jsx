@@ -7,14 +7,17 @@ import {
     NavbarMenu,
     NavbarMenuItem,
     Image,
+    Tooltip,
+    Badge
 } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 import DropdownMenuComponent from "./DropdownMenu.jsx";
-import UserLogged from "./UserLogged.jsx";
 import Search from "../filter/Search.jsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import Icon from "../Icons.jsx";
+import UserMenu from "./UserMenu.jsx";
 
 export default function App() {
+    const userRole = null;
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     return (
@@ -40,11 +43,17 @@ export default function App() {
                 </NavbarContent>
 
                 <NavbarContent justify="end" className="hidden sm:flex">
-                    <UserLogged />
+                    <UserMenu role={userRole}/>
                 </NavbarContent>
 
                 <NavbarContent  justify="end">
-                <FontAwesomeIcon icon={faCartPlus} className="w-10 h-10" />
+                    <Tooltip content="Ver carrito de compras" position="bottom">
+                        <Link to="/shopping-cart">
+                            <Badge content="3" color="primary" overlap>
+                                <Icon name="cart" size="2xl" className="hover:text-[--color-highlight] transition-all" />
+                            </Badge>
+                        </Link>
+                    </Tooltip>
                 </NavbarContent>
 
                 <NavbarMenu>

@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
-import menuData from '../../data/menuData.json';
+import menuCategories from '../../data/menuCategories.json';
 import CustomButton from '../Buttons/DesktopButtons.jsx';
 
 const DropdownMenuComponent = () => {
     const [menus, setMenus] = useState([]);
 
     useEffect(() => {
-        setMenus(menuData.menus);
+        setMenus(menuCategories.menus);
     }, []);
 
     return (

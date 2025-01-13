@@ -1,63 +1,101 @@
 {
-    "menus": [
-        {
-            "id": 1,
-            "title": "NOVEDADES",
-            "items": [
-                "Carpeta y Archivos",
-                "Cuadernos y Apuntes",
-                "Embalaje y Etiquetado",
-                "Herramientas de medición",
-                "Insumos y Accesorios",
-                "Lápices y Accesorios",
-                "Marcadores y Destacadores",
-                "Papelería",
-                "Para el Estuche",
-                "Pizarras y Borradores"
-            ]
-        },
-        {
-            "id": 2,
-            "title": "ESCOLAR",
-            "items": [
-                "Carpeta y Archivos",
-                "Cuadernos y Apuntes",
-                "Embalaje y Etiquetado",
-                "Herramientas de medición",
-                "Insumos y Accesorios",
-                "Lápices y Accesorios",
-                "Marcadores y Destacadores",
-                "Papelería",
-                "Para el Estuche",
-                "Pizarras y Borradores",
-                "Globo terráqueo"
-            ]
-        },
-        {
-            "id": 3,
-            "title": "OFICINA",
-            "items": [
-                "Carpeta y Archivos",
-                "Insumos y Accesorios",
-                "Embalaje y Etiquetado",
-                "Marcadores y Destacadores",
-                "Planificación y Organización",
-                "Lápices y Accesorios"
-            ]
-        },
-        {
-            "id": 4,
-            "title": "ARTE Y MANUALIDADES",
-            "items": [
-                "Block y Croqueras de Dibujo",
-                "Masas y Decorativos",
-                "Para Pegar y Fijar",
-                "Pinturas y Pinceles",
-                "Tijeras y Cortadores",
-                "Tintas y Colores",
-                "Papeles y Cartulinas",
-                "Acabado para Pintar"
-            ]
-        }
-    ]
+    "admin": {
+        "avatar": "https://res.cloudinary.com/dxxrdckad/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/hombre_perfil_godyjs.jpg",
+        "menu": [
+            {
+                "id": "admin-settings",
+                "icon": "cog",
+                "label": "Ajustes de administrador",
+                "link": "/admin/settings"
+            },
+            {
+                "id": "admin-purchases",
+                "icon": "shoppingBag",
+                "label": "Total ventas",
+                "link": "/admin/purchases"
+            },
+            {
+                "id": "admin-publications",
+                "icon": "folder",
+                "label": "Publicaciones",
+                "link": "/admin/publications"
+            },
+            {
+                "id": "admin-users",
+                "icon": "users",
+                "label": "Administrar usuarios",
+                "link": "/admin/users"
+            },
+            {
+                "id": "admin-logout",
+                "icon": "signOutAlt",
+                "label": "Cerrar sesión",
+                "link": "/logout"
+            }
+        ]
+    },
+    "seller": {
+        "avatar": "https://res.cloudinary.com/dxxrdckad/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/seller_perfil_v8jnot.jpg",
+        "menu": [
+            {
+                "id": "seller-settings",
+                "icon": "cog",
+                "label": "Ajustes de vendedor",
+                "link": "/seller/settings"
+            },
+            {
+                "id": "seller-sales",
+                "icon": "dollarSign",
+                "label": "Tus ventas",
+                "link": "/seller/sales"
+            },
+            {
+                "id": "seller-publications",
+                "icon": "folder",
+                "label": "Publicaciones",
+                "link": "/seller/publications"
+            },
+            {
+                "id": "seller-new-publication",
+                "icon": "plusCircle",
+                "label": "Nueva publicación",
+                "link": "/seller/new-publication"
+            },
+            {
+                "id": "seller-logout",
+                "icon": "signOutAlt",
+                "label": "Cerrar sesión",
+                "link": "/logout"
+            }
+        ]
+    },
+    "user": {
+        "avatar": "https://res.cloudinary.com/dxxrdckad/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/user_perfil_holyrm.avif",
+        "menu": [
+            {
+                "id": "user-settings",
+                "icon": "cog",
+                "label": "Ajustes de usuario",
+                "link": "/user/settings"
+            },
+            {
+                "id": "user-purchases",
+                "icon": "cart",
+                "label": "Tus compras",
+                "link": "/user/purchases"
+            },
+            {
+                "id": "user-favorites",
+                "icon": "heart",
+                "label": "Tus favoritos",
+                "link": "/user/favorites"
+            },
+            {
+                "id": "user-logout",
+                "icon": "signOutAlt",
+                "label": "Cerrar sesión",
+                "link": "/logout"
+            }
+        ]
+    }
 }
