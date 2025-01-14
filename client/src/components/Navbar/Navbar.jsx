@@ -22,7 +22,7 @@ export default function App() {
 
     return (
         <div>
-            <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" className=" bg-[--color-primary-dark] border-b-0" position="sticky">
+            <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" className=" bg-[--color-primary-dark] border-b-0 z-50" position="sticky">
                 <NavbarContent >
                     <NavbarMenuToggle
                         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
