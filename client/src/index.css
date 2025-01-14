@@ -28,10 +28,5 @@
     --color-background-dark: #1c1c1c;
   }
 
-/* Main grid for the application*/
-.gridApp {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
-}
+
 
