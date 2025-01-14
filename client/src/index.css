@@ -11,7 +11,7 @@
     /* Colores Primarios */
     --color-primary-light: #A5327F;
     --color-primary: #8256A5;
-    --color-primary-dark: #522675;
+    --color-primary-dark: #4b236c;
   
     /* Colores Secundarios */
     --color-secondary-light: #FEE9FC;
@@ -34,3 +34,4 @@
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }
+

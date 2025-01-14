@@ -10,8 +10,14 @@ import {
     faSackDollar,
     faPlusCircle,
     faShoppingBag,
-    faHeart,
+    faHeart
 } from "@fortawesome/free-solid-svg-icons";
+
+import {
+    faFacebook,
+    faInstagram,
+    faTwitter
+} from "@fortawesome/free-brands-svg-icons";
 
 const icons = {
     search: faSearch,
@@ -25,6 +31,9 @@ const icons = {
     plusCircle: faPlusCircle,
     shoppingBag: faShoppingBag,
     heart: faHeart,
+    facebook: faFacebook,
+    instagram: faInstagram,
+    x: faTwitter
 };
 
 const Icon = ({ name, ...props }) => {
