@@ -17,12 +17,12 @@ import Icon from "../Icons.jsx";
 import UserMenu from "./UserMenu.jsx";
 
 export default function App() {
-    const userRole = null;
+    const userRole = "admin";
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     return (
         <div>
-            <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" className=" bg-[--color-primary-dark] border-b-0">
+            <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" className=" bg-[--color-primary-dark] border-b-0" position="sticky">
                 <NavbarContent >
                     <NavbarMenuToggle
                         aria-label={isMenuOpen ? "Close menu" : "Open menu"}

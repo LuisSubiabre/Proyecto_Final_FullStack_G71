@@ -11,6 +11,7 @@ import Register from './pages/Register.jsx';
 import Category from './pages/Category.jsx';
 import NotFound from './pages/NotFound.jsx';
 import ShoppingCart from './pages/ShoppingCart.jsx';
+import SiteUnderConstruction from './pages/SiteUnderConstruction.jsx';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/category/:id/:name" element={<Category />} />
             <Route path="/*" element={<NotFound />} />
             <Route path="/shopping-cart" element={<ShoppingCart />} />
+            <Route path="/sitio-en-construccion" element={<SiteUnderConstruction />} />
           </Routes>
         </main>
         <footer>

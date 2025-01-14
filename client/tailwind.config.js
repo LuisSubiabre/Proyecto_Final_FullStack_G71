@@ -12,6 +12,7 @@ export default {
       fontFamily: {
         oswald: ["Oswald", "sans-serif"],
         arvo: ["Arvo", "serif"],
+        epilogue: ['Epilogue', 'sans-serif'],
       },
     },
   },

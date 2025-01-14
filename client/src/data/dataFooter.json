@@ -1,0 +1,118 @@
+{
+    "footerData": {
+        "columns": [
+            {
+                "id": "about",
+                "title": "SOMOS LIBRERÍA ALAS DE ALONDRA",
+                "content": [
+                    {
+                        "id": "about-1",
+                        "text": "Nos enorgullece ser mucho más que una librería convencional.",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "about-2",
+                        "text": "Somos tu aliado confiable para todos tus suministros educativos, llevando la comodidad directamente a tu puerta con nuestro servicio de despacho a domicilio.",
+                        "url": "/sitio-en-construccion"
+                    }
+                ]
+            },
+            {
+                "id": "clients",
+                "title": "CLIENTES",
+                "content": [
+                    {
+                        "id": "faq",
+                        "text": "Preguntas frecuentes",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "terms",
+                        "text": "Términos y condiciones",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "request-return",
+                        "text": "Solicitar una devolución",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "changes-returns",
+                        "text": "Cambios y devoluciones",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "dispatches",
+                        "text": "Despachos",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "privacy-policy",
+                        "text": "Política de Privacidad",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "refund-policy",
+                        "text": "Política de Reembolso",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "contact-info",
+                        "text": "Información del Contacto",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "shipping-policy",
+                        "text": "Política de Envíos",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "terms-service",
+                        "text": "Términos de Servicio",
+                        "url": "/sitio-en-construccion"
+                    }
+                ]
+            },
+            {
+                "id": "contact",
+                "title": "CONTÁCTANOS",
+                "content": [
+                    {
+                        "id": "phone",
+                        "text": "Teléfono: (+56)9552453333",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "address",
+                        "text": "Estamos ubicados en: dirección ficticia, directo a tu corazón 123.",
+                        "url": "/sitio-en-construccion"
+                    }
+                ]
+            },
+            {
+                "id": "social-media",
+                "title": "SÍGUENOS EN NUESTRAS REDES SOCIALES",
+                "content": [
+                    {
+                        "id": "facebook",
+                        "name": "facebook",
+                        "text": "Facebook",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "instagram",
+                        "name": "instagram",
+                        "text": "Instagram",
+                        "url": "/sitio-en-construccion"
+                    },
+                    {
+                        "id": "twitter",
+                        "name": "x",
+                        "text": "X (anteriormente Twitter)",
+                        "url": "/sitio-en-construccion"
+                    }
+                ]
+            }
+        ]
+    }
+}

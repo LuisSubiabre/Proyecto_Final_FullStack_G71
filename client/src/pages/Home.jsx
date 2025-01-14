@@ -1,7 +1,8 @@
+import SiteUnderConstruction from "./SiteUnderConstruction.jsx";
 function Home() {
     return (
         <div>
-            <h1>Home</h1>
+            <SiteUnderConstruction />
         </div>
     );
 }
