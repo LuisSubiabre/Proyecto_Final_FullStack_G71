@@ -10,7 +10,9 @@ import {
     faSackDollar,
     faPlusCircle,
     faShoppingBag,
-    faHeart
+    faHeart,
+    faArrowLeft,
+    faArrowRight
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -33,7 +35,9 @@ const icons = {
     heart: faHeart,
     facebook: faFacebook,
     instagram: faInstagram,
-    x: faTwitter
+    x: faTwitter,
+    arrowLeft: faArrowLeft,
+    arrowRight: faArrowRight
 };
 
 const Icon = ({ name, ...props }) => {
