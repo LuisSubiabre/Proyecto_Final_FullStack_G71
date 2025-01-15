@@ -28,5 +28,10 @@
     --color-background-dark: #1c1c1c;
   }
 
-
+  @layer utilities {
+    .custom-text-stroke {
+      -webkit-text-stroke: 2px #4b236c;
+      -webkit-text-fill-color: #FEE9FC;
+    }
+  }
 

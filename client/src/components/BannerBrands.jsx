@@ -5,7 +5,7 @@ const BannerBrands = () => {
     return (
         <div className="bg-[url('https://res.cloudinary.com/dxxrdckad/image/upload/v1736947360/fondo_login_register_nqwroy_2792d1.jpg')] bg-cover  p-2">
             <div className="container mx-auto text-center">
-                <h2 className="text-2xl !text-osvald text-[var(--color-primary-light)] mb-4 animate-text-color-change font-bold">
+                <h2 className="text-2xl font-osvald text-[var(--color-primary-light)] mb-4 animate-text-color-change font-bold">
                     CON NOSOTROS ENCONTRARÁS ESTAS INCREÍBLES MARCAS
                 </h2>
                 <div className="flex flex-wrap justify-between gap-4">

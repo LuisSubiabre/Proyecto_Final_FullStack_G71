@@ -12,7 +12,7 @@ export default {
       fontFamily: {
         oswald: ["Oswald", "sans-serif"],
         arvo: ["Arvo", "serif"],
-        epilogue: ['Epilogue', 'sans-serif'],
+        epilogue: ["Epilogue", "sans-serif"],
       },
       colors: {
         primary: {
@@ -36,19 +36,29 @@ export default {
         },
       },
       keyframes: {
-        'slide-in-horizontal': {
-          '0%': { transform: 'translate(-20px, -20px)', opacity: '0' },
-          '100%': { transform: 'translate(0, 0)', opacity: '1' },
+        "slide-in-horizontal": {
+          "0%": { transform: "translate(-20px, -20px)", opacity: "0" },
+          "100%": { transform: "translate(0, 0)", opacity: "1" },
         },
-        'text-color-change': {
-          '0%': { color: '#1c1c1c' },
-          '50%': { color: '#A5327F' },
-          '100%': { color: '#1c1c1c' },
+        "text-color-change": {
+          "0%": { color: "#1c1c1c" },
+          "50%": { color: "#A5327F" },
+          "100%": { color: "#1c1c1c" },
+        },
+        "background-flash": {
+          "0%, 100%": { backgroundColor: "#A5327F" },
+          "50%": { backgroundColor: "#C8ACD4" },
+        },
+        "pulse-text": {
+          "0%, 100%": { color: "#FFF" },
+          "50%": { color: "#C8ACD4" },
         },
       },
       animation: {
-        'slide-in-horizontal': 'slide-in-horizontal 0.5s ease-out',
-        'text-color-change': 'text-color-change 2s infinite',
+        "slide-in-horizontal": "slide-in-horizontal 0.5s ease-out",
+        "text-color-change": "text-color-change 2s infinite",
+        "background-flash": "background-flash 1.5s infinite",
+        "pulse-text": "pulse-text 2s infinite",
       },
     },
   },
