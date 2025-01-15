@@ -24,11 +24,11 @@ const Carrusel = () => {
     const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
     return (
-        <div className="relative overflow-hidden w-full h-[400px]">
+        <div className="relative overflow-hidden w-full h-[150px] md:h-[250px] lg:h-[350px] xl:h-[400px]">
             <div className="overflow-hidden w-full h-full" ref={emblaRef}>
                 <div className="flex">
                     {/* Slide 1 */}
-                    <div className="flex-[0_0_100%] h-full">
+                    <div className="flex-[0_0_100%] h-[150px] md:h-[250px] lg:h-[350px] xl:h-[400px]">
                         <img
                             src="https://res.cloudinary.com/dxxrdckad/image/upload/v1736905877/gif_alas_alondra_rwaqe5.gif"
                             alt="regreso a clases con papeleria alas de alondra"
@@ -36,7 +36,7 @@ const Carrusel = () => {
                         />
                     </div>
                     {/* Slide 2 */}
-                    <div className="flex-[0_0_100%] h-full">
+                    <div className="flex-[0_0_100%] h-[150px] md:h-[250px] lg:h-[350px] xl:h-[400px]">
                         <img
                             src="https://res.cloudinary.com/dxxrdckad/image/upload/v1729711111/banner_artel_ma4ndx.webp"
                             alt="Productos artel"
@@ -44,7 +44,7 @@ const Carrusel = () => {
                         />
                     </div>
                     {/* Slide 3 */}
-                    <div className="flex-[0_0_100%] h-full">
+                    <div className="flex-[0_0_100%] h-[150px] md:h-[250px] lg:h-[350px] xl:h-[400px]">
                         <img
                             src="https://res.cloudinary.com/dxxrdckad/image/upload/v1729714379/Slider_STABILO_BOSS_23er_deskset_1860x750_ahm7t6.jpg"
                             alt="destacadores"
