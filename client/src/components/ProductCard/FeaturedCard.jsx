@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardBody, CardFooter, Button } from "@nextui-org/react";
 import { Link } from "react-router-dom";
-import Icon from "./Icons";
+import Icon from "../Icons.jsx";
 
 const FeaturedCard = () => {
     return (
