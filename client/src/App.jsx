@@ -13,6 +13,8 @@ import Category from './pages/Category.jsx';
 import NotFound from './pages/NotFound.jsx';
 import ShoppingCart from './pages/ShoppingCart.jsx';
 import SiteUnderConstruction from './pages/SiteUnderConstruction.jsx';
+import ProductDetail from './pages/ProductDetail.jsx';
+import FavoriteProducts from './pages/FavoriteProducts.jsx';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/category/:id/:name" element={<Category />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/favorite-products" element={<FavoriteProducts />} />
             <Route path="/*" element={<NotFound />} />
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/sitio-en-construccion" element={<SiteUnderConstruction />} />

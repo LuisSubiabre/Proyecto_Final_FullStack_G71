@@ -1,4 +1,4 @@
-import FeaturedCard from "./FeaturedCard.jsx";
+import FeaturedCard from "./ProductCard/FeaturedCard.jsx";
 
 const FeaturedProducts = () => {
     return (

@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "nombre": "Croquera Mini Chibasaur, gato del meme",
+        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736991635/Croquera_mini_Chibasaur__12__jkhmkb.jpg",
+        "descripcion": "¡Para dibujar, para escribir, para llevar a todos lados! De 10 x 13 cm aproximadamente, de 80 hojas y puntas redondeadas.",
+        "categoria": "Escolar, croqueras, para colorear y escribir",
+        "precio": 3.990,
+        "url": "/shopping-cart"
+    },
+    {
+        "id": 2,
+        "nombre": "Croquera Mini Chibasaur, gato blanco",
+        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736991635/263_gheyvt.png",
+        "descripcion": "De 10 x 13cm. Tapa superior es cartón forrado grueso y laminado y la tapa inferior de cartón piedra. La croquera mini es ideal para llevar en el bolso y hacer todo tipo de anotaciones estratégicas.",
+        "categoria": "Escolar, croqueras, para colorear y escribir",
+        "precio": 3.990,
+        "url": "/shopping-cart"
+    },
+    {
+        "id": 3,
+        "nombre": "Croquera Mini Chibasaur, gato del meme negro",
+        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736991636/Croquera_mini_Chibasaur__15__wqccfk.jpg",
+        "descripcion": "Calidad Premium. Mina resistente, colores intensos. Mina 2.9 mm. Lápices con forma hexagonal. Colores mezclables entre sí. Permite un trazo suave.",
+        "categoria": "Escolar, croqueras, para colorear y escribir",
+        "precio": 3.990,
+        "url": "/shopping-cart"
+    }
+]
