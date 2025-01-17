@@ -47,7 +47,6 @@ const CardComponent = ({ producto }) => {
         </h3>
       </CardHeader>
       <CardBody className="relative">
-        {/* Contenedor de la imagen con posición relativa */}
         <div className="relative">
           <Image
             isZoomed
@@ -56,7 +55,6 @@ const CardComponent = ({ producto }) => {
             width="100%"
             className="rounded-t-md w-full object-cover"
           />
-          {/* Botón de favorito posicionado sobre la imagen */}
           <button
             onClick={handleToggleFavorite}
             className={`absolute bottom-2 right-2 text-4xl z-10 transition-colors ${
@@ -66,6 +64,11 @@ const CardComponent = ({ producto }) => {
             <Icon name="heart" />
           </button>
         </div>
+      </CardBody>
+      <CardBody>
+        <p className="text-[var(--color-primary-dark)] text-right font-epilogue font-bold text-2xl">
+          ${producto.precio}
+        </p>
       </CardBody>
       <CardBody className="font-epilogue">
         <p className="text-sm text-gray-600">{producto.descripcion}</p>

@@ -1,4 +1,4 @@
-import SiteUnderConstruction from "./SiteUnderConstruction.jsx";
+import ContactUs from "../components/ContactUs.jsx";
 import Carousel from "../components/Carousel.jsx";
 import BannerBrands from "../components/BannerBrands.jsx";
 import FeaturedProducts from "../components/FeaturedProducts.jsx";
@@ -10,7 +10,7 @@ function Home() {
             <BannerBrands />
             <FeaturedProducts />
             <NewProducts />
-            <SiteUnderConstruction />
+            <ContactUs />
         </div>
     );
 }
