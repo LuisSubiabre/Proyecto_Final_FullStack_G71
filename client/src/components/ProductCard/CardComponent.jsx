@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useFavoritos } from "../../context/FavoritosContext.jsx";
+import { useState, useContext } from "react";
+import FavoritosContext from "../../context/FavoritosContext.jsx";
 import {
   Card,
   CardHeader,
@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import Icon from "../Icons.jsx";
 
 const CardComponent = ({ producto }) => {
-  const { favoritos, setFavoritos } = useFavoritos();
+  const { favoritos, setFavoritos } = useContext(FavoritosContext);
   const [showAlert, setShowAlert] = useState(false);
   const [isFavorite, setIsFavorite] = useState(
     favoritos.some((fav) => fav.id === producto.id)
@@ -29,14 +29,15 @@ const CardComponent = ({ producto }) => {
   const handleToggleFavorite = () => {
     if (isFavorite) {
       // Elimina el producto de los favoritos
-      setFavoritos((prevFavoritos) => prevFavoritos.filter((fav) => fav.id !== producto.id));
+      setFavoritos((prevFavoritos) =>
+        prevFavoritos.filter((fav) => fav.id !== producto.id)
+      );
     } else {
       // Agrega el producto a los favoritos
       setFavoritos((prevFavoritos) => [...prevFavoritos, producto]);
     }
-    setIsFavorite(!isFavorite);
+    setIsFavorite(!isFavorite); // Actualiza el estado local
   };
-  
 
   return (
     <Card className="relative max-w-sm bg-white shadow-md shadow-[--color-primary-light] border-[1.5px] border-[var(--color-primary-dark)]">
