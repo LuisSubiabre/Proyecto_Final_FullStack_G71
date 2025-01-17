@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import CardComponent from "../components/ProductCard/CardComponent.jsx";
-import { useFavoritos } from "../context/FavoritosContext.jsx";
+import FavoritosContext from "../context/FavoritosContext.jsx";
 
 const FavoriteProducts = () => {
-    const { favoritos } = useFavoritos();
+    const { favoritos } = useContext(FavoritosContext);
 
     useEffect(() => {
         console.log("Favoritos en la vista de favoritos:", favoritos);
