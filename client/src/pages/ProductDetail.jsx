@@ -33,10 +33,9 @@ const ProductDetail = () => {
               isZoomed
               src={producto.imagen}
               alt={producto.nombre}
-              width="100%"
-              className="rounded-t-md w-full object-cover"
+              className="rounded-t-md object-cover w-screen"
             />
-            <div className="flex flex-col justify-between p-12 leading-normal">
+            <div className="flex flex-col justify-between p-12 leading-normal w-screen">
               <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                 {producto.nombre}
               </h1>
