@@ -1,30 +1,67 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 
 // Importaciones de componentes
-import Navbar from './components/Navbar/Navbar.jsx';
-import Footer from './components/Footer/Footer.jsx';
-import Banner from './components/Banner';
+import Navbar from "./components/Navbar/Navbar.jsx";
+import Footer from "./components/Footer/Footer.jsx";
+import Banner from "./components/Banner";
 
 // Importaciones de páginas
-import Home from './pages/Home.jsx';
-import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
-import Category from './pages/Category.jsx';
-import NotFound from './pages/NotFound.jsx';
-import ShoppingCart from './pages/ShoppingCart.jsx';
-import SiteUnderConstruction from './pages/SiteUnderConstruction.jsx';
-import ProductDetail from './pages/ProductDetail.jsx';
-import FavoriteProducts from './pages/FavoriteProducts.jsx';
+import Home from "./pages/Home.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import Category from "./pages/Category.jsx";
+import NotFound from "./pages/NotFound.jsx";
+import ShoppingCart from "./pages/ShoppingCart.jsx";
+import SiteUnderConstruction from "./pages/SiteUnderConstruction.jsx";
+import ProductDetail from "./pages/ProductDetail.jsx";
+import FavoriteProducts from "./pages/FavoriteProducts.jsx";
+import AdminUserProfile from "./pages/UserProfile/Admin/AdminUserProfile.jsx";
+import RegularUserProfile from "./pages/UserProfile/RegularUser/RegularUserProfile..jsx";
+import SellerUserProfile from "./pages/UserProfile/Seller/SellerUserProfile.jsx";
+
+// Componente Layout para las páginas con Banner, Navbar y Footer
+const DefaultLayout = ({ children }) => (
+  <>
+    <Banner />
+    <header className="sticky top-0 z-50">
+      <Navbar />
+    </header>
+    <main className="flex-1 overflow-y-auto">{children}</main>
+    <footer>
+      <Footer />
+    </footer>
+  </>
+);
+
+// Componente Layout sin Banner, Navbar ni Footer
+const MinimalLayout = ({ children }) => (
+  <main className="flex-1">{children}</main>
+);
 
 function App() {
+  const location = useLocation();
+
+  // Define las rutas que no requieren Banner, Navbar ni Footer
+  const minimalLayoutRoutes = ["/register", "/login"];
+
+  const isMinimalLayout = minimalLayoutRoutes.includes(location.pathname);
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Banner />
-      <Router>
-        <header className="sticky top-0 z-50">
-          <Navbar />
-        </header>
-        <main className="flex-1 overflow-y-auto">
+      {isMinimalLayout ? (
+        <MinimalLayout>
+          <Routes>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </MinimalLayout>
+      ) : (
+        <DefaultLayout>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -34,13 +71,16 @@ function App() {
             <Route path="/favorite-products" element={<FavoriteProducts />} />
             <Route path="/*" element={<NotFound />} />
             <Route path="/shopping-cart" element={<ShoppingCart />} />
-            <Route path="/sitio-en-construccion" element={<SiteUnderConstruction />} />
+            <Route
+              path="/sitio-en-construccion"
+              element={<SiteUnderConstruction />}
+            />
+            <Route path="/profile-admin" element={<AdminUserProfile />} />
+            <Route path="/profile-regular" element={<RegularUserProfile />} />
+            <Route path="/profile-seller" element={<SellerUserProfile />} />
           </Routes>
-        </main>
-        <footer>
-          <Footer />
-        </footer>
-      </Router>
+        </DefaultLayout>
+      )}
     </div>
   );
 }
