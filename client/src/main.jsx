@@ -1,6 +1,6 @@
-// main.tsx or main.jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom"; // Importar BrowserRouter
 import { NextUIProvider } from "@nextui-org/react";
 import App from "./App";
 import "./index.css";
@@ -10,9 +10,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <NextUIProvider>
       <FavoritosProvider>
-        <main className="dark text-foreground bg-background">
-          <App />
-        </main>
+        <BrowserRouter> {/* Envolver App con BrowserRouter */}
+          <main className="dark text-foreground bg-background">
+            <App />
+          </main>
+        </BrowserRouter>
       </FavoritosProvider>
     </NextUIProvider>
   </React.StrictMode>,
