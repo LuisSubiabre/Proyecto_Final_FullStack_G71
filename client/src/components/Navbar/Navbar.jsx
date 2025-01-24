@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from 'react';
 import {
     Navbar,
     NavbarBrand,
@@ -11,14 +11,19 @@ import {
     Badge
 } from "@nextui-org/react";
 import { Link } from "react-router-dom";
+// Componentes
 import DropdownMenuComponent from "./DropdownMenu.jsx";
 import Search from "../filter/Search.jsx";
 import Icon from "../Icons.jsx";
 import UserMenu from "./UserMenu.jsx";
+// Contextos
+import CartContext from "../../context/CartContext.jsx";
+
 
 export default function App() {
-    const userRole = "admin";
+    const userRole = "seller";
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const { getTotalQuantity } = useContext(CartContext);
 
     return (
         <div>
@@ -29,12 +34,16 @@ export default function App() {
                         className="sm:hidden"
                     />
                     <NavbarBrand>
-                        <Image
-                            isBlurred
-                            alt="logo"
-                            className="w-[200px] h-16"
-                            src="https://res.cloudinary.com/dxxrdckad/image/upload/v1727986358/logo_sin_fondo_o6f8m0.png"
-                        />
+                        <Tooltip content="Regresar a inicio">
+                            <Link to="/">
+                                <Image
+                                    isBlurred
+                                    alt="logo"
+                                    className="w-[200px] h-16 hover:animate-pulse hover:scale-110 transition-all"
+                                    src="https://res.cloudinary.com/dxxrdckad/image/upload/v1727986358/logo_sin_fondo_o6f8m0.png"
+                                />
+                            </Link>
+                        </Tooltip>
                     </NavbarBrand>
                 </NavbarContent>
 
@@ -43,13 +52,13 @@ export default function App() {
                 </NavbarContent>
 
                 <NavbarContent justify="end" className="hidden sm:flex">
-                    <UserMenu role={userRole}/>
+                    <UserMenu role={userRole} />
                 </NavbarContent>
 
-                <NavbarContent  justify="end">
+                <NavbarContent justify="end">
                     <Tooltip content="Ver carrito de compras" position="bottom">
                         <Link to="/shopping-cart">
-                            <Badge content="3" color="primary" overlap>
+                            <Badge content={getTotalQuantity()} color="primary" overlap>
                                 <Icon name="cart" size="2xl" className="hover:text-[--color-highlight] transition-all" />
                             </Badge>
                         </Link>

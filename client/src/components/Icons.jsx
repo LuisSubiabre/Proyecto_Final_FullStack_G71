@@ -15,7 +15,8 @@ import {
     faArrowRight,
     faEnvelope,
     faLock,
-  faStar,
+    faStar,
+    faHome
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -44,6 +45,7 @@ const icons = {
     mail: faEnvelope,
     padlock: faLock,
     star: faStar,
+    home: faHome
 };
 
 const Icon = ({ name, ...props }) => {

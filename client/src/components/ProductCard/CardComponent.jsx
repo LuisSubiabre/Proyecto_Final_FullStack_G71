@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import FavoritosContext from "../../context/FavoritosContext.jsx";
+import CartContext  from "../../context/CartContext.jsx";
 import {
   Card,
   CardHeader,
@@ -14,12 +15,14 @@ import Icon from "../Icons.jsx";
 
 const CardComponent = ({ producto }) => {
   const { favoritos, setFavoritos } = useContext(FavoritosContext);
+  const { addToCart } = useContext(CartContext);
   const [showAlert, setShowAlert] = useState(false);
   const [isFavorite, setIsFavorite] = useState(
     favoritos.some((fav) => fav.id === producto.id)
   );
 
   const handleAddToCart = () => {
+    addToCart(producto);
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
@@ -36,7 +39,7 @@ const CardComponent = ({ producto }) => {
       // Agrega el producto a los favoritos
       setFavoritos((prevFavoritos) => [...prevFavoritos, producto]);
     }
-    setIsFavorite(!isFavorite); // Actualiza el estado local
+    setIsFavorite(!isFavorite);
   };
 
   return (

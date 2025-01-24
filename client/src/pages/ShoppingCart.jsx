@@ -1,69 +1,27 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RadioGroup, Radio, Button } from "@nextui-org/react";
-import { useEffect } from "react";
+import  CartContext  from "../context/CartContext"; // Asegúrate de la ruta correcta
+
 function ShoppingCart() {
-  const [dataCarrito, setDataCarrito] = useState([
-    {
-      id: 1,
-      nombre: "Croquera Mini Chibasaur, gato del meme",
-      precio: 3.999,
-      imagen:
-        "https://res.cloudinary.com/dxxrdckad/image/upload/v1736991635/Croquera_mini_Chibasaur__12__jkhmkb.jpg",
-      cantidad: 1,
-    },
-    {
-      id: 2,
-      nombre: "Croquera Mini Chibasaur, gato blanco",
-      precio: 3.999,
-      imagen:
-        "https://res.cloudinary.com/dxxrdckad/image/upload/v1736991635/263_gheyvt.png",
-      cantidad: 1,
-    },
-  ]);
+  const {
+    cart,
+    increaseQuantity,
+    decreaseQuantity,
+    calculateTotal,
+  } = useContext(CartContext); // Consumimos el contexto del carrito
 
   const [selectedEnvio, setSelectedEnvio] = useState("tienda");
 
-  const handleIncrement = (id) => {
-    setDataCarrito((prevDataCarrito) =>
-      prevDataCarrito.map((producto) =>
-        producto.id === id
-          ? { ...producto, cantidad: producto.cantidad + 1 }
-          : producto
-      )
-    );
-  };
-
-  const handleDecrement = (id) => {
-    setDataCarrito(
-      (prevDataCarrito) =>
-        prevDataCarrito
-          .map((producto) =>
-            producto.id === id && producto.cantidad > 0 // Evitar valores negativos
-              ? { ...producto, cantidad: producto.cantidad - 1 }
-              : producto
-          )
-          .filter((producto) => producto.cantidad > 0) // Elimina productos con cantidad igual a 0
-    );
-  };
-
-  const calcularTotal = (sumaExtra = 0) => {
-    const totalCarrito = dataCarrito.reduce(
-      (total, producto) => total + producto.precio * producto.cantidad,
-      0
-    );
-    return totalCarrito + sumaExtra;
-  };
-
   const seleccionarEnvio = (event) => {
-    const value = event.target.value; // Asegúrate de acceder al valor correcto
-    setSelectedEnvio(value); // Actualiza el estado con el valor seleccionado
+    const value = event.target.value;
+    setSelectedEnvio(value);
   };
 
   useEffect(() => {
-    if (dataCarrito.length === 0) {
+    if (cart.length === 0) {
       setSelectedEnvio("tienda");
     }
-  }, [dataCarrito]);
+  }, [cart]);
 
   return (
     <>
@@ -95,7 +53,7 @@ function ShoppingCart() {
                 Detalle de tu compra
               </h3>
               <ul className="space-y-4">
-                {dataCarrito.slice(0, 2).map((producto) => (
+                {cart.map((producto, index) => (
                   <li
                     className="flex items-center justify-between bg-white p-4 rounded-lg shadow"
                     key={producto.id}
@@ -124,16 +82,16 @@ function ShoppingCart() {
                       </p>
                       <div className="flex items-center justify-end mt-2 space-x-2">
                         <button
-                          onClick={() => handleIncrement(producto.id)}
+                          onClick={() => increaseQuantity(index)}
                           className="w-8 h-8 flex items-center justify-center text-gray-900 focus:outline-none bg-white rounded-lg text-2xl font-medium"
                         >
                           +
                         </button>
-                        <span className="text-2xl  text-gray-900 font-medium">
-                          {producto.cantidad}
+                        <span className="text-2xl text-gray-900 font-medium">
+                          {producto.quantity}
                         </span>
                         <button
-                          onClick={() => handleDecrement(producto.id)}
+                          onClick={() => decreaseQuantity(index)}
                           className="w-8 h-8 flex items-center justify-center text-gray-900 focus:outline-none bg-white rounded-lg text-2xl font-medium"
                         >
                           −
@@ -154,7 +112,7 @@ function ShoppingCart() {
                 <hr className="my-4" />
                 <p className="flex justify-center text-gray-800">
                   <span className="mx-8">Subtotal:</span>
-                  <span className="mx-8">{calcularTotal().toFixed(3)}</span>
+                  <span className="mx-8">{calculateTotal().toFixed(3)}</span>
                 </p>
               </div>
               <hr className="my-4" />
@@ -164,10 +122,9 @@ function ShoppingCart() {
                     color="primary"
                     defaultValue="tienda"
                     label="Formas de envío:"
-                    value={selectedEnvio} // Asocia el valor del estado
-                    onChange={seleccionarEnvio} // Maneja el cambio del valor
-                    isInvalid={true}
-                    isDisabled={dataCarrito.length === 0}
+                    value={selectedEnvio}
+                    onChange={seleccionarEnvio}
+                    isDisabled={cart.length === 0}
                   >
                     <Radio value="starken">Starken</Radio>
                     <Radio value="express">Chile Express</Radio>
@@ -179,19 +136,19 @@ function ShoppingCart() {
                 <p className="flex justify-between font-bold text-3xl text-gray-800">
                   <span>Total:</span>
                   <span>
-                    {calcularTotal(
+                    {calculateTotal(
                       selectedEnvio !== "tienda" ? 4.99 : 0
                     ).toFixed(3)}
                   </span>
                 </p>
-                <p className=" text-gray-400 italic">
-                  {selectedEnvio !== "tienda" ? "(subtotal + envio)" : ""}
+                <p className="text-gray-400 italic">
+                  {selectedEnvio !== "tienda" ? "(subtotal + envío)" : ""}
                 </p>
               </div>
 
               <Button
                 className="ml-8 size-80 bg-rose-500 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full disabled:bg-gray-300"
-                disabled={dataCarrito.length === 0}
+                disabled={cart.length === 0}
               >
                 Continuar
               </Button>
@@ -204,5 +161,3 @@ function ShoppingCart() {
 }
 
 export default ShoppingCart;
-
-ShoppingCart;
