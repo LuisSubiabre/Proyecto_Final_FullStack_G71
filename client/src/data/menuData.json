@@ -6,13 +6,13 @@
                 "id": "admin-settings",
                 "icon": "cog",
                 "label": "Ajustes de administrador",
-                "link": "/admin/settings"
+                "link": "/profile-admin"
             },
             {
                 "id": "admin-purchases",
                 "icon": "shoppingBag",
                 "label": "Total ventas",
-                "link": "/admin/purchases"
+                "link": "/sitio-en-construccion"
             },
             {
                 "id": "admin-publications",
@@ -24,7 +24,7 @@
                 "id": "admin-users",
                 "icon": "users",
                 "label": "Administrar usuarios",
-                "link": "/admin/users"
+                "link": "/sitio-en-construccion"
             },
             {
                 "id": "admin-logout",
@@ -41,25 +41,25 @@
                 "id": "seller-settings",
                 "icon": "cog",
                 "label": "Ajustes de vendedor",
-                "link": "/seller/settings"
+                "link": "/profile-seller"
             },
             {
                 "id": "seller-sales",
                 "icon": "dollarSign",
                 "label": "Tus ventas",
-                "link": "/seller/sales"
+                "link": "/sitio-en-construccion"
             },
             {
                 "id": "seller-publications",
                 "icon": "folder",
                 "label": "Publicaciones",
-                "link": "/seller/publications"
+                "link": "/sitio-en-construccion"
             },
             {
                 "id": "seller-new-publication",
                 "icon": "plusCircle",
                 "label": "Nueva publicación",
-                "link": "/seller/new-publication"
+                "link": "/new-publication"
             },
             {
                 "id": "seller-logout",
@@ -76,19 +76,19 @@
                 "id": "user-settings",
                 "icon": "cog",
                 "label": "Ajustes de usuario",
-                "link": "/user/settings"
+                "link": "/profile-user"
             },
             {
                 "id": "user-purchases",
                 "icon": "cart",
                 "label": "Tus compras",
-                "link": "/user/purchases"
+                "link": "/sitio-en-construccion"
             },
             {
                 "id": "user-favorites",
                 "icon": "heart",
                 "label": "Tus favoritos",
-                "link": "/user/favorites"
+                "link": "/favorite-products"
             },
             {
                 "id": "user-logout",

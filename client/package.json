@@ -21,6 +21,7 @@
     "framer-motion": "^11.11.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.5",
     "react-router-dom": "^7.1.1"
   },
   "devDependencies": {

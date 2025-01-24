@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // Importaciones de componentes
 import Navbar from "./components/Navbar/Navbar.jsx";
@@ -23,6 +18,7 @@ import FavoriteProducts from "./pages/FavoriteProducts.jsx";
 import AdminUserProfile from "./pages/UserProfile/Admin/AdminUserProfile.jsx";
 import RegularUserProfile from "./pages/UserProfile/RegularUser/RegularUserProfile..jsx";
 import SellerUserProfile from "./pages/UserProfile/Seller/SellerUserProfile.jsx";
+import Publications from "./pages/UserProfile/Seller/Publications.jsx";
 
 // Componente Layout para las páginas con Banner, Navbar y Footer
 const DefaultLayout = ({ children }) => (
@@ -39,50 +35,31 @@ const DefaultLayout = ({ children }) => (
 );
 
 // Componente Layout sin Banner, Navbar ni Footer
-const MinimalLayout = ({ children }) => (
-  <main className="flex-1">{children}</main>
-);
+const MinimalLayout = ({ children }) => <main className="flex-1">{children}</main>;
 
 function App() {
-  const location = useLocation();
-
-  // Define las rutas que no requieren Banner, Navbar ni Footer
-  const minimalLayoutRoutes = ["/register", "/login"];
-
-  const isMinimalLayout = minimalLayoutRoutes.includes(location.pathname);
 
   return (
     <div className="flex flex-col min-h-screen">
-      {isMinimalLayout ? (
-        <MinimalLayout>
-          <Routes>
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </MinimalLayout>
-      ) : (
-        <DefaultLayout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/category/:id/:name" element={<Category />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/favorite-products" element={<FavoriteProducts />} />
-            <Route path="/*" element={<NotFound />} />
-            <Route path="/shopping-cart" element={<ShoppingCart />} />
-            <Route
-              path="/sitio-en-construccion"
-              element={<SiteUnderConstruction />}
-            />
-            <Route path="/profile-admin" element={<AdminUserProfile />} />
-            <Route path="/profile-regular" element={<RegularUserProfile />} />
-            <Route path="/profile-seller" element={<SellerUserProfile />} />
-          </Routes>
-        </DefaultLayout>
-      )}
+      <Routes>
+
+        <Route path="/" element={<DefaultLayout> <Home /> </DefaultLayout>} />
+        <Route path="/category/:id/:name" element={<DefaultLayout> <Category /> </DefaultLayout>} />
+        <Route path="/product/:id" element={<DefaultLayout> <ProductDetail /> </DefaultLayout>} />
+        <Route path="/favorite-products" element={<DefaultLayout> <FavoriteProducts /> </DefaultLayout>} />
+        <Route path="/shopping-cart" element={<DefaultLayout> <ShoppingCart /> </DefaultLayout>} />
+        <Route path="/sitio-en-construccion" element={<DefaultLayout> <SiteUnderConstruction /> </DefaultLayout>} />
+        <Route path="/profile-admin" element={<DefaultLayout> <AdminUserProfile /> </DefaultLayout>} />
+        <Route path="/profile-regular" element={<DefaultLayout> <RegularUserProfile /> </DefaultLayout>} />
+        <Route path="/profile-seller" element={<DefaultLayout> <SellerUserProfile /> </DefaultLayout>} />
+        <Route path="/new-publication" element={<DefaultLayout> <Publications /> </DefaultLayout>} />
+        <Route path="/login" element={<MinimalLayout> <Login /> </MinimalLayout>} />
+        <Route path="/register" element={<MinimalLayout> <Register /> </MinimalLayout>} />
+        <Route path="*" element={<MinimalLayout> <NotFound /> </MinimalLayout>} />
+      </Routes>
     </div>
   );
 }
 
 export default App;
+
