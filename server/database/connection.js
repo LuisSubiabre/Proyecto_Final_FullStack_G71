@@ -3,17 +3,15 @@ import pkg from "pg";
 const { Pool } = pkg;
 
 export const pool = new Pool({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-  allowExitOnIdle: true,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 try {
-  await pool.query("SELECT NOW()");
-  console.log("Database connected");
+  const res = await pool.query("SELECT NOW()");
+  console.log("Database connected:", res.rows[0]);
 } catch (error) {
-  console.log(error);
+  console.error("Database connection error:", error);
 }
