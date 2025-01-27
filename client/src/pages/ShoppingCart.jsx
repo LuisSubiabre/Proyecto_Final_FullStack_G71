@@ -1,14 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { RadioGroup, Radio, Button } from "@nextui-org/react";
-import  CartContext  from "../context/CartContext"; // Asegúrate de la ruta correcta
+import CartContext from "../context/CartContext"; // Asegúrate de la ruta correcta
 
 function ShoppingCart() {
-  const {
-    cart,
-    increaseQuantity,
-    decreaseQuantity,
-    calculateTotal,
-  } = useContext(CartContext); // Consumimos el contexto del carrito
+  const { cart, increaseQuantity, decreaseQuantity, calculateTotal } =
+    useContext(CartContext); // Consumimos el contexto del carrito
 
   const [selectedEnvio, setSelectedEnvio] = useState("tienda");
 
@@ -46,7 +42,7 @@ function ShoppingCart() {
           </div>
 
           {/* Sección inferior con dos columnas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Columna izquierda */}
             <div className="p-4">
               <h3 className="text-gray-800 text-3xl font-normal mb-4">
@@ -55,18 +51,18 @@ function ShoppingCart() {
               <ul className="space-y-4">
                 {cart.map((producto, index) => (
                   <li
-                    className="flex items-center justify-between bg-white p-4 rounded-lg shadow"
+                    className="flex flex-col md:flex-row items-center justify-between bg-white p-4 rounded-lg shadow"
                     key={producto.id}
                   >
                     {/* Izquierda: Imagen del producto */}
                     <img
                       src={producto.imagen}
                       alt={producto.nombre}
-                      className="w-16 h-16 object-cover rounded"
+                      className="w-16 h-16 object-cover rounded mb-4 md:mb-0"
                     />
 
                     {/* Centro: Nombre del producto y texto adicional */}
-                    <div className="flex-1 px-4">
+                    <div className="flex-1 px-4 text-center md:text-left">
                       <h4 className="text-lg font-bold text-gray-800">
                         {producto.nombre}
                       </h4>
@@ -76,11 +72,11 @@ function ShoppingCart() {
                     </div>
 
                     {/* Derecha: Precio y controles de cantidad */}
-                    <div className="text-right">
+                    <div className="text-center md:text-right">
                       <p className="text-rose-500 font-epilogue text-2xl">
                         ${producto.precio}
                       </p>
-                      <div className="flex items-center justify-end mt-2 space-x-2">
+                      <div className="flex items-center justify-center md:justify-end mt-2 space-x-2">
                         <button
                           onClick={() => increaseQuantity(index)}
                           className="w-8 h-8 flex items-center justify-center text-gray-900 focus:outline-none bg-white rounded-lg text-2xl font-medium"
@@ -104,8 +100,8 @@ function ShoppingCart() {
             </div>
 
             {/* Columna derecha */}
-            <div className="p-4 w-8/12">
-              <h3 className="text-gray-800 text-2xl font-normal mb-4 text-center">
+            <div className="p-4 bg-white rounded-lg shadow w-full lg:w-8/12 mx-auto lg:mx-0">
+              <h3 className=" text-gray-800 text-2xl font-normal mb-4 text-center">
                 Total carrito
               </h3>
               <div className="mb-2">
@@ -117,9 +113,10 @@ function ShoppingCart() {
               </div>
               <hr className="my-4" />
               <p className="flex justify-between text-gray-800">
-                <div className="flex flex-col space-y-2 text-gray-800">
+                <div className="flex flex-col space-y-2 text-gray-800 bg">
                   <RadioGroup
                     color="primary"
+                    isInvalid={true}
                     defaultValue="tienda"
                     label="Formas de envío:"
                     value={selectedEnvio}
@@ -147,7 +144,7 @@ function ShoppingCart() {
               </div>
 
               <Button
-                className="ml-8 size-80 bg-rose-500 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full disabled:bg-gray-300"
+                className="w-full bg-rose-500 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full disabled:bg-gray-300"
                 disabled={cart.length === 0}
               >
                 Continuar
