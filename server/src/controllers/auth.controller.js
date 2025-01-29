@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import authModel from "../models/auth.model.js";
 import jwt from "jsonwebtoken";
+import { handleError } from "../helpers/errorHandler.js";
 
 const login = async (req, res) => {
   try {
@@ -31,7 +32,7 @@ const login = async (req, res) => {
       token,
     });
   } catch (error) {
-    return res.status(500).send("Error en el body: " + error);
+    handleError(error, res);
   }
 };
 

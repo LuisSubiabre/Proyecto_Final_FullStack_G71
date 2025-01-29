@@ -1,4 +1,4 @@
-import { pool } from "../database/connection.js";
+import { pool } from "../../database/index.js";
 import format from "pg-format";
 
 const register = async (newUser) => {
