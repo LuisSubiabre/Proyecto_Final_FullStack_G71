@@ -1,9 +1,13 @@
 import "dotenv/config";
 import { Router } from "express";
 import authController from "../controllers/auth.controller.js";
+import {
+  validateLogin,
+  handleValidationErrors,
+} from "../helpers/validations.js";
+
 const router = Router();
 
-router.post("/", authController.login);
-//router.post("/verify", authController.verifyToken);
+router.post("/", validateLogin, handleValidationErrors, authController.login);
 
 export default router;

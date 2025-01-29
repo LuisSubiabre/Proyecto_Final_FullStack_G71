@@ -1,4 +1,4 @@
-import { pool } from "../database/connection.js";
+import { pool } from "../../database/index.js";
 import format from "pg-format";
 
 const validateUser = async (email) => {
@@ -14,4 +14,5 @@ const validateUser = async (email) => {
 const authModel = {
   validateUser,
 };
+
 export default authModel;
