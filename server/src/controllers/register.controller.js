@@ -1,10 +1,6 @@
 import bcrypt from "bcryptjs";
 import registerModel from "../models/register.model.js";
 import { handleError } from "../helpers/errorHandler.js";
-import {
-  validateRegister,
-  handleValidationErrors,
-} from "../helpers/validations.js";
 
 const register = async (req, res) => {
   try {
