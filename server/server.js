@@ -1,6 +1,7 @@
 import express from "express";
 import "dotenv/config";
 import cors from "cors";
+import { handleError } from "./src/helpers/errorHandler.js";
 
 /* rutas */
 import registerRoute from "./src/routes/register.route.js";
@@ -28,10 +29,12 @@ app.use("/products", productsRouter); // Usa las rutas de productos
 app.use("/categories", categoryRouter); // Usa las rutas de categorías
 
 // Error Handling Global
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Ocurrió un error interno en el servidor." });
-});
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).json({ error: "Ocurrió un error interno en el servidor." });
+// });
+
+app.use(handleError); // Manejador de errores, reemplaza el middleware anterior
 
 // Iniciar el servidor
 app.listen(PORT, () => {

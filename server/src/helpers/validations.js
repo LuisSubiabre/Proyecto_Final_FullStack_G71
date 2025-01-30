@@ -12,6 +12,7 @@ export const validateRegister = [
   body("password")
     .isLength({ min: 6 })
     .withMessage("La contraseña debe tener al menos 6 caracteres"),
+  body("role").notEmpty().withMessage("El rol es requerido"),
 ];
 
 /* valida que los campos del formulario de login no estén vacíos o en con datos incorrectos */
@@ -33,17 +34,31 @@ export const validateProduct = [
     .isLength({ max: 500 })
     .withMessage("La descripción no puede tener más de 500 caracteres"),
 
+  body("brand").notEmpty().withMessage("La marca es requerida"),
+
   body("price")
     .notEmpty()
     .withMessage("El precio es requerido")
     .isFloat({ min: 0 })
     .withMessage("El precio debe ser un número válido y mayor o igual a 0"),
 
-  body("stock")
+  body("quantity")
     .notEmpty()
     .withMessage("El stock es requerido")
     .isInt({ min: 0 })
     .withMessage("El stock debe ser un número entero y mayor o igual a 0"),
+
+  body("category_id")
+    .notEmpty()
+    .withMessage("El ID de la categoría es requerido")
+    .isInt()
+    .withMessage("El ID de la categoría debe ser un número entero"),
+
+  body("status")
+    .notEmpty()
+    .withMessage("El estado del producto es requerido")
+    .isInt()
+    .withMessage("El estado del producto debe ser un número entero"),
 
   body("user_id")
     .notEmpty()
@@ -51,11 +66,16 @@ export const validateProduct = [
     .isInt()
     .withMessage("El ID del usuario debe ser un número entero"),
 
-  body("category_id")
+  body("image_url")
     .notEmpty()
-    .withMessage("El ID de la categoría es requerido")
+    .isURL()
+    .withMessage("La URL de la imagen no es válida"),
+
+  body("subcategory_id")
+    .notEmpty()
+    .withMessage("El ID de la subcategoría es requerido")
     .isInt()
-    .withMessage("El ID de la categoría debe ser un número entero"),
+    .withMessage("El ID de la subcategoría debe ser un número entero"),
 ];
 
 /* maneja los errores de validación */
