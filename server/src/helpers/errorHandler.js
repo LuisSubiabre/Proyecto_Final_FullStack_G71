@@ -13,40 +13,49 @@ export const postgresErrorCodes = {
 
 // Manejador de errores
 export const handleError = (error, req, res, next) => {
-  console.error(error.stack); // Log del error para depuración
+  console.error("Error detectado:", error.stack || error); // Log para depuración
 
-  // Errores específicos de PostgreSQL
+  const isDevelopment = process.env.NODE_ENV === "development";
+
+  // Manejo de errores específicos de PostgreSQL
   if (error.code && postgresErrorCodes[error.code]) {
     const statusCode = getStatusCodeForPostgresError(error.code);
     return res.status(statusCode).json({
+      success: false,
       error: postgresErrorCodes[error.code],
       details: `Código de error: ${error.code}`,
+      ...(isDevelopment && { stack: error.stack }),
     });
   }
 
-  // Errores HTTP personalizados
-  if (error.statusCode) {
-    return res.status(error.statusCode).json({
-      error: getErrorMessageForStatusCode(error.statusCode),
-      details: error.message,
+  // Manejo de errores con `statusCode` definido
+  if (error.statusCode || error.status) {
+    const statusCode = error.statusCode || error.status;
+    return res.status(statusCode).json({
+      success: false,
+      error: getErrorMessageForStatusCode(statusCode),
+      details: error.message || "Error inesperado",
+      ...(isDevelopment && { stack: error.stack }),
     });
   }
 
   // Error genérico (500 Internal Server Error)
   return res.status(500).json({
+    success: false,
     error: "Error interno del servidor",
     details: error.message || "Algo salió mal",
+    ...(isDevelopment && { stack: error.stack }),
   });
 };
 
 // Función para obtener el código de estado HTTP basado en el código de error de PostgreSQL
 const getStatusCodeForPostgresError = (postgresErrorCode) => {
   switch (postgresErrorCode) {
-    case "23505":
+    case "23505": // Violación de unicidad
       return 409;
-    case "23502":
+    case "23502": // Falta un valor obligatorio
       return 400;
-    case "23503":
+    case "23503": // Llave foránea no encontrada
       return 404;
     default:
       return 500;
@@ -57,27 +66,27 @@ const getStatusCodeForPostgresError = (postgresErrorCode) => {
 const getErrorMessageForStatusCode = (statusCode) => {
   switch (statusCode) {
     case 400:
-      return "Bad Request :(";
+      return "Solicitud incorrecta (Bad Request)";
     case 401:
-      return "Unauthorized";
+      return "No autorizado (Unauthorized)";
     case 403:
-      return "Forbidden";
+      return "Prohibido (Forbidden)";
     case 404:
-      return "Not Found";
+      return "No encontrado (Not Found)";
     case 409:
-      return "Conflict";
+      return "Conflicto (Conflict)";
     case 422:
-      return "Unprocessable Entity";
+      return "Entidad no procesable (Unprocessable Entity)";
     case 500:
-      return "Internal Server Error";
+      return "Error interno del servidor (Internal Server Error)";
     case 501:
-      return "Not Implemented";
+      return "No implementado (Not Implemented)";
     case 502:
-      return "Bad Gateway";
+      return "Puerta de enlace incorrecta (Bad Gateway)";
     case 503:
-      return "Service Unavailable";
+      return "Servicio no disponible (Service Unavailable)";
     case 504:
-      return "Gateway Timeout";
+      return "Tiempo de espera agotado (Gateway Timeout)";
     default:
       return "Error desconocido";
   }
