@@ -1,0 +1,274 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Proyecto-G71",
+    "collectionId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+    "dateExported": "2025-01-30T21:50:23.391Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "12b16c3d-d875-48c1-b571-14da38991ecb",
+            "name": "Ruta-Category",
+            "containerId": "",
+            "created": "2025-01-30T19:18:06.166Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "ff3ecbad-fcfe-4e33-a715-b51cf896a2ed",
+            "name": "GET",
+            "containerId": "12b16c3d-d875-48c1-b571-14da38991ecb",
+            "created": "2025-01-30T19:18:31.014Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "a5ab25c0-d775-4d4f-885c-7805dd08ad98",
+            "name": "POST",
+            "containerId": "12b16c3d-d875-48c1-b571-14da38991ecb",
+            "created": "2025-01-30T19:18:39.919Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "fe69ed58-f086-49ca-92d4-6e114d5438bb",
+            "name": "PUT",
+            "containerId": "12b16c3d-d875-48c1-b571-14da38991ecb",
+            "created": "2025-01-30T19:18:49.234Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "2839eb8c-8bf8-4e63-93fd-c2d6e877782e",
+            "name": "DELETE",
+            "containerId": "12b16c3d-d875-48c1-b571-14da38991ecb",
+            "created": "2025-01-30T19:19:00.867Z",
+            "sortNum": 50000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "8e477cd8-c6fb-43e6-a1d8-de36247412bf",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "ff3ecbad-fcfe-4e33-a715-b51cf896a2ed",
+            "name": "Obtener todas las categorias",
+            "url": "http://localhost:3000/category",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2025-01-30T19:21:36.979Z",
+            "modified": "2025-01-30T19:22:18.614Z",
+            "headers": []
+        },
+        {
+            "_id": "fcf25ec1-e5ab-4113-b6f3-ed0593006d4c",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "ff3ecbad-fcfe-4e33-a715-b51cf896a2ed",
+            "name": "Obtener todas las subcategorias",
+            "url": "http://localhost:3000/category/subcategory",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2025-01-30T19:23:46.255Z",
+            "modified": "2025-01-30T19:23:58.167Z",
+            "headers": []
+        },
+        {
+            "_id": "0b5192bb-203c-42b6-8d79-ae92262aea24",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "ff3ecbad-fcfe-4e33-a715-b51cf896a2ed",
+            "name": "obtener una categoria x ID",
+            "url": "http://localhost:3000/category/subcategory/50",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2025-01-30T19:35:50.697Z",
+            "modified": "2025-01-30T21:45:05.679Z",
+            "headers": []
+        },
+        {
+            "_id": "0bd92820-326c-4307-a0f2-3be1906e8501",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "ff3ecbad-fcfe-4e33-a715-b51cf896a2ed",
+            "name": "obtener subcategoria con categoria",
+            "url": "http://localhost:3000/category/subcategory/4/category",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2025-01-30T19:37:59.808Z",
+            "modified": "2025-01-30T19:47:05.603Z",
+            "headers": []
+        },
+        {
+            "_id": "8eec1cc7-7408-4a86-bdd4-c36c30435748",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "a5ab25c0-d775-4d4f-885c-7805dd08ad98",
+            "name": "crear subcategoria",
+            "url": "http://localhost:3000/category/subcategory",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2025-01-30T19:49:49.703Z",
+            "modified": "2025-01-30T19:51:39.146Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsImlhdCI6MTczODI1ODAwNCwiZXhwIjoxNzM4MzQ0NDA0fQ.dKzF03VrwOT9Bs2dgTJLzcUF9UblWNuvpYx2xFJ_9Jc"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"name_subcategories\": \"Subcategoría válida\",\r\n    \"category_id\": 1\r\n}\r\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "74e1ee46-c7f7-474d-b078-c4a98c5f4606",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "fe69ed58-f086-49ca-92d4-6e114d5438bb",
+            "name": "actualizar-subcategoria",
+            "url": "http://localhost:3000/category/subcategory/41",
+            "method": "PUT",
+            "sortNum": 90000,
+            "created": "2025-01-30T19:53:04.768Z",
+            "modified": "2025-01-30T19:56:46.217Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsImlhdCI6MTczODI1ODAwNCwiZXhwIjoxNzM4MzQ0NDA0fQ.dKzF03VrwOT9Bs2dgTJLzcUF9UblWNuvpYx2xFJ_9Jc"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"name_subcategories\": \"Subcategoría alondrita\",\r\n    \"category_id\": 1\r\n}\r\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "8ffdf81a-4316-4705-9fda-ea5ead27bb9f",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "2839eb8c-8bf8-4e63-93fd-c2d6e877782e",
+            "name": "eliminar subcategoria",
+            "url": "http://localhost:3000/category/subcategory/41",
+            "method": "DELETE",
+            "sortNum": 100000,
+            "created": "2025-01-30T19:57:46.141Z",
+            "modified": "2025-01-30T19:58:48.612Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsImlhdCI6MTczODI1ODAwNCwiZXhwIjoxNzM4MzQ0NDA0fQ.dKzF03VrwOT9Bs2dgTJLzcUF9UblWNuvpYx2xFJ_9Jc"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ]
+        },
+        {
+            "_id": "b1147060-4ffb-4434-b337-da4fc9021d3e",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "ff3ecbad-fcfe-4e33-a715-b51cf896a2ed",
+            "name": "obtener categoria con su subcategoria",
+            "url": "http://localhost:3000/category/2/subcategory",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2025-01-30T20:01:06.263Z",
+            "modified": "2025-01-30T20:01:46.395Z",
+            "headers": []
+        },
+        {
+            "_id": "6f5931ba-3627-46fa-9958-25bee8e951c1",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "ff3ecbad-fcfe-4e33-a715-b51cf896a2ed",
+            "name": "obtener una subcategoria x ID",
+            "url": "http://localhost:3000/category/subcategory/20",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2025-01-30T20:03:03.515Z",
+            "modified": "2025-01-30T20:04:43.672Z",
+            "headers": []
+        },
+        {
+            "_id": "defb4529-4c15-4f99-b382-9275135cf214",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "a5ab25c0-d775-4d4f-885c-7805dd08ad98",
+            "name": "crear categoria",
+            "url": "http://localhost:3000/category",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2025-01-30T20:05:58.553Z",
+            "modified": "2025-01-30T20:17:52.473Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsImlhdCI6MTczODI1ODAwNCwiZXhwIjoxNzM4MzQ0NDA0fQ.dKzF03VrwOT9Bs2dgTJLzcUF9UblWNuvpYx2xFJ_9Jc"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name_categories\": \"ALONDRITA\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "8b9b42c0-d4ab-42b2-b61e-5bb75b0b52af",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "fe69ed58-f086-49ca-92d4-6e114d5438bb",
+            "name": "actualizar categoria",
+            "url": "http://localhost:3000/category/5",
+            "method": "PUT",
+            "sortNum": 140000,
+            "created": "2025-01-30T20:18:40.809Z",
+            "modified": "2025-01-30T21:37:47.307Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsImlhdCI6MTczODI1ODAwNCwiZXhwIjoxNzM4MzQ0NDA0fQ.dKzF03VrwOT9Bs2dgTJLzcUF9UblWNuvpYx2xFJ_9Jc"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name_categories\": \"alondra bonita\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "3cba1d73-baa5-4d22-bd5b-b70821cebe62",
+            "colId": "12f94300-a8ed-4fc6-912e-b1b8c133819a",
+            "containerId": "2839eb8c-8bf8-4e63-93fd-c2d6e877782e",
+            "name": "eliminar categoria",
+            "url": "http://localhost:3000/category/5",
+            "method": "DELETE",
+            "sortNum": 150000,
+            "created": "2025-01-30T21:38:41.144Z",
+            "modified": "2025-01-30T21:40:34.293Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": ""
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsImlhdCI6MTczODI1ODAwNCwiZXhwIjoxNzM4MzQ0NDA0fQ.dKzF03VrwOT9Bs2dgTJLzcUF9UblWNuvpYx2xFJ_9Jc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name_categories\": \"alondra bonita\"\n}",
+                "form": []
+            }
+        }
+    ],
+    "ref": "yugkB4-gFpEv6l-9FA4viX1ib9VePcez0WuDK0LfMSsJ7YjGiTQNVM-wwfpoZb-IzdUFI9ZCfVj40jpWRwT_lQ"
+}
