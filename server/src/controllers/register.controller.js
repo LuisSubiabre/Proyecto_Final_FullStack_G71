@@ -21,7 +21,7 @@ const register = async (req, res) => {
       birth_date,
       email,
       phone,
-      password: bcrypt.hashSync(password, 10),
+      password: await bcrypt.hash(password, 10),
       role,
       status,
     };
