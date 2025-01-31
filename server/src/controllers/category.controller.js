@@ -106,7 +106,6 @@ const deleteCategoryById = async (req, res, next) => {
     }
 };
 
-// Exportar las funciones del controlador
 const categoryController = {
     getAllCategories,
     getCategory,

@@ -74,7 +74,6 @@ const createSubcategory = async (req, res, next) => {
     }
 };
 
-
 const updateSubcategoryById = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -96,7 +95,6 @@ const updateSubcategoryById = async (req, res, next) => {
     }
 };
 
-
 const deleteSubcategoryById = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -113,9 +111,6 @@ const deleteSubcategoryById = async (req, res, next) => {
     }
 };
 
-
-
-// Exportar las funciones como un objeto
 const subcategoryController = {
     getAllSubcategories,
     getSubcategory,

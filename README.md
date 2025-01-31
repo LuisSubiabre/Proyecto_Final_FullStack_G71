@@ -14,8 +14,6 @@
 - Node versión recomendada ![nodes](https://img.shields.io/badge/node-v18.16.0-gray?style=flat&logo=node.js&logoColor=white&color=339933)
 
 ## Procedimiento para iniciar el proyecto
-
-- Crear base de datos
 - Clonar el proyecto
 - Ir hacia el directorio del proyecto
 
@@ -28,9 +26,8 @@ Instalar dependencias:
   npm install
 ```
 
-# NOTA IMPORTANTE debe crear el archivo .env
-
-- como se indica en el ejemplo debe crear el archivo .env con la informacion del archivo .env.example en la caperta server
+# NOTA IMPORTANTE se compartió el archivo .env para que pueda conectarse a la base de datos sin tener que crear una local
+- Esto solo estará disponible mientras no se haga el deploy de la base de datos.
 
 Levantar proyecto
 
@@ -52,3 +49,4 @@ Levantar proyecto
 ```bash
   npm run dev
 ```
+## Para realizar los test debe capturar un token porbando la ruta POST /login y pegar el token en los archivos test.js
