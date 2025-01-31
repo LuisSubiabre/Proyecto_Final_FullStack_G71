@@ -20,8 +20,17 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
-// Middleware de logging
-app.use(morgan("dev"));
+// agregue esto para tener más información en el log
+morgan.token("body", (req) => JSON.stringify(req.body));
+morgan.token("params", (req) => JSON.stringify(req.params));
+morgan.token("query", (req) => JSON.stringify(req.query));
+
+// Middleware de logging con formato personalizado
+app.use(
+    morgan(
+        ':method :url :status :res[content-length] - :response-time ms | Body: :body | Params: :params | Query: :query'
+    )
+);
 
 // Rutas
 app.use("/register", registerRoute);
@@ -35,9 +44,12 @@ app.use("/category", categoryRouter);
 // Error Handling Global
 app.use(handleError);
 
-app.listen(PORT, () => {
-  console.log(`Servidor lanzado 🚀 en: http://localhost:${PORT}`);
-});
+// Iniciar el servidor solo si no se está ejecutando en modo de pruebas
+if (process.env.NODE_ENV !== "test") {
+    app.listen(PORT, () => {
+        console.log(`Servidor lanzado 🚀 en: http://localhost:${PORT}`);
+    });
+}
 
 export default app;
 
