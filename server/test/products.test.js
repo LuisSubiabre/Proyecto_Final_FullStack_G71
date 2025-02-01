@@ -2,7 +2,9 @@ import request from "supertest";
 import app from "../server.js";
 import { pool } from "../database/index.js";
 
-const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsImlhdCI6MTczODM1ODUzNCwiZXhwIjoxNzM4NDQ0OTM0fQ.aDuYpMM-r7c8WjOFbU8XCVPlMHWtr3NZuWvopeBZQ6I";
+// Para realizar los test hay que descomentar en el archivo .env "NODE_ENV"
+// Hay que cambiar el token para que funcione (porque le pusimos duración de 24 horas)
+const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlbGxlckBleGFtcGxlLmNvbSIsImlhdCI6MTczODQyOTE2NiwiZXhwIjoxNzM4NTE1NTY2fQ.dYulPk73tuFN8kDrjVB0elkvNXIQN0lcJ9xuE_hZn2Y";
 
 let server;
 
