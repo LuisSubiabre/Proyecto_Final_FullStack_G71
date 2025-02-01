@@ -13,6 +13,10 @@ export const validateRegister = [
     .isLength({ min: 6 })
     .withMessage("La contraseña debe tener al menos 6 caracteres"),
   body("role").notEmpty().withMessage("El rol es requerido"),
+  body("url_img_profile")
+  .optional()
+  .isURL()
+  .withMessage("La URL de la imagen de perfil no es válida"),
 ];
 
 /* valida que los campos del formulario de login no estén vacíos o en con datos incorrectos */

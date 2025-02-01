@@ -79,3 +79,18 @@ export const deleteUserById = async (user_id) => {
         throw error;
     }
 };
+
+// Actualizar la imagen de perfil
+export const updateProfileImage = async (user_id, url_img_profile) => {
+    const query = format(
+        "UPDATE users SET url_img_profile = %L WHERE user_id = %s RETURNING *",
+        url_img_profile,
+        user_id
+    );
+    try {
+        const result = await pool.query(query);
+        return result.rowCount ? result.rows[0] : null;
+    } catch (error) {
+        throw error;
+    }
+};

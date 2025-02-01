@@ -3,7 +3,8 @@ import {
     getUserById,
     updateUserById,
     changeUserStatus,
-    deleteUserById
+    deleteUserById,
+    updateProfileImage
 } from "../models/users.model.js";
 
 const createResponse = (res, data, message, statusCode = 200) => {
@@ -97,6 +98,33 @@ export const deleteUserByIdController = async (req, res, next) => {
             return res.status(404).json({ success: false, error: "Usuario no encontrado para eliminar" });
         }
         createResponse(res, null, "Usuario eliminado correctamente");
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Actualizar la imagen de perfil
+export const updateProfileImageController = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { url_img_profile } = req.body;
+
+        if (!url_img_profile) {
+            return res.status(400).json({
+                success: false,
+                error: "La URL de la imagen de perfil es requerida",
+            });
+        }
+
+        const updatedUser = await updateProfileImage(id, url_img_profile);
+        if (!updatedUser) {
+            return res.status(404).json({
+                success: false,
+                error: "Usuario no encontrado para actualizar la imagen de perfil",
+            });
+        }
+
+        createResponse(res, updatedUser, "Imagen de perfil actualizada correctamente");
     } catch (error) {
         next(error);
     }
