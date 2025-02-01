@@ -24,40 +24,44 @@ Proyecto práctico de desarrollo de un marketplace tipo e-commerce llamado **"Li
 
 ## 🛠️ **Procedimiento para iniciar el proyecto**
 
-1. Clonar el proyecto
-2. Navegar hacia el directorio del proyecto
+1. Clonar el proyecto.
+2. Navegar hacia el directorio del proyecto.
 
 ### **Instalar dependencias para el backend**
 
-````bash
+```bash
 cd server
 npm install
-
-
-# NOTA IMPORTANTE se compartió el archivo .env para que pueda conectarse a la base de datos sin tener que crear una local
-
-- Esto solo estará disponible mientras no se haga el deploy de la base de datos.
-
-Levantar El servidor
-
-```bash
-  npm run dev
 ```
 
-- Abrir otro terminal para levantar el cliente
+> **Nota importante:**
+> Se compartió el archivo `.env` para que pueda conectarse a la base de datos sin tener que crear una local.
+> Esto solo estará disponible mientras no se haga el deploy de la base de datos.
 
-## Instalar dependencias para el frontend
-
-```bash
-  cd client
-  npm install
-```
-
-Levantar  el client
+**Levantar el servidor:**
 
 ```bash
-  npm run dev
+npm run dev
 ```
+
+---
+
+### **Instalar dependencias para el frontend**
+
+Abrir otro terminal y ejecutar:
+
+```bash
+cd client
+npm install
+```
+
+**Levantar el cliente:**
+
+```bash
+npm run dev
+```
+
+---
 
 ## ✅ **Pruebas y testeo**
 
@@ -72,11 +76,14 @@ Para realizar las pruebas es necesario capturar un token probando la ruta `POST 
 
 ```bash
 npm test
-
 ```
-## 🌟 Capturas del proyecto
+
+---
+
+## 🌟 **Capturas del proyecto**
 
 ### **Vista general de la aplicación**
+
 ![Captura de pantalla de la aplicación](https://res.cloudinary.com/dxxrdckad/image/upload/v1738431620/Captura_de_pantalla_2025-02-01_143911_iz1uzw.png)
 
 ---
@@ -84,17 +91,13 @@ npm test
 ### **Resultados de los tests**
 
 #### **Captura de pantalla 1:**
-![Resultados de test - Captura 1](https://res.cloudinary.com/dxxrdckad/image/upload/v1738431620/Captura_de_pantalla_2025-02-01_143911_iz1uzw.png)
+
+![Resultados de test - Captura 1](https://res.cloudinary.com/dxxrdckad/image/upload/v1738431416/Captura_de_pantalla_2025-02-01_141650_z4yndf.png)
 
 ---
 
 #### **Captura de pantalla 2:**
+
 ![Resultados de test - Captura 2](https://res.cloudinary.com/dxxrdckad/image/upload/v1738431416/Captura_de_pantalla_2025-02-01_141637_y8y3yj.png)
 
 
-
-
-
-
-
-````
