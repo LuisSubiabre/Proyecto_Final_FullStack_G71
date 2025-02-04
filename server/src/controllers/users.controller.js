@@ -44,11 +44,25 @@ export const updateUserByIdController = async (req, res, next) => {
     try {
         const { id } = req.params;
         const userData = req.body;
-        if (userData.status !== undefined) {
-            userData.status = userData.status === true || userData.status === "true";
+
+        // Obtener el usuario existente por su ID
+        const existingUser = await getUserById(id);
+
+        if (!existingUser) {
+            return res.status(404).json({
+                success: false,
+                error: "Usuario no encontrado"
+            });
         }
-        const requiredFields = ["username", "rut", "birth_date", "email", "phone", "password", "role", "status"];
+        userData.rut = existingUser.rut;
+        userData.status = userData.status !== undefined
+            ? (userData.status === true || userData.status === "true")
+            : existingUser.status;
+        userData.birth_date = userData.birth_date || existingUser.birth_date;
+        userData.role = userData.role || existingUser.role;
+        const requiredFields = ["username", "birth_date", "email", "phone", "password", "role", "status"];
         const missingFields = requiredFields.filter(field => userData[field] === undefined);
+
         if (missingFields.length > 0) {
             return res.status(400).json({
                 success: false,
@@ -56,17 +70,22 @@ export const updateUserByIdController = async (req, res, next) => {
             });
         }
         const updatedUser = await updateUserById(id, userData);
+
         if (!updatedUser) {
             return res.status(404).json({
                 success: false,
                 error: "Usuario no encontrado para actualizar"
             });
         }
+
+        // Responder con éxito
         createResponse(res, updatedUser, "Usuario actualizado correctamente");
     } catch (error) {
         next(error);
     }
 };
+
+
 
 // Cambiar estado de un usuario
 export const changeUserStatusController = async (req, res, next) => {

@@ -27,8 +27,9 @@ const login = async (req, res) => {
     });
 
     res.json({
-      message: "Usuario logeado",
-      usuario: data.email,
+      message: "Usuario logeado correctamente",
+      email: data.email,
+      user_id: data.user_id,
       token,
     });
   } catch (error) {
