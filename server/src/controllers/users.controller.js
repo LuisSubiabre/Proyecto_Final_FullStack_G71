@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import {
     getAllUsers,
     getUserById,
@@ -54,13 +55,20 @@ export const updateUserByIdController = async (req, res, next) => {
                 error: "Usuario no encontrado"
             });
         }
+
+        // Actualizar los campos del usuario existente con los valores proporcionados en userData
         userData.rut = existingUser.rut;
         userData.status = userData.status !== undefined
             ? (userData.status === true || userData.status === "true")
             : existingUser.status;
         userData.birth_date = userData.birth_date || existingUser.birth_date;
         userData.role = userData.role || existingUser.role;
-        const requiredFields = ["username", "birth_date", "email", "phone", "password", "role", "status"];
+        if (userData.password) {
+            const salt = bcrypt.genSaltSync(10);
+            userData.password = bcrypt.hashSync(userData.password, salt);
+        }
+
+        const requiredFields = ["username", "birth_date", "email", "phone", "role", "status"];
         const missingFields = requiredFields.filter(field => userData[field] === undefined);
 
         if (missingFields.length > 0) {
@@ -69,6 +77,7 @@ export const updateUserByIdController = async (req, res, next) => {
                 error: `Faltan campos obligatorios: ${missingFields.join(", ")}`
             });
         }
+
         const updatedUser = await updateUserById(id, userData);
 
         if (!updatedUser) {
@@ -77,8 +86,6 @@ export const updateUserByIdController = async (req, res, next) => {
                 error: "Usuario no encontrado para actualizar"
             });
         }
-
-        // Responder con éxito
         createResponse(res, updatedUser, "Usuario actualizado correctamente");
     } catch (error) {
         next(error);
