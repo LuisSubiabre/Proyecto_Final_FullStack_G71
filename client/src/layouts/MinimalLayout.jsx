@@ -1,3 +1,9 @@
-const MinimalLayout = ({ children }) => <main className="flex-1">{children}</main>;
+import { Outlet } from "react-router-dom";
+
+const MinimalLayout = () => (
+    <main className="flex-1">
+        <Outlet />
+    </main>
+);
 
 export default MinimalLayout;
