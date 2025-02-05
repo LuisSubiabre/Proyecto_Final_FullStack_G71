@@ -12,6 +12,7 @@ import userRouter from "./src/routes/user.route.js";
 import favoritesRouter from "./src/routes/favorites.route.js";
 import productsRouter from "./src/routes/products.route.js";
 import categoryRouter from "./src/routes/category.route.js";
+import reviewsRouter from "./src/routes/reviews.route.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,9 +28,9 @@ morgan.token("query", (req) => JSON.stringify(req.query));
 
 // Middleware de logging con formato personalizado
 app.use(
-    morgan(
-        ':method :url :status :res[content-length] - :response-time ms | Body: :body | Params: :params | Query: :query'
-    )
+  morgan(
+    ":method :url :status :res[content-length] - :response-time ms | Body: :body | Params: :params | Query: :query"
+  )
 );
 
 // Rutas
@@ -40,16 +41,16 @@ app.use("/user", userRouter);
 app.use("/favorites", favoritesRouter);
 app.use("/products", productsRouter);
 app.use("/category", categoryRouter);
+app.use("/reviews/", reviewsRouter);
 
 // Error Handling Global
 app.use(handleError);
 
 // Iniciar el servidor solo si no se está ejecutando en modo de pruebas
 if (process.env.NODE_ENV !== "test") {
-    app.listen(PORT, () => {
-        console.log(`Servidor lanzado 🚀 en: http://localhost:${PORT}`);
-    });
+  app.listen(PORT, () => {
+    console.log(`Servidor lanzado 🚀 en: http://localhost:${PORT}`);
+  });
 }
 
 export default app;
-

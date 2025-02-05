@@ -18,8 +18,8 @@ const login = async (req, res) => {
     }
     // Crear JWT con id, nombre y email
     const payload = {
-      id: data.id,
-      nombre: data.nombre,
+      id: data.user_id,
+      username: data.username,
       email: data.email,
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
