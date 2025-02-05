@@ -1,4 +1,4 @@
-import  { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Componentes y layouts
@@ -26,52 +26,73 @@ function App() {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Routes>
-        {/* Rutas públicas */}
-        <Route path="/" element={<DefaultLayout><Home /></DefaultLayout>} />
-        <Route path="/category/:id/:name" element={<DefaultLayout><Category /></DefaultLayout>} />
-        <Route path="/product/:id" element={<DefaultLayout><ProductDetail /></DefaultLayout>} />
-        <Route path="/sitio-en-construccion" element={<DefaultLayout><SiteUnderConstruction /></DefaultLayout>} />
+        {/* Rutas que usan DefaultLayout */}
+        <Route element={<DefaultLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/category/:id/:name" element={<Category />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/sitio-en-construccion" element={<SiteUnderConstruction />} />
 
-        {/* Rutas protegidas */}
-        <Route path="/favorite-products" element={
-          <PrivateRoute>
-            <DefaultLayout><FavoriteProducts /></DefaultLayout>
-          </PrivateRoute>
-        } />
-        <Route path="/shopping-cart" element={
-          <PrivateRoute>
-            <DefaultLayout><ShoppingCart /></DefaultLayout>
-          </PrivateRoute>
-        } />
-        <Route path="/profile-admin" element={
-          <PrivateRoute>
-            <DefaultLayout><AdminUserProfile /></DefaultLayout>
-          </PrivateRoute>
-        } />
-        <Route path="/profile-regular" element={
-          <PrivateRoute>
-            <DefaultLayout><RegularUserProfile /></DefaultLayout>
-          </PrivateRoute>
-        } />
-        <Route path="/profile-seller" element={
-          <PrivateRoute>
-            <DefaultLayout><SellerUserProfile /></DefaultLayout>
-          </PrivateRoute>
-        } />
-        <Route path="/new-publication" element={
-          <PrivateRoute>
-            <DefaultLayout><Publications /></DefaultLayout>
-          </PrivateRoute>
-        } />
+          {/* Rutas protegidas */}
+          <Route
+            path="/favorite-products"
+            element={
+              <PrivateRoute>
+                <FavoriteProducts />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/shopping-cart"
+            element={
+              <PrivateRoute>
+                <ShoppingCart />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile-admin"
+            element={
+              <PrivateRoute>
+                <AdminUserProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile-regular"
+            element={
+              <PrivateRoute>
+                <RegularUserProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile-seller"
+            element={
+              <PrivateRoute>
+                <SellerUserProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/new-publication"
+            element={
+              <PrivateRoute>
+                <Publications />
+              </PrivateRoute>
+            }
+          />
+        </Route>
 
-        {/* Rutas con layout minimal */}
-        <Route path="/login" element={<MinimalLayout><Login /></MinimalLayout>} />
-        <Route path="/register" element={<MinimalLayout><Register /></MinimalLayout>} />
-        <Route path="*" element={<MinimalLayout><NotFound /></MinimalLayout>} />
+        {/* Rutas con MinimalLayout */}
+        <Route element={<MinimalLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
     </Suspense>
   );
 }
 
 export default App;
-

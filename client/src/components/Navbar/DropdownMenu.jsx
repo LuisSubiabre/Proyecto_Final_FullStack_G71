@@ -1,15 +1,30 @@
-import { useState, useEffect } from 'react';
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Skeleton } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
-import menuCategories from '../../data/menuCategories.json';
 import CustomButton from '../Buttons/DesktopButtons.jsx';
+import useCategories from '../../hook/useCategories.js';
 
 const DropdownMenuComponent = () => {
-    const [menus, setMenus] = useState([]);
+    const { menus, loading, error } = useCategories();
 
-    useEffect(() => {
-        setMenus(menuCategories.menus);
-    }, []);
+    if (loading) {
+        return (
+            <div className="flex justify-around w-full">
+                {[1, 2, 3, 4].map((_, index) => (
+                    <div key={index} className="flex flex-col items-center space-y-2">
+                        <Skeleton bg-secondary className="h-6 w-32 rounded" />
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex justify-center items-center w-full h-16 text-red-500">
+                {error}
+            </div>
+        );
+    }
 
     return (
         <div className="flex justify-around w-full">
@@ -37,3 +52,4 @@ const DropdownMenuComponent = () => {
 };
 
 export default DropdownMenuComponent;
+
