@@ -3,17 +3,54 @@
 import { useParams } from "react-router-dom";
 import FeaturedProducts from "../components/FeaturedProducts";
 import NewProducts from "../components/NewProducts";
-import dataProductos from "../data/dataProductos.json";
 
 import { Button, Image } from "@nextui-org/react";
 import Icon from "../components/Icons";
+import { useEffect, useState } from "react";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const [producto, setProducto] = useState({});
 
-  const producto = dataProductos.find(
-    (producto) => producto.id === parseInt(id)
-  );
+  useEffect(() => {
+    fetchProductoDetalle(id);
+  }, []);
+
+  // const producto = dataProductos.find(
+  //   (producto) => producto.id === parseInt(id)
+  // );
+
+  const fetchProductoDetalle = async (id) => {
+    console.log("fetchProductoDetalle", id);
+    try {
+      const response = await fetch(`http://localhost:3000/products/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer 123`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("No se pudo obtener el producto");
+      }
+      const data = await response.json();
+      console.log("data", data);
+
+      // Ajustamos los nombres de las propiedades
+      setProducto({
+        id: data.data.product_id,
+        nombre: data.data.name_product,
+        descripcion: data.data.description,
+        marca: data.data.brand,
+        precio: data.data.price,
+        cantidad: data.data.quantity,
+        categoriaId: data.data.category_id,
+        imagen: data.data.image_url,
+      });
+    } catch (error) {
+      console.error("Error al cargar el producto", error);
+    }
+  };
   /* la linea de arriba se reemplaza por el fetch de llamada a la API */
 
   return (
@@ -82,7 +119,7 @@ const ProductDetail = () => {
                 </Button>
               </div>
               <p className="mt-8 font-normal text-gray-900">
-                {producto.descripcion}
+                {/* {producto.descripcion} */}
               </p>
             </div>
           </div>
