@@ -1,24 +1,47 @@
-import { Breadcrumbs, BreadcrumbItem } from "@heroui/react";
-import categoriesData from "../data/menuCategories.json";
+import { Breadcrumbs, BreadcrumbItem, Tooltip, Skeleton } from "@nextui-org/react";
 import Icon from "./Icons";
+import useCategories from "../hook/useCategories.jsx";
+import { useParams } from "react-router-dom";
 
 const Breadcrumb = ({ categoryName, categoryId }) => {
-    const findCategoryPath = (name, id) => {
+    const { menus, loading, error } = useCategories();
+    const { subcategoryId } = useParams();
+    const findSubcategoryName = (id) => {
+        for (const menu of menus) {
+            const subcategory = menu.items.find((item) => item.id === parseInt(id, 10));
+            if (subcategory) return subcategory.title;
+        }
+        return null;
+    };
+
+    const subcategoryName = findSubcategoryName(subcategoryId);
+
+    const findCategoryPath = (name, id, subcategoryName) => {
         let path = [
-            { label: "Home", href: "/", icon: "home" } // Agregar el icono de Home
+            { label: "Home", href: "/", icon: "home" }
         ];
-        const menu = categoriesData.menus.find((menu) => menu.id === id);
+
+        const menu = menus.find((menu) => menu.id === id);
 
         if (menu) {
             path.push({ label: menu.title, href: `/category/${id}` });
-            if (menu.items.includes(name)) {
-                path.push({ label: name, href: `/category/${id}/${name}` });
+            if (subcategoryName) {
+                path.push({ label: subcategoryName, href: `/category/${id}/${subcategoryId}` });
             }
         }
+
         return path;
     };
 
-    const categoryPath = findCategoryPath(categoryName, categoryId);
+    if (loading) {
+        return <Skeleton className="w-full rounded-lg h-16 m-1"> </Skeleton>;
+    }
+
+    if (error) {
+        return <p className="text-center text-red-500">{error}</p>;
+    }
+
+    const categoryPath = findCategoryPath(categoryName, categoryId, subcategoryName);
 
     return (
         <>
@@ -34,23 +57,35 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
                 underline="hover"
                 variant="solid"
             >
-                {categoryPath.map((item, index) => (
-                    <BreadcrumbItem
-                        key={index}
-                        href={item.href}
-                        current={index === categoryPath.length - 1}
-                    >
-                        {/* Renderizar el icono solo para Home */}
-                        {item.icon && <Icon name={item.icon} className="mr-2" />}
-                        {item.label}
-                    </BreadcrumbItem>
-                ))}
+                {categoryPath.map((item, index) => {
+                    const isDisabled = index === 1;
+
+                    return (
+                        <BreadcrumbItem
+                            key={index}
+                            href={!isDisabled ? item.href : undefined}
+                            current={index === categoryPath.length - 1}
+                        >
+                            {item.icon && <Icon name={item.icon} className="mr-2" />}
+
+                            {isDisabled ? (
+                                <Tooltip content="Este enlace está deshabilitado por el momento" placement="top">
+                                    <span className="opacity-50 cursor-not-allowed">{item.label}</span>
+                                </Tooltip>
+                            ) : (
+                                item.label
+                            )}
+                        </BreadcrumbItem>
+                    );
+                })}
             </Breadcrumbs>
+
             <div className="m-2">
                 <p className="text-[var(--color-neutral-dark)] font-epilogue">
                     ¡Encuentra todo lo que necesitas para la vuelta a clases en Librería Alas de Alondra!
-                    Nuestro catálogo incluye,  <strong className="text-[var(--color-primary-dark)]">{categoryName}</strong> de las marcas más reconocidas como Artel, Jm, Jovi, Maped,
-                    Pentel, Stabilo y más. ¡Haz de este regreso a clases algo único con nuestros productos de calidad!
+                    Nuestro catálogo incluye, <strong className="text-[var(--color-primary-dark)] animate-text-color-change ">{subcategoryName} </strong>
+                    de las marcas más reconocidas como Artel, Jm, Jovi, Maped, Pentel, Stabilo y más.
+                    ¡Haz de este regreso a clases algo único con nuestros productos de calidad!
                 </p>
             </div>
         </>
@@ -58,3 +93,5 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
 };
 
 export default Breadcrumb;
+
+

@@ -154,3 +154,13 @@ export const statusProducts = async (product_id, status) => {
         throw error;
     }
 };
+
+export const getProductsBySubcategoryId = async (subcategory_id) => {
+    const query = "SELECT * FROM products WHERE subcategory_id = $1";
+    try {
+        const result = await pool.query(query, [subcategory_id]);
+        return result.rows;
+    } catch (error) {
+        throw error;
+    }
+};

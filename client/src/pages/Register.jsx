@@ -3,6 +3,8 @@ import { Input, Button, useDisclosure, Modal, ModalContent, ModalHeader, ModalBo
 import Icon from "../components/Icons.jsx";
 import { useNavigate } from "react-router-dom"; // Importar useNavigate para redireccionar
 
+
+//TE FALTA EL RUT EN EL FORMULARIO ES UN CAMPO OBLIGATORIO EN EL BACKEND
 const Register = () => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // Para manejar el modal de alerta
   const [errors, setErrors] = React.useState({}); // Estado para manejar errores

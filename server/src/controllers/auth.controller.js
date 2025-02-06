@@ -18,8 +18,8 @@ const login = async (req, res) => {
     }
     // Crear JWT con id, nombre y email
     const payload = {
-      id: data.id,
-      nombre: data.nombre,
+      id: data.user_id,
+      username: data.username,
       email: data.email,
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -27,8 +27,9 @@ const login = async (req, res) => {
     });
 
     res.json({
-      message: "Usuario logeado",
-      usuario: data.email,
+      message: "Usuario logeado correctamente",
+      email: data.email,
+      user_id: data.user_id,
       token,
     });
   } catch (error) {

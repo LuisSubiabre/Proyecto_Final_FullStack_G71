@@ -3,13 +3,16 @@ import {
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
-    User
+    User,
 } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import Icon from "../Icons";
 import menuData from "../../data/menuData.json";
+import useAuth from "../../hook/useAuth";
 
-const UserMenu = ({ role }) => {
+const UserMenu = ({ role, userName, userEmail, profilePic }) => {
+    const { logout } = useAuth();
+
     if (!role) {
         return (
             <div className="flex items-center space-x-2 md:space-x-1 sm:space-x-0">
@@ -36,7 +39,35 @@ const UserMenu = ({ role }) => {
         );
     }
 
-    const userData = menuData[role];
+    // Se obtiene la data base del menú según el role
+    let userDataJson = menuData[role];
+
+    // Si se tiene una foto de perfil desde la base de datos, se usa esa imagen en lugar del avatar del JSON
+    const avatarUrl = profilePic ? profilePic : userDataJson.avatar;
+
+    // Opcional: modificar dinámicamente las URLs de ciertas opciones usando el userId o según el role
+    if (role === "user") {
+        userDataJson = {
+            ...userDataJson,
+            menu: userDataJson.menu.map((item) =>
+                item.id === "user-settings" ? { ...item, link: `/profile-user` } : item
+            ),
+        };
+    } else if (role === "seller") {
+        userDataJson = {
+            ...userDataJson,
+            menu: userDataJson.menu.map((item) =>
+                item.id === "seller-settings" ? { ...item, link: `/profile-seller` } : item
+            ),
+        };
+    } else if (role === "admin") {
+        userDataJson = {
+            ...userDataJson,
+            menu: userDataJson.menu.map((item) =>
+                item.id === "admin-settings" ? { ...item, link: `/profile-admin` } : item
+            ),
+        };
+    }
 
     return (
         <div className="flex items-center space-x-4">
@@ -46,33 +77,48 @@ const UserMenu = ({ role }) => {
                         as="button"
                         avatarProps={{
                             isBordered: true,
-                            src: userData.avatar
+                            src: avatarUrl,
                         }}
                         className="transition-transform"
-                        description="@aqui_va_el_correo"
-                        name="Aqui va el nombre del usuario"
+                        description={userEmail || "Sin correo"}
+                        name={userName || "Sin nombre"}
                     />
                 </DropdownTrigger>
-                <DropdownMenu aria-label="User Actions" variant="faded" color="secondary" >
-                    {userData.menu.map((item) => (
+                <DropdownMenu aria-label="User Actions" variant="faded" color="secondary">
+                    {userDataJson.menu.map((item) => (
                         <DropdownItem
                             key={item.id}
                             className="flex items-center"
                             textValue={item.label}
+                            onClick={() => {
+                                if (item.link === "/logout") {
+                                    logout();
+                                }
+                            }}
                         >
-                            <Link to={item.link} className="flex items-center w-full">
-                                <Icon name={item.icon} className="w-5 h-5 text-[--color-primary-dark] mr-3" />
-                                {item.label}
-                            </Link>
+                            {item.link === "/logout" ? (
+                                <span className="flex items-center w-full cursor-pointer">
+                                    <Icon
+                                        name={item.icon}
+                                        className="w-5 h-5 text-[--color-primary-dark] mr-3"
+                                    />
+                                    {item.label}
+                                </span>
+                            ) : (
+                                <Link to={item.link} className="flex items-center w-full">
+                                    <Icon
+                                        name={item.icon}
+                                        className="w-5 h-5 text-[--color-primary-dark] mr-3"
+                                    />
+                                    {item.label}
+                                </Link>
+                            )}
                         </DropdownItem>
                     ))}
                 </DropdownMenu>
-
             </Dropdown>
         </div>
     );
 };
 
 export default UserMenu;
-
-
