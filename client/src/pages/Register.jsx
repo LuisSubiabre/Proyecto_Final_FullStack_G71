@@ -1,12 +1,15 @@
 import React from "react";
 import { Input, Button, useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/react";
 import Icon from "../components/Icons.jsx";
+import { useNavigate } from "react-router-dom"; // Importar useNavigate para redireccionar
 
 const Register = () => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // Para manejar el modal de alerta
   const [errors, setErrors] = React.useState({}); // Estado para manejar errores
+  const [successMessage, setSuccessMessage] = React.useState(""); // Estado para mensajes de éxito
+  const navigate = useNavigate(); // Hook para redireccionar
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
@@ -15,10 +18,11 @@ const Register = () => {
     const newErrors = {};
 
     if (!data.name) newErrors.name = "El nombre es requerido";
+    if (!data.rut) newErrors.rut = "El rut es requerido";
     if (!data.birthdate) newErrors.birthdate = "La fecha de nacimiento es requerida";
-    if (!data.phone) newErrors.phone = "El teléfono es requerido";
     if (!data.email) newErrors.email = "El correo es requerido";
     if (data.email !== data.confirmEmail) newErrors.confirmEmail = "Los correos no coinciden";
+    if (!data.phone) newErrors.phone = "El teléfono es requerido";
     if (!data.password) newErrors.password = "La contraseña es requerida";
     if (data.password !== data.confirmPassword) newErrors.confirmPassword = "Las contraseñas no coinciden";
     if (!data.role) newErrors.role = "El rol es requerido";
@@ -28,8 +32,54 @@ const Register = () => {
       setErrors(newErrors); // Mostrar errores
       onOpen(); // Abrir modal de alerta
     } else {
-      console.log("Formulario enviado:", data);
-      // Aquí puedes manejar el envío del formulario
+      try {
+        const response = await fetch('http://localhost:3000/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: data.name,
+            rut: data.rut, 
+            birth_date: data.birthdate,
+            email: data.email,
+            phone: data.phone,
+            password: data.password,
+            role: data.role,
+          }),
+        });
+
+        const responseText = await response.text();
+        let responseData;
+        try {
+          responseData = JSON.parse(responseText);
+        } catch (error) {
+          throw new Error(`Error en la respuesta del servidor: ${responseText}`);
+        }
+
+        if (!response.ok) {
+          throw new Error('Error al registrar el usuario');
+        }
+
+        // const responseText = await response.text();
+        // const result = JSON.parse(responseText); 
+        // console.log("Usuario registrado:", result);
+        
+        // Mostrar mensaje de éxito
+        setSuccessMessage("¡Registro exitoso! Redirigiendo al login...");
+        e.target.reset();
+        setErrors({}); // Limpiar errores
+
+        // Redirigir al usuario después de 2 segundos
+        setTimeout(() => {
+          navigate("/login"); // Redirigir al componente de Login
+        }, 2000);
+        
+      } catch (error) {
+        console.error("Error:", error);
+        setErrors({ submit: "Error al registrar el usuario" });
+        onOpen();
+      }
     }
   };
 
@@ -87,10 +137,11 @@ const Register = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {[
               { id: "name", label: "Nombre Completo", type: "text", icon: "user" },
+              { id: "rut", label: "RUT", type: "text", icon: "user" }, 
               { id: "birthdate", label: "Fecha de Nacimiento", type: "date", icon: "user" },
-              { id: "phone", label: "Teléfono", type: "tel", icon: "phone" },
               { id: "email", label: "Correo", type: "email", icon: "mail" },
               { id: "confirmEmail", label: "Repite el correo", type: "email", icon: "mail" },
+              { id: "phone", label: "Teléfono", type: "tel", icon: "phone" },
               { id: "password", label: "Contraseña", type: "password", icon: "padlock" },
               { id: "confirmPassword", label: "Repite la contraseña", type: "password", icon: "padlock" },
             ].map(({ id, label, type, icon }) => (
@@ -164,7 +215,7 @@ const Register = () => {
             </ul>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Cerrar</Button>
+            <Button onPress={onClose}>Cerrar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
