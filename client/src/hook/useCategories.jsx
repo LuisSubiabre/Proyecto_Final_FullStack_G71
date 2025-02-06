@@ -14,7 +14,6 @@ const useCategories = () => {
     useEffect(() => {
         const fetchCategoriesAndSubcategories = async () => {
             try {
-                // Obtener categorías con subcategorías organizadas por menú
                 const responseCategories = await getAllCategories();
                 const categories = responseCategories.data;
 
@@ -28,20 +27,34 @@ const useCategories = () => {
                         return {
                             id: category.category_id,
                             title: category.name_categories,
-                            items: subcategories.map((sub) => sub.name_subcategories),
+                            items: subcategories.map((sub) => ({
+                                id: sub.subcategory_id,
+                                title: sub.name_subcategories,
+                            })),
                         };
                     })
                 );
 
                 setMenus(menusWithItems);
 
-                // Obtener todas las subcategorías únicas
+                // Obtener todas las subcategorías y eliminar duplicados por nombre
                 const responseSubcategories = await getAllSubcategories();
-                const uniqueSubcategories = Array.from(
-                    new Set(responseSubcategories.data.map((sub) => sub.name_subcategories))
-                );
+                const subcategories = responseSubcategories.data;
 
-                setAllSubcategories(uniqueSubcategories);
+                const filteredSubcategories = [];
+                const seenTitles = new Set();
+
+                subcategories.forEach((sub) => {
+                    if (!seenTitles.has(sub.name_subcategories)) {
+                        filteredSubcategories.push({
+                            id: sub.subcategory_id,
+                            title: sub.name_subcategories,
+                        });
+                        seenTitles.add(sub.name_subcategories);
+                    }
+                });
+
+                setAllSubcategories(filteredSubcategories);
             } catch (err) {
                 console.error("Error al obtener categorías o subcategorías:", err);
                 setError("No se pudieron cargar las categorías o subcategorías.");

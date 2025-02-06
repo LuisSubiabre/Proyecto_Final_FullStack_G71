@@ -14,7 +14,6 @@ const FilterCategories = () => {
                     className="bg-[var(--color-secondary)]"
                 >
                     {loading ? (
-                        // Skeleton de carga mientras se obtienen las subcategorías
                         <div className="space-y-2">
                             {[...Array(5)].map((_, index) => (
                                 <Skeleton key={index} className="h-6 w-32 rounded" />
@@ -24,14 +23,14 @@ const FilterCategories = () => {
                         <p className="text-red-500 text-center">{error}</p>
                     ) : (
                         <ul className="list-none p-0">
-                            {allSubcategories.map((subcategory, index) => (
-                                <li key={index} className="mb-2">
+                            {allSubcategories.map((subcategory) => (
+                                <li key={subcategory.id} className="mb-2">
                                     <label className="flex items-center text-purple-700">
                                         <input
                                             type="checkbox"
                                             className="mr-2 accent-purple-500"
                                         />
-                                        {subcategory}
+                                        {subcategory.title}
                                     </label>
                                 </li>
                             ))}

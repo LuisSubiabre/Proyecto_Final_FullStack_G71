@@ -7,7 +7,8 @@ import {
     createNewProduct,
     updateProducts,
     deleteProducts,
-    statusProducts
+    statusProducts,
+    getProductsBySubcategoryId
 } from "../models/products.model.js";
 
 // Respuestas estándar para el cliente
@@ -179,6 +180,17 @@ const changeProductStatus = async (req, res, next) => {
     }
 };
 
+// Obtener productos por subcategoría
+const getProductsBySubcategory = async (req, res, next) => {
+    try {
+        const { subcategoryId } = req.params;
+        const products = await getProductsBySubcategoryId(subcategoryId);
+        createResponse(res, products, "Productos de la subcategoría obtenidos correctamente");
+    } catch (error) {
+        next(error);
+    }
+};
+
 
 const productController = {
     getAllProductsController,
@@ -190,6 +202,7 @@ const productController = {
     updateProductById,
     deleteProductById,
     changeProductStatus,
+    getProductsBySubcategory,
 };
 
 export default productController;

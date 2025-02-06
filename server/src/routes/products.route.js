@@ -11,6 +11,8 @@ router.get("/search", productController.searchProductsByDescription);           
 router.get("/", productController.getAllProductsController);                       // Obtener todos los productos
 router.get("/:id", productController.getProductById);                              // Obtener un producto por ID
 router.get("/category/:categoryId", productController.getProductsByCategory);      // Obtener productos por categoría
+router.get("/subcategory/:subcategoryId", productController.getProductsBySubcategory);
+
 
 // ** Rutas Privadas (requieren autenticación) **
 router.get("/user/:id", authMiddleware, productController.getProductsByUser);                     // Obtener productos de un usuario específico

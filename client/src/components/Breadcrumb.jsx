@@ -1,11 +1,22 @@
-import { Breadcrumbs, BreadcrumbItem, Tooltip } from "@nextui-org/react";
+import { Breadcrumbs, BreadcrumbItem, Tooltip, Skeleton } from "@nextui-org/react";
 import Icon from "./Icons";
 import useCategories from "../hook/useCategories.jsx";
+import { useParams } from "react-router-dom";
 
 const Breadcrumb = ({ categoryName, categoryId }) => {
     const { menus, loading, error } = useCategories();
+    const { subcategoryId } = useParams();
+    const findSubcategoryName = (id) => {
+        for (const menu of menus) {
+            const subcategory = menu.items.find((item) => item.id === parseInt(id, 10));
+            if (subcategory) return subcategory.title;
+        }
+        return null;
+    };
 
-    const findCategoryPath = (name, id) => {
+    const subcategoryName = findSubcategoryName(subcategoryId);
+
+    const findCategoryPath = (name, id, subcategoryName) => {
         let path = [
             { label: "Home", href: "/", icon: "home" }
         ];
@@ -14,8 +25,8 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
 
         if (menu) {
             path.push({ label: menu.title, href: `/category/${id}` });
-            if (menu.items.includes(name)) {
-                path.push({ label: name, href: `/category/${id}/${name}` });
+            if (subcategoryName) {
+                path.push({ label: subcategoryName, href: `/category/${id}/${subcategoryId}` });
             }
         }
 
@@ -23,14 +34,14 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
     };
 
     if (loading) {
-        return <p className="text-center">Cargando categorías...</p>;
+        return <Skeleton className="w-full rounded-lg h-16 m-1"> </Skeleton>;
     }
 
     if (error) {
         return <p className="text-center text-red-500">{error}</p>;
     }
 
-    const categoryPath = findCategoryPath(categoryName, categoryId);
+    const categoryPath = findCategoryPath(categoryName, categoryId, subcategoryName);
 
     return (
         <>
@@ -47,7 +58,7 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
                 variant="solid"
             >
                 {categoryPath.map((item, index) => {
-                    const isDisabled = index === 1; // Desactivar el segundo botón
+                    const isDisabled = index === 1;
 
                     return (
                         <BreadcrumbItem
@@ -72,7 +83,7 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
             <div className="m-2">
                 <p className="text-[var(--color-neutral-dark)] font-epilogue">
                     ¡Encuentra todo lo que necesitas para la vuelta a clases en Librería Alas de Alondra!
-                    Nuestro catálogo incluye, <strong className="text-[var(--color-primary-dark)]">{categoryName}</strong>
+                    Nuestro catálogo incluye, <strong className="text-[var(--color-primary-dark)] animate-text-color-change ">{subcategoryName} </strong>
                     de las marcas más reconocidas como Artel, Jm, Jovi, Maped, Pentel, Stabilo y más.
                     ¡Haz de este regreso a clases algo único con nuestros productos de calidad!
                 </p>
@@ -82,4 +93,5 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
 };
 
 export default Breadcrumb;
+
 
