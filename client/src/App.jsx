@@ -29,7 +29,7 @@ function App() {
         {/* Rutas que usan DefaultLayout */}
         <Route element={<DefaultLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/category/:id/:name" element={<Category />} />
+          <Route path="/category/:id/:subcategoryId" element={<Category />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/sitio-en-construccion" element={<SiteUnderConstruction />} />
 

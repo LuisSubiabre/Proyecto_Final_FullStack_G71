@@ -1,7 +1,7 @@
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Skeleton } from '@nextui-org/react';
-import { Link } from 'react-router-dom';
-import CustomButton from '../Buttons/DesktopButtons.jsx';
-import useCategories from '../../hook/useCategories.jsx';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Skeleton } from "@nextui-org/react";
+import { Link } from "react-router-dom";
+import CustomButton from "../Buttons/DesktopButtons.jsx";
+import useCategories from "../../hook/useCategories.jsx";
 
 const DropdownMenuComponent = () => {
     const { menus, loading, error } = useCategories();
@@ -30,14 +30,14 @@ const DropdownMenuComponent = () => {
                         <CustomButton>{menu.title}</CustomButton>
                     </DropdownTrigger>
                     <DropdownMenu variant="flat" color="secondary">
-                        {menu.items.map((item, index) => (
-                            <DropdownItem key={`${menu.id}-${index}`}>
-                                {/* Restauramos el enlace a la página de la subcategoría */}
+                        {menu.items.map((item) => (
+                            <DropdownItem key={`${menu.id}-${item.id}`}>
+                                {/* Ahora el enlace utiliza el subcategory_id */}
                                 <Link
-                                    to={`/category/${menu.id}/${encodeURIComponent(item)}`}
+                                    to={`/category/${menu.id}/${item.id}`}
                                     className="text-inherit"
                                 >
-                                    {item}
+                                    {item.title}
                                 </Link>
                             </DropdownItem>
                         ))}

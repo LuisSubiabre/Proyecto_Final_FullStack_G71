@@ -1,26 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
 import FilterCategories from "../components/FilterCategories.jsx";
 import CardComponent from "../components/ProductCard/CardComponent.jsx";
 import { Pagination } from "@nextui-org/react";
-import dataProductsCategories from "../data/dataProductsCategories.json";
+import { getProductsBySubcategory } from "../service/productService.js";
 
 const ITEMS_PER_PAGE = 6;
 
 const Category = () => {
-    const { name, id } = useParams();
+    const { id, subcategoryId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
+    const [products, setProducts] = useState([]);
+    const [error, setError] = useState(null);
 
-    // Determinar el total de páginas
-    const totalPages = Math.ceil(dataProductsCategories.length / ITEMS_PER_PAGE);
+    useEffect(() => {
+        if (!subcategoryId) return;
 
-    // Obtener los productos para la página actual
+        getProductsBySubcategory(subcategoryId)
+            .then((response) => {
+                const productsArray = response.data || [];
+                if (productsArray.length > 0) {
+                    setProducts(productsArray);
+                } else {
+                    setError("No se encontraron productos para esta subcategoría.");
+                }
+            })
+            .catch((err) => {
+                console.error("Error al obtener productos:", err);
+                setError("Error al obtener productos.");
+            });
+    }, [subcategoryId]);
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const currentProducts = dataProductsCategories.slice(
-        startIndex,
-        startIndex + ITEMS_PER_PAGE
-    );
+    const currentProducts = products.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
     return (
         <div className="category-page p-4">
@@ -35,7 +53,7 @@ const Category = () => {
                 <div className="w-full md:w-3/4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {currentProducts.map((producto) => (
-                            <CardComponent key={producto.id} producto={producto} />
+                            <CardComponent key={producto.product_id} producto={producto} />
                         ))}
                     </div>
 
@@ -57,7 +75,3 @@ const Category = () => {
 };
 
 export default Category;
-
-
-
-
