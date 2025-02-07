@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Input, Button, Card } from "@nextui-org/react";
 import Icon from "../components/Icons.jsx";
+import useAuth from "../hook/useAuth";
 
 const Login = () => {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -26,11 +28,14 @@ const Login = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Formulario válido, enviando datos...");
-      // Aquí iría la lógica para enviar los datos al backend
+      try {
+        await login({ email, password });
+      } catch (error) {
+        setErrors({ general: "Error al iniciar sesión. Verifique sus credenciales." });
+      }
     }
   };
 
@@ -57,6 +62,7 @@ const Login = () => {
         </div>
         <Card className="bg-[var(--color-primary-light)] p-8 rounded-lg shadow-lg w-full max-w-md">
           <h2 className="text-[var(--color-primary-dark)] text-2xl font-bold mb-6 text-center">Iniciar sesión</h2>
+          {errors.general && <p className="text-red-500 text-center mb-4">{errors.general}</p>}
           <form className="space-y-6" onSubmit={handleSubmit}>
             <Input
               fullWidth
