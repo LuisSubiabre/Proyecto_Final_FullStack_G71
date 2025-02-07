@@ -21,7 +21,6 @@ const CardComponent = ({ producto }) => {
   const [subcategoryName, setSubcategoryName] = useState("");
   const [categoryName, setCategoryName] = useState("Desconocida");
 
-  // Obtiene la subcategoría
   useEffect(() => {
     if (producto.subcategory_id) {
       getSubcategoryById(producto.subcategory_id)
@@ -44,7 +43,6 @@ const CardComponent = ({ producto }) => {
   }, [categories, producto.category_id]);
 
   const handleAddToCart = () => {
-    // Asegúrate de enviar solo los datos necesarios a la API
     addToCart({
       product_id: producto.product_id,
       name_product: producto.name_product,
@@ -112,9 +110,8 @@ const CardComponent = ({ producto }) => {
         </div>
       </CardBody>
 
-      {/* Muestra la subcategoría y categoría */}
       <CardBody className="flex flex-col space-y-1">
-        <p className="text-[var(--color-primary-dark)] font-epilogue font-bold text-2xl text-right ">
+        <p className="text-[var(--color-primary-dark)] font-epilogue font-bold text-2xl text-right">
           ${producto.price}
         </p>
         <p className="text-xs text-gray-500">Subcategoría: {subcategoryName}</p>
@@ -125,14 +122,18 @@ const CardComponent = ({ producto }) => {
         <p className="text-sm text-gray-600">{producto.description}</p>
       </CardBody>
       <CardFooter className="flex flex-col justify-between items-center font-arvo relative">
-        <Button
-          size="xs"
-          onPress={handleAddToCart}
-          className="w-full mb-1 bg-white text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)] hover:bg-[var(--color-primary)] hover:text-white"
-        >
-          Añade al carrito
-          <Icon name="cart" className="ml-1" />
-        </Button>
+        <Tooltip content={!user ? "Debes iniciar sesión para añadir al carrito" : "Añadir al carrito"}>
+          <Button
+            size="xs"
+            onPress={handleAddToCart}
+            disabled={!user}
+            className={`w-full mb-1 ${user ? "bg-white text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)] hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+          >
+            Añade al carrito
+            <Icon name="cart" className="ml-1" />
+          </Button>
+        </Tooltip>
         {showAlert && (
           <Alert className="absolute top-[110%]" color="success" variant="bordered">
             Producto agregado al carrito con éxito.
