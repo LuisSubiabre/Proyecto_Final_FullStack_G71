@@ -10,13 +10,13 @@ import {
   ModalFooter,
 } from "@nextui-org/react";
 import Icon from "../components/Icons.jsx";
-import { useNavigate } from "react-router-dom"; // Importar useNavigate para redireccionar
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure(); // Para manejar el modal de alerta
-  const [errors, setErrors] = React.useState({}); // Estado para manejar errores
-  const [successMessage, setSuccessMessage] = React.useState(""); // Estado para mensajes de éxito
-  const navigate = useNavigate(); // Hook para redireccionar
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [errors, setErrors] = React.useState({});
+  const [successMessage, setSuccessMessage] = React.useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,22 +28,18 @@ const Register = () => {
 
     if (!data.name) newErrors.name = "El nombre es requerido";
     if (!data.rut) newErrors.rut = "El rut es requerido";
-    if (!data.birthdate)
-      newErrors.birthdate = "La fecha de nacimiento es requerida";
+    if (!data.birthdate) newErrors.birthdate = "La fecha de nacimiento es requerida";
     if (!data.email) newErrors.email = "El correo es requerido";
-    if (data.email !== data.confirmEmail)
-      newErrors.confirmEmail = "Los correos no coinciden";
+    if (data.email !== data.confirmEmail) newErrors.confirmEmail = "Los correos no coinciden";
     if (!data.phone) newErrors.phone = "El teléfono es requerido";
     if (!data.password) newErrors.password = "La contraseña es requerida";
-    if (data.password !== data.confirmPassword)
-      newErrors.confirmPassword = "Las contraseñas no coinciden";
+    if (data.password !== data.confirmPassword) newErrors.confirmPassword = "Las contraseñas no coinciden";
     if (!data.role) newErrors.role = "El rol es requerido";
-    if (!data.terms)
-      newErrors.terms = "Debes aceptar los términos y condiciones";
+    if (!data.terms) newErrors.terms = "Debes aceptar los términos y condiciones";
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors); // Mostrar errores
-      onOpen(); // Abrir modal de alerta
+      setErrors(newErrors);
+      onOpen();
     } else {
       try {
         const response = await fetch("http://localhost:3000/register", {
@@ -62,32 +58,15 @@ const Register = () => {
           }),
         });
 
-        const responseText = await response.text();
-        let responseData;
-        try {
-          responseData = JSON.parse(responseText);
-        } catch (error) {
-          throw new Error(
-            `Error en la respuesta del servidor: ${responseText}`
-          );
-        }
-
         if (!response.ok) {
-          throw new Error("Error al registrar el usuario");
+          const errorText = await response.text();
+          throw new Error(`Error en la respuesta del servidor: ${errorText}`);
         }
-
-        // const responseText = await response.text();
-        // const result = JSON.parse(responseText);
-        // console.log("Usuario registrado:", result);
-
-        // Mostrar mensaje de éxito
         setSuccessMessage("¡Registro exitoso! Redirigiendo al login...");
         e.target.reset();
         setErrors({}); // Limpiar errores
-
-        // Redirigir al usuario después de 2 segundos
         setTimeout(() => {
-          navigate("/login"); // Redirigir al componente de Login
+          navigate("/login");
         }, 2000);
       } catch (error) {
         console.error("Error:", error);
@@ -96,6 +75,7 @@ const Register = () => {
       }
     }
   };
+
 
   return (
     <div
@@ -222,8 +202,8 @@ const Register = () => {
                 className="w-full bg-white px-4 py-2 border rounded-md text-[var(--color-primary-dark)] focus:outline-none focus:ring-2 focus:ring-color-primary"
               >
                 <option value="">Selecciona un rol</option>
-                <option value="Usuario">Usuario</option>
-                <option value="Administrador">Seller</option>
+                <option value=" user">Comprador</option>
+                <option value="seller">Vendedor</option>
               </select>
               {errors.role && (
                 <p className="text-red-500 text-sm mt-1">{errors.role}</p>
