@@ -202,7 +202,7 @@ const Register = () => {
                 className="w-full bg-white px-4 py-2 border rounded-md text-[var(--color-primary-dark)] focus:outline-none focus:ring-2 focus:ring-color-primary"
               >
                 <option value="">Selecciona un rol</option>
-                <option value=" user">Comprador</option>
+                <option value="user">Comprador</option>
                 <option value="seller">Vendedor</option>
               </select>
               {errors.role && (
