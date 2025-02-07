@@ -28,7 +28,8 @@ const register = async (req, res) => {
 
     await registerModel.register(newUser);
 
-    return res.status(200).send("Usuario creado correctamente");
+    //return res.status(200).send("Usuario creado correctamente");
+    return res.status(200).json({ message: 'Usuario creado', user: newUser });
   } catch (error) {
     handleError(error, req, res);
   }

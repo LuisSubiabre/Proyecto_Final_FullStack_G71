@@ -1,42 +1,36 @@
 import { useState } from "react";
-import useAuth from "../hook/useAuth";  // Importamos el hook
 import { Input, Button, Card } from "@nextui-org/react";
 import Icon from "../components/Icons.jsx";
 
 const Login = () => {
-  const { login } = useAuth();  // Consumimos la función `login` del hook
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
     let errors = {};
-
+    
     if (!email) {
       errors.email = "El correo es obligatorio";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       errors.email = "El correo no es válido";
     }
-
+    
     if (!password) {
       errors.password = "La contraseña es obligatoria";
     } else if (password.length < 6) {
       errors.password = "La contraseña debe tener al menos 6 caracteres";
     }
-
+    
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
     if (validateForm()) {
-      try {
-        await login({ email, password });
-      } catch {
-        setErrors((prev) => ({ ...prev, general: "Error al iniciar sesión. Verifique sus credenciales." }));
-      }
+      console.log("Formulario válido, enviando datos...");
+      // Aquí iría la lógica para enviar los datos al backend
     }
   };
 
@@ -88,8 +82,7 @@ const Login = () => {
                   setErrors((prev) => ({ ...prev, password: "La contraseña debe tener al menos 6 caracteres" }));
                 } else {
                   setErrors((prev) => {
-                    const rest = { ...prev };
-                    delete rest.password;
+                    const { password, ...rest } = prev;
                     return rest;
                   });
                 }
@@ -99,10 +92,6 @@ const Login = () => {
               classNames={{ helperText: "text-white font-bold" }}
               startContent={<Icon name="padlock" className="text-[var(--color-primary-light)]" />}
             />
-
-            {errors.general && (
-              <p className="text-red-500 font-bold text-center">{errors.general}</p>
-            )}
 
             <Button fullWidth color="primary" type="submit" className="py-2 rounded-lg font-bold text-lg hover:bg-[var(--color-highlight)] transition">
               Ingresar
@@ -118,3 +107,6 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
