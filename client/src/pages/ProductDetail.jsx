@@ -3,22 +3,47 @@
 import { useParams } from "react-router-dom";
 import FeaturedProducts from "../components/FeaturedProducts";
 import NewProducts from "../components/NewProducts";
-
-import { Button, Image } from "@nextui-org/react";
+import CartContext from "../context/CartContext.jsx";
+import {
+  Button,
+  Image,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Alert,
+} from "@nextui-org/react";
 import Icon from "../components/Icons";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [producto, setProducto] = useState({});
+  const { addToCart } = useContext(CartContext);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     fetchProductoDetalle(id);
   }, []);
 
-  // const producto = dataProductos.find(
-  //   (producto) => producto.id === parseInt(id)
-  // );
+  const handleAddToCart = () => {
+    addToCart({
+      product_id: producto.id, // <-- Usa producto.id
+      name_product: producto.nombre, // <-- Usa producto.nombre
+      price: producto.precio, // <-- Usa producto.precio
+      image_url: producto.imagen, // <-- Usa producto.imagen
+    });
+
+    disminuirCantidad();
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 4000);
+  };
+  const disminuirCantidad = () => {
+    if (producto.cantidad > 0) {
+      setProducto({ ...producto, cantidad: producto.cantidad - 1 });
+    }
+  };
 
   const fetchProductoDetalle = async (id) => {
     console.log("fetchProductoDetalle", id);
@@ -102,18 +127,50 @@ const ProductDetail = () => {
                     ${producto.precio}
                   </span>
                 </p>
-                <Button className="ml-8 size-80 bg-rose-500 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
+                <Button
+                  onPress={handleAddToCart}
+                  className="ml-8 size-80 bg-rose-500 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full"
+                >
                   Agregar al carrito
                   <Icon name="cart" className="ml-1" />
                 </Button>
+                {showAlert && (
+                  <Alert
+                    className="absolute top-[110%]"
+                    color="success"
+                    variant="bordered"
+                  >
+                    Producto agregado al carrito con éxito.
+                  </Alert>
+                )}
               </div>
               <div className="flex space-x-4 mt-8">
-                <Button className="size-40 bg-blue-800 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
-                  Información
-                </Button>
-                <Button className="size-40 bg-fuchsia-700 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
-                  Disponibilidad
-                </Button>
+                <Popover showArrow offset={20} placement="bottom">
+                  <PopoverTrigger className="size-40 bg-blue-800 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
+                    <Button>Información</Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <div className="px-1 py-2">
+                      <div className="text-small font-bold">Disponibilidad</div>
+                      <div className="text-tiny">{producto.descripcion}</div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                <Popover showArrow offset={20} placement="bottom">
+                  <PopoverTrigger className="size-40 bg-fuchsia-700 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
+                    <Button>Disponibilidad: {producto.cantidad}</Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <div className="px-1 py-2">
+                      <div className="text-small font-bold">Disponibilidad</div>
+                      <div className="text-tiny">
+                        {producto.cantidad} en Stock
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
                 <Button className="size-40 bg-fuchsia-700 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
                   Comentarios
                 </Button>
