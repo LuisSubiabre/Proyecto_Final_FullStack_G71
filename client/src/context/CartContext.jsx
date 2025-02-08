@@ -6,10 +6,11 @@ import {
   useEffect,
 } from "react";
 import {
-  getCartsByUser,
+  // getCartsByUser,
   addCartItem,
   getCarritoGuardado,
   addCart,
+  getCartsByCartID,
 } from "../service/cartService";
 import useAuth from "../hook/useAuth";
 
@@ -32,21 +33,23 @@ export const CartProvider = ({ children }) => {
           }
 
           // Obtener los productos del carrito activo usando el endpoint
-          const response = await getCartsByUser(userId); // Usa el endpoint correcto
-
+          // const response = await getCartsByUser(userId); // Usa el endpoint correcto
+          const response = await getCartsByCartID(cart_id);
+          console.log("response:", response);
           if (response.success) {
-            // Mapear los datos del endpoint al formato esperado por el estado `cart`
             const cartItemsWithDetails = response.data.map((item) => ({
               product_id: item.product_id,
               cart_id: item.cart_id,
               detail_id: item.detail_id,
+              name_product: item.name_product,
+              image_url: item.image_url,
               quantity: item.quantity,
               price: parseFloat(item.price) || 0,
               cartQuantity: item.quantity, // Usamos la cantidad del carrito
               created_at: item.created_at,
             }));
+            console.log("Carrito cargado:", cartItemsWithDetails);
 
-            // Actualizar el estado del carrito
             setCart(cartItemsWithDetails);
           } else {
             console.error("Error al obtener el carrito:", response.message);
