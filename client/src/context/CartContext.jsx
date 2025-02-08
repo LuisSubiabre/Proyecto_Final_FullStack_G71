@@ -13,6 +13,7 @@ import {
   getCartsByCartID,
   increaseCartItemQuantity,
   decreaseCartItemQuantity,
+  eliminarItemCarrito,
 } from "../service/cartService";
 import useAuth from "../hook/useAuth";
 
@@ -165,22 +166,22 @@ export const CartProvider = ({ children }) => {
   // Disminuir la cantidad de un producto en el carrito (solo en cliente)
   const decreaseQuantity = useCallback(
     async (index) => {
+      /* si la cantidad llega a 0, eliminar el item del carrito */
       if (cart[index].cartQuantity <= 1) {
-        console.error("La cantidad no puede ser menor a 1");
-        return;
+        await eliminarItemCarrito(cart[index].detail_id);
+        setCart((prevCart) => prevCart.filter((_, i) => i !== index));
+      } else {
+        /* si la cantidad es mayor a 1, decrementar la cantidad */
+        await decreaseCartItemQuantity({
+          detail_id: cart[index].detail_id,
+          quantity: cart[index].cartQuantity - 1,
+        });
+        setCart((prevCart) => {
+          const newCart = [...prevCart];
+          newCart[index].cartQuantity -= 1;
+          return newCart;
+        });
       }
-
-      const response = await decreaseCartItemQuantity({
-        detail_id: cart[index].detail_id,
-        quantity: cart[index].cartQuantity - 1,
-      });
-      console.log("response:", response);
-
-      setCart((prevCart) => {
-        const newCart = [...prevCart];
-        newCart[index].cartQuantity -= 1;
-        return newCart;
-      });
     },
     [cart]
   );

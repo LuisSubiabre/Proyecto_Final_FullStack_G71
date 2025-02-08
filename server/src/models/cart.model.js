@@ -175,3 +175,16 @@ export const getDetailCarritoModel = async (cart_id) => {
   }
   return rows;
 };
+
+/* si un item del carrito front es 0 se elimina del carrito*/
+export const eliminarItemCarritoModel = async (detail_id, quantity) => {
+  const query = `
+    DELETE FROM cart_items WHERE detail_id = $1 RETURNING *;
+    `;
+  try {
+    const result = await pool.query(query, [detail_id]);
+    return result.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
