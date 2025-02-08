@@ -6,14 +6,15 @@ function ShoppingCart() {
   const { cart, increaseQuantity, decreaseQuantity, calculateTotal } =
     useContext(CartContext);
   const [selectedEnvio, setSelectedEnvio] = useState("tienda");
+  const [valorEnvio, setValorEnvio] = useState(0);
 
   // Calcular el costo adicional de envío
   const calculateShipping = (selectedMethod) => {
     switch (selectedMethod) {
       case "starken":
-        return 4.99;
+        return 4990;
       case "express":
-        return 7.99;
+        return 7990;
       default:
         return 0;
     }
@@ -21,10 +22,11 @@ function ShoppingCart() {
 
   const seleccionarEnvio = (event) => {
     setSelectedEnvio(event.target.value);
+
+    setValorEnvio(calculateShipping(event.target.value));
   };
 
   useEffect(() => {
-    console.log("Carrito actualizado:", cart);
     if (cart.length === 0) {
       setSelectedEnvio("tienda");
     }
@@ -88,7 +90,7 @@ function ShoppingCart() {
                   {/* Derecha: Precio y controles de cantidad */}
                   <div className="text-center md:text-right">
                     <p className="text-rose-500 font-epilogue text-2xl">
-                      ${producto.price.toFixed(2)}
+                      ${producto.price.toFixed(0)}
                     </p>
                     <div className="flex items-center justify-center md:justify-end mt-2 space-x-2">
                       <button
@@ -122,13 +124,14 @@ function ShoppingCart() {
               <hr className="my-4" />
               <p className="flex justify-center text-gray-800">
                 <span className="mx-8">Subtotal:</span>
-                <span className="mx-8">${subtotal.toFixed(2)}</span>
+                <span className="mx-8">${subtotal.toFixed(0)}</span>
               </p>
             </div>
             <hr className="my-4" />
             <div className="flex flex-col space-y-2 text-gray-800">
               <RadioGroup
-                color="primary"
+                isInvalid={true}
+                color="danger"
                 defaultValue="tienda"
                 label="Formas de envío:"
                 value={selectedEnvio}
@@ -143,10 +146,12 @@ function ShoppingCart() {
             <div className="my-8">
               <p className="flex justify-between font-bold text-3xl text-gray-800">
                 <span>Total:</span>
-                <span>${total.toFixed(2)}</span>
+                <span>${total.toFixed(0)}</span>
               </p>
               <p className="text-gray-400 italic">
-                {selectedEnvio !== "tienda" ? "(subtotal + envío)" : ""}
+                {selectedEnvio !== "tienda"
+                  ? `(subtotal + envío: ${valorEnvio}) `
+                  : ""}
               </p>
             </div>
 
