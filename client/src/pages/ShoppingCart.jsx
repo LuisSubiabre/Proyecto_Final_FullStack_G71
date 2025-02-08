@@ -24,7 +24,6 @@ function ShoppingCart() {
   };
 
   useEffect(() => {
-    console.log("Carrito actualizado:", cart);
     if (cart.length === 0) {
       setSelectedEnvio("tienda");
     }
