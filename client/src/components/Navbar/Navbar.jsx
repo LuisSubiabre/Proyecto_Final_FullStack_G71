@@ -100,7 +100,7 @@ export default function Navbar() {
                 <NavbarContent justify="end">
                     <Tooltip content="Ver carrito de compras" position="bottom">
                         <Link to={userId ? "/shopping-cart" : "#"} className={userId ? "" : "pointer-events-none opacity-50"}>
-                            <Badge content={getTotalQuantity()} color="primary" overlap>
+                            <Badge content={getTotalQuantity()} color="primary" overlap="true">
                                 <Icon
                                     name="cart"
                                     size="2xl"

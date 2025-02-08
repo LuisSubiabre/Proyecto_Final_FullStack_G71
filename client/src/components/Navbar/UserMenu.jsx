@@ -44,8 +44,6 @@ const UserMenu = ({ role, userName, userEmail, profilePic }) => {
 
     // Si se tiene una foto de perfil desde la base de datos, se usa esa imagen en lugar del avatar del JSON
     const avatarUrl = profilePic ? profilePic : userDataJson.avatar;
-
-    // Opcional: modificar dinámicamente las URLs de ciertas opciones usando el userId o según el role
     if (role === "user") {
         userDataJson = {
             ...userDataJson,
@@ -90,7 +88,7 @@ const UserMenu = ({ role, userName, userEmail, profilePic }) => {
                             key={item.id}
                             className="flex items-center"
                             textValue={item.label}
-                            onClick={() => {
+                            onPress={() => {
                                 if (item.link === "/logout") {
                                     logout();
                                 }
