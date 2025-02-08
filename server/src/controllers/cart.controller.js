@@ -9,6 +9,7 @@ import {
   decrementCartItem,
   getCarritoGuardadoModel,
   consultaItemCarrito,
+  getDetailCarritoModel,
 } from "../models/cart.model.js";
 
 const createResponse = (res, data, message, statusCode = 200) => {
@@ -164,6 +165,24 @@ export const getCarritoGuardado = async (req, res, next) => {
     const cart = await getCarritoGuardadoModel(user_id);
     res.status(200).json(cart);
     //createResponse(res, cart, "Carrito guardado obtenido correctamente");
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Obtiene el detalle de un carrito para mostrar en el front
+export const getDetailCarrito = async (req, res, next) => {
+  try {
+    const { cart_id } = req.params;
+    const cart = await getDetailCarritoModel(cart_id);
+    if (!cart) {
+      return res.status(404).json({ error: "No se encontró el carrito" });
+    }
+    createResponse(
+      res,
+      cart,
+      "Carritos completos del usuario obtenidos correctamente"
+    );
   } catch (error) {
     next(error);
   }
