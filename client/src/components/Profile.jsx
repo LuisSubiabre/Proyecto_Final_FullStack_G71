@@ -16,7 +16,7 @@ const Profile = () => {
                 isBordered
                 color="primary"
                 className="w-16 h-16 sm:w-24 sm:h-24 text-large mr-4"
-                src="https://res.cloudinary.com/dxxrdckad/image/upload/v1737644821/profile-admin_glp1xo.png"
+                src="https://res.cloudinary.com/libreriaalondra/image/upload/v1737644821/profile-admin_glp1xo.png"
               />
               <div>
                 <p className="text-gray-700 font-bold">Alondra Luque</p>

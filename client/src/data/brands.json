@@ -1,32 +1,32 @@
 [
-    {
-        "id": 1,
-        "name": "Artel",
-        "image": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736946227/logo-artel_gwsfvh.png"
-    },
-    {
-        "id": 2,
-        "name": "Pro Arte",
-        "image": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736946358/proarte-color_qgpxfc.png"
-    },
-    {
-        "id": 3,
-        "name": "Fulton",
-        "image": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736946622/Fultons_tuo1og.jpg"
-    },
-    {
-        "id": 4,
-        "name": "Giotto",
-        "image": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736946700/D_NQ_NP_626029-MLA43362048146_092020-O_eb6pum.webp"
-    },
-    {
-        "id": 5,
-        "name": "Faber-Castell",
-        "image": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736946792/faber-castell_1024x1024_gdheaq.png"
-    },
-    {
-        "id": 6,
-        "name": "Stabilo",
-        "image": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736946867/1318_x2_olqxfa.jpg"
-    }
+  {
+    "id": 1,
+    "name": "Artel",
+    "image": "https://res.cloudinary.com/libreriaalondra/image/upload/v1736946227/logo-artel_gwsfvh.png"
+  },
+  {
+    "id": 2,
+    "name": "Pro Arte",
+    "image": "https://res.cloudinary.com/libreriaalondra/image/upload/v1736946358/proarte-color_qgpxfc.png"
+  },
+  {
+    "id": 3,
+    "name": "Fulton",
+    "image": "https://res.cloudinary.com/libreriaalondra/image/upload/v1736946622/Fultons_tuo1og.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Giotto",
+    "image": "https://res.cloudinary.com/libreriaalondra/image/upload/v1736946700/D_NQ_NP_626029-MLA43362048146_092020-O_eb6pum.webp"
+  },
+  {
+    "id": 5,
+    "name": "Faber-Castell",
+    "image": "https://res.cloudinary.com/libreriaalondra/image/upload/v1736946792/faber-castell_1024x1024_gdheaq.png"
+  },
+  {
+    "id": 6,
+    "name": "Stabilo",
+    "image": "https://res.cloudinary.com/libreriaalondra/image/upload/v1736946867/1318_x2_olqxfa.jpg"
+  }
 ]
