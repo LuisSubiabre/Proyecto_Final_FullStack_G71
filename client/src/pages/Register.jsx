@@ -96,7 +96,7 @@ const Register = () => {
         />
         <a
           href="/"
-          className="ml-2 text-[20px] font-bold text-[var(--color-primary-light)] hover:text-color-primary"
+          className="ml-2 text-[20px] font-bold text-[var(--color-primary-light)] hover:text-[var(--color-primary-dark)] hover:underline"
         >
           Regresar a inicio
         </a>
@@ -106,28 +106,28 @@ const Register = () => {
         {/* Columna del texto a la izquierda */}
         <div className="flex flex-col items-center justify-center space-y-8">
           {/* Primer div */}
-          <div className="mb-8 text-center lg:text-left">
-            <p className="text-[24px] text-center text-[var(--color-highlight)] mt-4 font-bold">
+          <div className="mb-4 text-center lg:text-left mt-10">
+            <p className="text-[24px] text-center text-[var(--color-highlight)] mt-4 font-bold font-oswald">
               Registrate y recibe un descuento del 10% en tu primera compra.
             </p>
           </div>
 
           {/* Segundo div */}
-          <div className="mb-8 text-center lg:text-left lg:w-1/3">
-            <p className="text-[32px] text-center text-[var(--color-primary-dark)] mt-4">
+          <div className=" text-center lg:text-left lg:w-70">
+            <p className="text-[32px] text-center text-[var(--color-primary-dark)] mt-1 font-light font-epilogue ">
               ¿Ya tienes cuenta?{" "}
               <a
                 href="/login"
-                className="font-bold text-[var(--color-highlight)] hover:underline"
+                className="font-medium text-[var(--color-highlight)] hover:underline"
               >
-                Inicia sesión AQUÍ
+                Inicia sesión <strong className="animate-text-color-change">AQUÍ</strong>
               </a>
             </p>
           </div>
         </div>
 
         {/* Columna del formulario a la derecha */}
-        <div className="bg-[var(--color-secondary)] bg-opacity-90 shadow-xl p-6 rounded-md w-full max-w-xs">
+        <div className="bg-[var(--color-secondary)] bg-opacity-90 shadow-xl m-5 p-8 rounded-md w-full xs:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg 3xl:w-[500px]">
           <h1 className="text-2xl font-bold text-[var(--color-primary-dark)] mb-4 text-center">
             REGISTRO DE USUARIO
           </h1>

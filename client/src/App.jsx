@@ -21,6 +21,7 @@ const Publications = lazy(() => import("./pages/UserProfile/Seller/Publications.
 const Login = lazy(() => import("./pages/Login.jsx"));
 const Register = lazy(() => import("./pages/Register.jsx"));
 const NotFound = lazy(() => import("./pages/NotFound.jsx"));
+const SearchResults = lazy(() => import("./pages/SearchResults.jsx"));
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/category/:id/:subcategoryId" element={<Category />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/search-results" element={<SearchResults />} />
           <Route path="/sitio-en-construccion" element={<SiteUnderConstruction />} />
 
           {/* Rutas protegidas */}
