@@ -2,7 +2,7 @@
 
 ## 📖 Librería y Papelería Alas de Alondra
 
-![Logo de la librería](https://res.cloudinary.com/dxxrdckad/image/upload/v1727986341/LOGO_CLARO-removebg-preview_wcpkli.png)
+![Logo de la librería](https://res.cloudinary.com/libreriaalondra/image/upload/v1727986341/LOGO_CLARO-removebg-preview_wcpkli.png)
 
 Proyecto práctico de desarrollo de un marketplace tipo e-commerce llamado **"Librería Alas de Alondra"**, diseñado para la compra y venta de productos escolares, materiales de oficina y otros artículos de papelería. La aplicación web está desarrollada en **React**, con una arquitectura componetizada para facilitar la reutilización de elementos como el **navbar** y el **footer** en múltiples vistas. El backend se implementa con **Node.js** y **PostgreSQL**, mientras que la documentación y pruebas de la API se gestionan con herramientas como **Apiary**.
 
@@ -84,7 +84,7 @@ npm test
 
 ### **Vista general de la aplicación**
 
-![Captura de pantalla de la aplicación](https://res.cloudinary.com/dxxrdckad/image/upload/v1738431620/Captura_de_pantalla_2025-02-01_143911_iz1uzw.png)
+![Captura de pantalla de la aplicación](https://res.cloudinary.com/libreriaalondra/image/upload/v1738431620/Captura_de_pantalla_2025-02-01_143911_iz1uzw.png)
 
 ---
 
@@ -92,12 +92,10 @@ npm test
 
 #### **Captura de pantalla 1:**
 
-![Resultados de test - Captura 1](https://res.cloudinary.com/dxxrdckad/image/upload/v1738431416/Captura_de_pantalla_2025-02-01_141650_z4yndf.png)
+![Resultados de test - Captura 1](https://res.cloudinary.com/libreriaalondra/image/upload/v1738431416/Captura_de_pantalla_2025-02-01_141650_z4yndf.png)
 
 ---
 
 #### **Captura de pantalla 2:**
 
-![Resultados de test - Captura 2](https://res.cloudinary.com/dxxrdckad/image/upload/v1738431416/Captura_de_pantalla_2025-02-01_141637_y8y3yj.png)
-
-
+![Resultados de test - Captura 2](https://res.cloudinary.com/libreriaalondra/image/upload/v1738431416/Captura_de_pantalla_2025-02-01_141637_y8y3yj.png)

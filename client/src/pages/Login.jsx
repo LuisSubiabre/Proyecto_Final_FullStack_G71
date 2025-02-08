@@ -11,19 +11,19 @@ const Login = () => {
 
   const validateForm = () => {
     let errors = {};
-    
+
     if (!email) {
       errors.email = "El correo es obligatorio";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       errors.email = "El correo no es válido";
     }
-    
+
     if (!password) {
       errors.password = "La contraseña es obligatoria";
     } else if (password.length < 6) {
       errors.password = "La contraseña debe tener al menos 6 caracteres";
     }
-    
+
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -34,16 +34,18 @@ const Login = () => {
       try {
         await login({ email, password });
       } catch (error) {
-        setErrors({ general: "Error al iniciar sesión. Verifique sus credenciales." });
+        setErrors({
+          general: "Error al iniciar sesión. Verifique sus credenciales.",
+        });
       }
     }
   };
 
   return (
-    <div className='bg-[url("https://res.cloudinary.com/dxxrdckad/image/upload/v1730842164/Green_and_Blue_Illustrative_World_Friendship_Day_Banner_Landscape_izseal.png")] bg-cover bg-center flex flex-col items-center justify-center min-h-screen font-osvald'>
+    <div className='bg-[url("https://res.cloudinary.com/libreriaalondra/image/upload/v1730842164/Green_and_Blue_Illustrative_World_Friendship_Day_Banner_Landscape_izseal.png")] bg-cover bg-center flex flex-col items-center justify-center min-h-screen font-osvald'>
       <div className="absolute top-4 left-4 flex items-center">
         <img
-          src="https://res.cloudinary.com/dxxrdckad/image/upload/v1734362650/logo_fondo_azul_tt5joc.png"
+          src="https://res.cloudinary.com/libreriaalondra/image/upload/v1734362650/logo_fondo_azul_tt5joc.png"
           alt="Logo"
           className="w-12 h-12 rounded-full border-2 border-white"
         />
@@ -57,12 +59,22 @@ const Login = () => {
       <div className="flex flex-col lg:flex-row items-center justify-center w-full max-w-4xl px-4">
         <div className="mb-8 lg:mb-0 lg:mr-16 text-center">
           <p className="text-[var(--color-primary-dark)] text-[36px] font-medium">
-            ¿No tienes cuenta? <a href="/register" className="text-[var(--color-highlight)] font-bold hover:underline">Regístrate AQUÍ</a>
+            ¿No tienes cuenta?{" "}
+            <a
+              href="/register"
+              className="text-[var(--color-highlight)] font-bold hover:underline"
+            >
+              Regístrate AQUÍ
+            </a>
           </p>
         </div>
         <Card className="bg-[var(--color-primary-light)] p-8 rounded-lg shadow-lg w-full max-w-md">
-          <h2 className="text-[var(--color-primary-dark)] text-2xl font-bold mb-6 text-center">Iniciar sesión</h2>
-          {errors.general && <p className="text-red-500 text-center mb-4">{errors.general}</p>}
+          <h2 className="text-[var(--color-primary-dark)] text-2xl font-bold mb-6 text-center">
+            Iniciar sesión
+          </h2>
+          {errors.general && (
+            <p className="text-red-500 text-center mb-4">{errors.general}</p>
+          )}
           <form className="space-y-6" onSubmit={handleSubmit}>
             <Input
               fullWidth
@@ -74,7 +86,12 @@ const Login = () => {
               status={errors.email ? "error" : "default"}
               helperText={errors.email}
               classNames={{ helperText: "text-white font-bold" }}
-              startContent={<Icon name="mail" className="text-[var(--color-primary-light)]" />}
+              startContent={
+                <Icon
+                  name="mail"
+                  className="text-[var(--color-primary-light)]"
+                />
+              }
             />
             <Input
               fullWidth
@@ -85,7 +102,10 @@ const Login = () => {
               onChange={(e) => {
                 setPassword(e.target.value);
                 if (e.target.value.length < 6) {
-                  setErrors((prev) => ({ ...prev, password: "La contraseña debe tener al menos 6 caracteres" }));
+                  setErrors((prev) => ({
+                    ...prev,
+                    password: "La contraseña debe tener al menos 6 caracteres",
+                  }));
                 } else {
                   setErrors((prev) => {
                     const { password, ...rest } = prev;
@@ -96,13 +116,28 @@ const Login = () => {
               status={errors.password ? "error" : "default"}
               helperText={errors.password}
               classNames={{ helperText: "text-white font-bold" }}
-              startContent={<Icon name="padlock" className="text-[var(--color-primary-light)]" />}
+              startContent={
+                <Icon
+                  name="padlock"
+                  className="text-[var(--color-primary-light)]"
+                />
+              }
             />
 
-            <Button fullWidth color="primary" type="submit" className="py-2 rounded-lg font-bold text-lg hover:bg-[var(--color-highlight)] transition">
+            <Button
+              fullWidth
+              color="primary"
+              type="submit"
+              className="py-2 rounded-lg font-bold text-lg hover:bg-[var(--color-highlight)] transition"
+            >
               Ingresar
             </Button>
-            <Button fullWidth variant="bordered" color="primary" className="py-2 rounded-lg font-bold text-lg hover:bg-[var(--color-primary-dark)] hover:text-white transition">
+            <Button
+              fullWidth
+              variant="bordered"
+              color="primary"
+              className="py-2 rounded-lg font-bold text-lg hover:bg-[var(--color-primary-dark)] hover:text-white transition"
+            >
               Recuperar cuenta
             </Button>
           </form>
@@ -113,6 +148,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-

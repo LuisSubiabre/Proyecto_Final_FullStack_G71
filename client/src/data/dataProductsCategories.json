@@ -1,119 +1,119 @@
 [
-    {
-        "id": 1,
-        "nombre": "Croquera Mini Chibasaur, gato del meme",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736991635/Croquera_mini_Chibasaur__12__jkhmkb.jpg",
-        "descripcion": "¡Para dibujar, para escribir, para llevar a todos lados! De 10 x 13 cm aproximadamente, de 80 hojas y puntas redondeadas.",
-        "categoria": "Escolar, croqueras, para colorear y escribir",
-        "precio": 3.999,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 2,
-        "nombre": "Croquera Mini Chibasaur, gato blanco",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736991635/263_gheyvt.png",
-        "descripcion": "De 10 x 13cm. Tapa superior es cartón forrado grueso y laminado y la tapa inferior de cartón piedra. La croquera mini es ideal para llevar en el bolso y hacer todo tipo de anotaciones estratégicas.",
-        "categoria": "Escolar, croqueras, para colorear y escribir",
-        "precio": 3.999,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 3,
-        "nombre": "Croquera Mini Chibasaur, gato del meme negro",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1736991636/Croquera_mini_Chibasaur__15__wqccfk.jpg",
-        "descripcion": "Calidad Premium. Mina resistente, colores intensos. Mina 2.9 mm. Lápices con forma hexagonal. Colores mezclables entre sí. Permite un trazo suave.",
-        "categoria": "Escolar, croqueras, para colorear y escribir",
-        "precio": 3.999,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 4,
-        "nombre": "Set de lápices de colores pastel",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1737687281/610_qyas4e.png",
-        "descripcion": "Lápices de colores pastel, perfectos para dibujos delicados y tonos suaves. Incluye 12 colores únicos.",
-        "categoria": "Escolar, lápices, dibujo artístico",
-        "precio": 5.499,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 5,
-        "nombre": "Agenda 2025, diseño floral",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1737687278/700147_hejklm.jpg",
-        "descripcion": "Agenda para el año 2025 con un diseño floral elegante. Tamaño A5, incluye espacio para notas y calendarios mensuales.",
-        "categoria": "Escolar, agendas, organización",
-        "precio": 7.999,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 6,
-        "nombre": "Estuche organizador multicolor",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1737687279/7807265009235_o6l8jc.jpg",
-        "descripcion": "Estuche organizador con múltiples compartimentos, ideal para lápices, bolígrafos y otros accesorios escolares.",
-        "categoria": "Escolar, estuches, accesorios",
-        "precio": 4.999,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 7,
-        "nombre": "Marcadores permanentes, set de 6 colores",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1737687277/610_wrgsie.png",
-        "descripcion": "Marcadores permanentes de alta calidad. Set de 6 colores intensos y duraderos, perfectos para proyectos creativos.",
-        "categoria": "Escolar, marcadores, manualidades",
-        "precio": 6.999,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 8,
-        "nombre": "Cuaderno de dibujo, tapa dura",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1737687276/50069208945_dxkddw.jpg",
-        "descripcion": "Cuaderno de dibujo con tapa dura y papel de alta calidad. Tamaño A4, ideal para bocetos y trabajos artísticos.",
-        "categoria": "Escolar, cuadernos, dibujo artístico",
-        "precio": 8.499,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 9,
-        "nombre": "Tijeras escolares, diseño ergonómico",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1737687277/caja-de-lapices-grafito-hbhexagonal-con-sacapuntas-proarte_brzyog.jpg",
-        "descripcion": "Tijeras escolares con diseño ergonómico y punta redondeada. Seguras para niños, disponibles en varios colores.",
-        "categoria": "Escolar, tijeras, útiles escolares",
-        "precio": 2.999,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 10,
-        "nombre": "Pegamento en barra, set de 3 unidades",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1737687277/M_proarte-36-plus1405_r6hcdo.png",
-        "descripcion": "Pegamento en barra, ideal para proyectos escolares y manualidades. Set de 3 unidades, no tóxico.",
-        "categoria": "Escolar, adhesivos, manualidades",
-        "precio": 3.499,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 11,
-        "nombre": "Bolígrafos de gel, pack de 5 colores",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1737687276/50069208945_dxkddw.jpg",
-        "descripcion": "Bolígrafos de gel con tinta suave y colores vibrantes. Pack de 5 colores surtidos.",
-        "categoria": "Escolar, bolígrafos, escritura",
-        "precio": 4.499,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 12,
-        "nombre": "Regla transparente de 30 cm",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1737687278/product-images_577650_hrz6rt.jpg",
-        "descripcion": "Regla transparente de 30 cm con medidas claras y precisas. Ideal para uso escolar y profesional.",
-        "categoria": "Escolar, reglas, accesorios",
-        "precio": 1.999,
-        "url": "/shopping-cart"
-    },
-    {
-        "id": 13,
-        "nombre": "Papel para origami, 100 hojas",
-        "imagen": "https://res.cloudinary.com/dxxrdckad/image/upload/v1737687278/700147_hejklm.jpg",
-        "descripcion": "Papel para origami de alta calidad. Set de 100 hojas con colores surtidos.",
-        "categoria": "Escolar, papel, manualidades",
-        "precio": 5.999,
-        "url": "/shopping-cart"
-    }
+  {
+    "id": 1,
+    "nombre": "Croquera Mini Chibasaur, gato del meme",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1736991635/Croquera_mini_Chibasaur__12__jkhmkb.jpg",
+    "descripcion": "¡Para dibujar, para escribir, para llevar a todos lados! De 10 x 13 cm aproximadamente, de 80 hojas y puntas redondeadas.",
+    "categoria": "Escolar, croqueras, para colorear y escribir",
+    "precio": 3.999,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 2,
+    "nombre": "Croquera Mini Chibasaur, gato blanco",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1736991635/263_gheyvt.png",
+    "descripcion": "De 10 x 13cm. Tapa superior es cartón forrado grueso y laminado y la tapa inferior de cartón piedra. La croquera mini es ideal para llevar en el bolso y hacer todo tipo de anotaciones estratégicas.",
+    "categoria": "Escolar, croqueras, para colorear y escribir",
+    "precio": 3.999,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 3,
+    "nombre": "Croquera Mini Chibasaur, gato del meme negro",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1736991636/Croquera_mini_Chibasaur__15__wqccfk.jpg",
+    "descripcion": "Calidad Premium. Mina resistente, colores intensos. Mina 2.9 mm. Lápices con forma hexagonal. Colores mezclables entre sí. Permite un trazo suave.",
+    "categoria": "Escolar, croqueras, para colorear y escribir",
+    "precio": 3.999,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 4,
+    "nombre": "Set de lápices de colores pastel",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1737687281/610_qyas4e.png",
+    "descripcion": "Lápices de colores pastel, perfectos para dibujos delicados y tonos suaves. Incluye 12 colores únicos.",
+    "categoria": "Escolar, lápices, dibujo artístico",
+    "precio": 5.499,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 5,
+    "nombre": "Agenda 2025, diseño floral",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1737687278/700147_hejklm.jpg",
+    "descripcion": "Agenda para el año 2025 con un diseño floral elegante. Tamaño A5, incluye espacio para notas y calendarios mensuales.",
+    "categoria": "Escolar, agendas, organización",
+    "precio": 7.999,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 6,
+    "nombre": "Estuche organizador multicolor",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1737687279/7807265009235_o6l8jc.jpg",
+    "descripcion": "Estuche organizador con múltiples compartimentos, ideal para lápices, bolígrafos y otros accesorios escolares.",
+    "categoria": "Escolar, estuches, accesorios",
+    "precio": 4.999,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 7,
+    "nombre": "Marcadores permanentes, set de 6 colores",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1737687277/610_wrgsie.png",
+    "descripcion": "Marcadores permanentes de alta calidad. Set de 6 colores intensos y duraderos, perfectos para proyectos creativos.",
+    "categoria": "Escolar, marcadores, manualidades",
+    "precio": 6.999,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 8,
+    "nombre": "Cuaderno de dibujo, tapa dura",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1737687276/50069208945_dxkddw.jpg",
+    "descripcion": "Cuaderno de dibujo con tapa dura y papel de alta calidad. Tamaño A4, ideal para bocetos y trabajos artísticos.",
+    "categoria": "Escolar, cuadernos, dibujo artístico",
+    "precio": 8.499,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 9,
+    "nombre": "Tijeras escolares, diseño ergonómico",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1737687277/caja-de-lapices-grafito-hbhexagonal-con-sacapuntas-proarte_brzyog.jpg",
+    "descripcion": "Tijeras escolares con diseño ergonómico y punta redondeada. Seguras para niños, disponibles en varios colores.",
+    "categoria": "Escolar, tijeras, útiles escolares",
+    "precio": 2.999,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 10,
+    "nombre": "Pegamento en barra, set de 3 unidades",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1737687277/M_proarte-36-plus1405_r6hcdo.png",
+    "descripcion": "Pegamento en barra, ideal para proyectos escolares y manualidades. Set de 3 unidades, no tóxico.",
+    "categoria": "Escolar, adhesivos, manualidades",
+    "precio": 3.499,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 11,
+    "nombre": "Bolígrafos de gel, pack de 5 colores",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1737687276/50069208945_dxkddw.jpg",
+    "descripcion": "Bolígrafos de gel con tinta suave y colores vibrantes. Pack de 5 colores surtidos.",
+    "categoria": "Escolar, bolígrafos, escritura",
+    "precio": 4.499,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 12,
+    "nombre": "Regla transparente de 30 cm",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1737687278/product-images_577650_hrz6rt.jpg",
+    "descripcion": "Regla transparente de 30 cm con medidas claras y precisas. Ideal para uso escolar y profesional.",
+    "categoria": "Escolar, reglas, accesorios",
+    "precio": 1.999,
+    "url": "/shopping-cart"
+  },
+  {
+    "id": 13,
+    "nombre": "Papel para origami, 100 hojas",
+    "imagen": "https://res.cloudinary.com/libreriaalondra/image/upload/v1737687278/700147_hejklm.jpg",
+    "descripcion": "Papel para origami de alta calidad. Set de 100 hojas con colores surtidos.",
+    "categoria": "Escolar, papel, manualidades",
+    "precio": 5.999,
+    "url": "/shopping-cart"
+  }
 ]

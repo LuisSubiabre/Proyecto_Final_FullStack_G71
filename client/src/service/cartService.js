@@ -8,7 +8,7 @@ export const getAllCarts = () =>
 
 // Obtener los carritos guardados de un usuario específico
 export const getCartsByUser = (userId) =>
-  api.get(`/cart/user/${userId}`).then((response) => response.data);
+  api.get(`/cart/detail/${userId}`).then((response) => response.data);
 
 // Obtener todos los carritos completos de un usuario específico
 export const getAllCartsByUser = (userId) =>
@@ -42,3 +42,6 @@ export const addCart = (userId) =>
   api
     .post("/cart/addCart", { user_id: userId })
     .then((response) => response.data);
+
+export const getCartsByCartID = (cart_id) =>
+  api.get(`/cart/detail/${cart_id}`).then((response) => response.data);

@@ -28,14 +28,18 @@ const Register = () => {
 
     if (!data.name) newErrors.name = "El nombre es requerido";
     if (!data.rut) newErrors.rut = "El rut es requerido";
-    if (!data.birthdate) newErrors.birthdate = "La fecha de nacimiento es requerida";
+    if (!data.birthdate)
+      newErrors.birthdate = "La fecha de nacimiento es requerida";
     if (!data.email) newErrors.email = "El correo es requerido";
-    if (data.email !== data.confirmEmail) newErrors.confirmEmail = "Los correos no coinciden";
+    if (data.email !== data.confirmEmail)
+      newErrors.confirmEmail = "Los correos no coinciden";
     if (!data.phone) newErrors.phone = "El teléfono es requerido";
     if (!data.password) newErrors.password = "La contraseña es requerida";
-    if (data.password !== data.confirmPassword) newErrors.confirmPassword = "Las contraseñas no coinciden";
+    if (data.password !== data.confirmPassword)
+      newErrors.confirmPassword = "Las contraseñas no coinciden";
     if (!data.role) newErrors.role = "El rol es requerido";
-    if (!data.terms) newErrors.terms = "Debes aceptar los términos y condiciones";
+    if (!data.terms)
+      newErrors.terms = "Debes aceptar los términos y condiciones";
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -76,18 +80,17 @@ const Register = () => {
     }
   };
 
-
   return (
     <div
       className="min-h-screen bg-cover bg-center flex items-center justify-center"
       style={{
         backgroundImage:
-          "url('https://res.cloudinary.com/dxxrdckad/image/upload/v1730820074/fondo_login_register_nqwroy.jpg')",
+          "url('https://res.cloudinary.com/libreriaalondra/image/upload/v1730820074/fondo_login_register_nqwroy.jpg')",
       }}
     >
       <div className="absolute top-4 left-4 flex items-center">
         <img
-          src="https://res.cloudinary.com/dxxrdckad/image/upload/v1734362650/logo_fondo_azul_tt5joc.png"
+          src="https://res.cloudinary.com/libreriaalondra/image/upload/v1734362650/logo_fondo_azul_tt5joc.png"
           alt="Logo"
           className="w-12 h-12 rounded-full border-2 border-white"
         />

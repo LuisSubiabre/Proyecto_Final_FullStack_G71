@@ -147,3 +147,31 @@ export const consultaItemCarrito = async (cart_id, product_id) => {
     throw error;
   }
 };
+
+// reemplazara a getAllCartsByUser, ya que consulta por el carrito activo del usuario
+export const getDetailCarritoModel = async (cart_id) => {
+  const query = `
+  SELECT
+      c.cart_id,
+      c.status,
+      ci.detail_id,
+      ci.product_id,
+      p.name_product,
+      ci.quantity,
+      ci.price,
+      c.created_at,
+      p.image_url,
+      u.username
+  FROM cart c
+  INNER JOIN cart_items ci ON c.cart_id = ci.cart_id
+  INNER JOIN products p ON ci.product_id = p.product_id
+  INNER JOIN users u ON c.user_id = u.user_id
+  WHERE c.cart_id = $1
+  ORDER BY c.cart_id DESC, ci.detail_id;
+`;
+  const { rows } = await pool.query(query, [cart_id]);
+  if (rows.length === 0) {
+    return null;
+  }
+  return rows;
+};
