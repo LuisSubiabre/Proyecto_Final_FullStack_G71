@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import {
   Input,
   Button,
@@ -22,7 +22,7 @@ const Login = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-  const [modalIsClosed, setModalIsClosed] = useState(false); // Nuevo estado
+  const [modalIsClosed, setModalIsClosed] = useState(false);
 
   const validateForm = () => {
     let errors = {};
@@ -48,31 +48,29 @@ const Login = () => {
     if (validateForm()) {
       try {
         await login({ email, password });
-        setSuccessMessage("¡Has iniciado sesión correctamente!"); // Set success message
+        setSuccessMessage("¡Has iniciado sesión correctamente!");
         e.target.reset();
-        setErrors({}); // Limpiar errores
-        onOpen(); // Open success modal
-
-        // Primero, mostramos el modal y aseguramos que se renderice antes de programar su cierre
+        setErrors({});
+        onOpen();
         setTimeout(() => {
-          setModalIsClosed(false); // Asegura que el modal esté visible
+          setModalIsClosed(false);
           
           setTimeout(() => {
-            setModalIsClosed(true); // Cierra el modal después de 5 segundos visibles
+            setModalIsClosed(true);
             
             setTimeout(() => {
-              navigate("/"); // Redirige después de 2 segundos adicionales para evitar cortes bruscos
-            }, 2000); // Margen de 2 segundos después de cerrar el modal
+              navigate("/");
+            }, 3000);
 
-          }, 2000); // Mantiene el modal abierto durante 2 segundos antes de cerrarlo
+          }, 3000);
 
-        }, 2000); // Breve margen inicial para asegurar que el modal se renderice antes de iniciar el proceso
+        }, 3000);
       } catch (error) {
         setErrors({ general: "Error al iniciar sesión. Verifique sus credenciales." });
-        onOpen(); // Open error modal
+        onOpen();
       }
     } else {
-      onOpen(); // Open modal to show validation errors
+      onOpen();
     }
   };
 
@@ -80,7 +78,6 @@ const Login = () => {
     const newPassword = e.target.value;
     setPassword(newPassword);
 
-    // Validación en tiempo real para la contraseña
     if (newPassword.length < 6) {
       setErrors((prev) => ({ ...prev, password: "La contraseña debe tener al menos 6 caracteres" }));
     } else {
@@ -153,8 +150,8 @@ const Login = () => {
               label="Contraseña"
               placeholder="Ingrese su contraseña"
               value={password}
-              onChange={handlePasswordChange} // Validación en tiempo real
-              onBlur={handlePasswordBlur} // Validación al perder el foco
+              onChange={handlePasswordChange}
+              onBlur={handlePasswordBlur}
               status={errors.password ? "error" : "default"}
               helperText={errors.password}
               classNames={{ helperText: "text-white font-bold" }}
