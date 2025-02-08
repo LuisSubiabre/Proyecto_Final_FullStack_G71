@@ -1,104 +1,198 @@
-import { createContext, useState, useMemo, useCallback, useEffect } from 'react';
-import { getCartsByUser, addCartItem } from '../service/cartService';
-import { getProductById } from '../service/productService';
-import useAuth from '../hook/useAuth';
+import {
+  createContext,
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from "react";
+import {
+  getCartsByUser,
+  addCartItem,
+  getCarritoGuardado,
+  addCart,
+} from "../service/cartService";
+import useAuth from "../hook/useAuth";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const { userId } = useAuth();
-    const [cart, setCart] = useState([]);
+  const { userId } = useAuth();
+  const [cart, setCart] = useState([]);
 
-    // Cargar el carrito del usuario al montar el contexto
-    useEffect(() => {
-        const fetchCart = async () => {
-            try {
-                if (userId) {
-                    const cartData = await getCartsByUser(userId);
-                    const cartItemsWithDetails = await Promise.all(
-                        cartData.items.map(async (item) => {
-                            const productDetails = await getProductById(item.product_id);
-                            return {
-                                ...item,
-                                ...productDetails.data,
-                                price: parseFloat(productDetails.data.price) || 0,
-                                cartQuantity: item.quantity,
-                            };
-                        })
-                    );
-                    setCart(cartItemsWithDetails);
-                }
-            } catch (error) {
-                console.error('Error al cargar el carrito:', error);
-            }
-        };
-        fetchCart();
-    }, [userId]);
+  // Cargar el carrito del usuario al montar el contexto
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        if (userId) {
+          // Consultar si el usuario tiene un carrito activo
+          const cart_id = await consultaCarroActivo();
+          if (!cart_id) {
+            console.error("No se pudo obtener el carrito activo");
+            return;
+          }
 
-    // Agregar un producto al carrito
-    const addToCart = useCallback(async (product) => {
-        try {
-            const cartItemData = {
-                product_id: product.product_id,
-                quantity: 1,
-            };
-            const newItem = await addCartItem(cartItemData);
-            setCart((prevCart) => [
-                ...prevCart,
-                { ...newItem, ...product, price: parseFloat(product.price) || 0, cartQuantity: 1 }
-            ]);
-        } catch (error) {
-            console.error('Error al agregar producto al carrito:', error);
+          // Obtener los productos del carrito activo usando el endpoint
+          const response = await getCartsByUser(userId); // Usa el endpoint correcto
+
+          if (response.success) {
+            // Mapear los datos del endpoint al formato esperado por el estado `cart`
+            const cartItemsWithDetails = response.data.map((item) => ({
+              product_id: item.product_id,
+              cart_id: item.cart_id,
+              detail_id: item.detail_id,
+              quantity: item.quantity,
+              price: parseFloat(item.price) || 0,
+              cartQuantity: item.quantity, // Usamos la cantidad del carrito
+              created_at: item.created_at,
+            }));
+
+            // Actualizar el estado del carrito
+            setCart(cartItemsWithDetails);
+          } else {
+            console.error("Error al obtener el carrito:", response.message);
+          }
         }
-    }, []);
+      } catch (error) {
+        console.error("Error al cargar el carrito:", error);
+      }
+    };
 
-    // Incrementar la cantidad de un producto en el carrito (solo en cliente)
-    const increaseQuantity = useCallback((index) => {
-        setCart((prevCart) => {
-            const newCart = [...prevCart];
-            newCart[index].cartQuantity += 1;
-            return newCart;
-        });
-    }, []);
+    fetchCart();
+  }, [userId]);
 
-    // Disminuir la cantidad de un producto en el carrito (solo en cliente)
-    const decreaseQuantity = useCallback((index) => {
-        setCart((prevCart) => {
-            const newCart = [...prevCart];
-            if (newCart[index].cartQuantity > 1) {
-                newCart[index].cartQuantity -= 1;
-            } else {
-                newCart.splice(index, 1);  // Eliminar el ítem si la cantidad llega a 0
-            }
-            return newCart;
-        });
-    }, []);
+  /* consulta si existe carrito activo al backend*/
+  const consultaCarroActivo = useCallback(async () => {
+    try {
+      /*consulta si el usuario tiene un carrito activo*/
+      const cartInfo = await getCarritoGuardado(userId);
 
-    // Calcular el total del carrito
-    const calculateTotal = useCallback(() => {
-        return cart.reduce((total, product) => {
-            const price = parseFloat(product.price) || 0;
-            const quantity = product.cartQuantity || 0;
-            return total + price * quantity;
-        }, 0);
-    }, [cart]);
+      // Si no existe carrito, crea un carrito nuevo
+      if (!cartInfo) {
+        const newCart = await addCart(userId);
+        return newCart.cart_id; // Devuelve el ID del nuevo carrito
+      } else {
+        // Si existe carrito, regresa el id del carrito activo
+        return cartInfo.cart_id;
+      }
+    } catch (error) {
+      console.error("Error al consultar el carrito activo:", error);
+      return null;
+    }
+  }, [userId]);
 
-    // Obtener el total de productos en el carrito
-    const getTotalQuantity = useCallback(() => {
-        return cart.reduce((total, product) => total + product.cartQuantity, 0);
-    }, [cart]);
+  // Agregar un producto al carrito
+  const addToCart = useCallback(
+    async (product) => {
+      if (!userId) {
+        console.error("El usuario no está autenticado");
+        return;
+      }
 
-    // Valor del contexto
-    const value = useMemo(() => ({
-        cart,
-        addToCart,
-        increaseQuantity,
-        decreaseQuantity,
-        calculateTotal,
-        getTotalQuantity,
-    }), [cart, addToCart, increaseQuantity, decreaseQuantity, calculateTotal, getTotalQuantity]);
+      try {
+        // Obtener el cart_id del carrito activo
+        const cart_id = await consultaCarroActivo();
+        if (!cart_id) {
+          console.error("Error al consultar el carrito activo");
+          return;
+        }
 
-    return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+        // Datos para enviar al backend
+        const cartItemData = {
+          product_id: product.product_id,
+          user_id: userId,
+          cart_id: cart_id,
+          quantity: 1, // Cantidad a agregar (puedes ajustar esto según tu lógica)
+        };
+
+        // Enviar la información al backend
+        const response = await addCartItem(cartItemData);
+
+        // Verificar si el producto ya existe en el carrito
+        const existingProductIndex = cart.findIndex(
+          (item) => item.product_id === product.product_id
+        );
+
+        if (existingProductIndex !== -1) {
+          // Si el producto ya existe, actualizar la cantidad en el estado `cart`
+          const updatedCart = [...cart];
+          updatedCart[existingProductIndex].cartQuantity += 1;
+          setCart(updatedCart);
+        } else {
+          // Si el producto no existe, agregarlo al estado `cart`
+          setCart((prevCart) => [
+            ...prevCart,
+            {
+              ...response, // Respuesta del backend
+              ...product,
+              price: parseFloat(product.price) || 0,
+              cartQuantity: 1,
+            },
+          ]);
+        }
+      } catch (error) {
+        console.error("Error al agregar producto al carrito:", error);
+      }
+    },
+    [userId, cart, consultaCarroActivo] // Agrega cart como dependencia
+  );
+
+  // Incrementar la cantidad de un producto en el carrito (solo en cliente)
+  const increaseQuantity = useCallback((index) => {
+    setCart((prevCart) => {
+      const newCart = [...prevCart];
+      newCart[index].cartQuantity += 1;
+      return newCart;
+    });
+  }, []);
+
+  // Disminuir la cantidad de un producto en el carrito (solo en cliente)
+  const decreaseQuantity = useCallback((index) => {
+    setCart((prevCart) => {
+      const newCart = [...prevCart];
+      if (newCart[index].cartQuantity > 1) {
+        newCart[index].cartQuantity -= 1;
+      } else {
+        newCart.splice(index, 1); // Eliminar el ítem si la cantidad llega a 0
+      }
+      return newCart;
+    });
+  }, []);
+
+  // Calcular el total del carrito
+  const calculateTotal = useCallback(() => {
+    return cart.reduce((total, product) => {
+      const price = parseFloat(product.price) || 0;
+      const quantity = product.cartQuantity || 0;
+      return total + price * quantity;
+    }, 0);
+  }, [cart]);
+
+  // Obtener el total de productos en el carrito
+  const getTotalQuantity = useCallback(() => {
+    return cart.reduce((total, product) => total + product.cartQuantity, 0);
+  }, [cart]);
+
+  // Valor del contexto
+  const value = useMemo(
+    () => ({
+      cart,
+      addToCart,
+      increaseQuantity,
+      decreaseQuantity,
+      calculateTotal,
+      getTotalQuantity,
+    }),
+    [
+      cart,
+      addToCart,
+      increaseQuantity,
+      decreaseQuantity,
+      calculateTotal,
+      getTotalQuantity,
+    ]
+  );
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
 export default CartContext;
