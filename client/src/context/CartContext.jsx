@@ -11,6 +11,9 @@ import {
   getCarritoGuardado,
   addCart,
   getCartsByCartID,
+  increaseCartItemQuantity,
+  decreaseCartItemQuantity,
+  eliminarItemCarrito,
 } from "../service/cartService";
 import useAuth from "../hook/useAuth";
 
@@ -48,7 +51,6 @@ export const CartProvider = ({ children }) => {
               cartQuantity: item.quantity, // Usamos la cantidad del carrito
               created_at: item.created_at,
             }));
-            console.log("Carrito cargado:", cartItemsWithDetails);
 
             setCart(cartItemsWithDetails);
           } else {
@@ -140,26 +142,49 @@ export const CartProvider = ({ children }) => {
   );
 
   // Incrementar la cantidad de un producto en el carrito (solo en cliente)
-  const increaseQuantity = useCallback((index) => {
-    setCart((prevCart) => {
-      const newCart = [...prevCart];
-      newCart[index].cartQuantity += 1;
-      return newCart;
-    });
-  }, []);
+  const increaseQuantity = useCallback(
+    async (index) => {
+      try {
+        const response = await increaseCartItemQuantity({
+          detail_id: cart[index].detail_id,
+          quantity: cart[index].cartQuantity + 1,
+        });
+        console.log("response:", response);
+
+        setCart((prevCart) => {
+          const newCart = [...prevCart];
+          newCart[index].cartQuantity += 1;
+          return newCart;
+        });
+      } catch (error) {
+        console.error("Error al incrementar la cantidad del producto:", error);
+      }
+    },
+    [cart]
+  );
 
   // Disminuir la cantidad de un producto en el carrito (solo en cliente)
-  const decreaseQuantity = useCallback((index) => {
-    setCart((prevCart) => {
-      const newCart = [...prevCart];
-      if (newCart[index].cartQuantity > 1) {
-        newCart[index].cartQuantity -= 1;
+  const decreaseQuantity = useCallback(
+    async (index) => {
+      /* si la cantidad llega a 0, eliminar el item del carrito */
+      if (cart[index].cartQuantity <= 1) {
+        await eliminarItemCarrito(cart[index].detail_id);
+        setCart((prevCart) => prevCart.filter((_, i) => i !== index));
       } else {
-        newCart.splice(index, 1); // Eliminar el ítem si la cantidad llega a 0
+        /* si la cantidad es mayor a 1, decrementar la cantidad */
+        await decreaseCartItemQuantity({
+          detail_id: cart[index].detail_id,
+          quantity: cart[index].cartQuantity - 1,
+        });
+        setCart((prevCart) => {
+          const newCart = [...prevCart];
+          newCart[index].cartQuantity -= 1;
+          return newCart;
+        });
       }
-      return newCart;
-    });
-  }, []);
+    },
+    [cart]
+  );
 
   // Calcular el total del carrito
   const calculateTotal = useCallback(() => {

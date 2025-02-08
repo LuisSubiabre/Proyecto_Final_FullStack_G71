@@ -96,7 +96,7 @@ const UserMenu = ({ role, userName, userEmail, profilePic }) => {
               key={item.id}
               className="flex items-center"
               textValue={item.label}
-              onClick={() => {
+              onPress={() => {
                 if (item.link === "/logout") {
                   logout();
                 }

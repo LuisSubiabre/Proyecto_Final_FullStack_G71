@@ -45,3 +45,6 @@ export const addCart = (userId) =>
 
 export const getCartsByCartID = (cart_id) =>
   api.get(`/cart/detail/${cart_id}`).then((response) => response.data);
+
+export const eliminarItemCarrito = (detail_id) =>
+  api.delete(`/cart/items/${detail_id}`).then((response) => response.data);
