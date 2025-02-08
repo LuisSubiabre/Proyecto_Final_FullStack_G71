@@ -10,6 +10,7 @@ const FilterCategories = () => {
 
             <Accordion variant="splitted">
                 <AccordionItem
+                    aria-label="Categoría"
                     title={<span className="text-black">Categoría</span>}
                     className="bg-[var(--color-secondary)]"
                 >
@@ -40,6 +41,7 @@ const FilterCategories = () => {
 
                 {/* Precio */}
                 <AccordionItem
+                    aria-label="Precio"
                     title={<span className="text-black">Precio</span>}
                     className="text-[var(--color-primary-dark)] bg-[var(--color-secondary)] mt-2"
                 >
