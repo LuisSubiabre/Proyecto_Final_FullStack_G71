@@ -10,6 +10,7 @@ import {
   getCarritoGuardadoModel,
   consultaItemCarrito,
   getDetailCarritoModel,
+  eliminarItemCarritoModel,
 } from "../models/cart.model.js";
 
 const createResponse = (res, data, message, statusCode = 200) => {
@@ -105,7 +106,6 @@ export const addCartUserController = async (req, res, next) => {
 export const updateCartIncreaseController = async (req, res, next) => {
   try {
     const { detail_id, quantity } = req.body;
-
     // Incrementar la cantidad del ítem
     const updatedItem = await incrementCartItem(detail_id, quantity);
     createResponse(
@@ -122,7 +122,6 @@ export const updateCartIncreaseController = async (req, res, next) => {
 export const updateCartDecreaseController = async (req, res, next) => {
   try {
     const { detail_id, quantity } = req.body;
-
     // Decrementar la cantidad del ítem
     const updatedItem = await decrementCartItem(detail_id, quantity);
     createResponse(
@@ -183,6 +182,18 @@ export const getDetailCarrito = async (req, res, next) => {
       cart,
       "Carritos completos del usuario obtenidos correctamente"
     );
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const eliminarItemCarrito = async (req, res, next) => {
+  const { detail_id } = req.params;
+  //res.json({ message: "Ruta para eliminar un ítem del carrito " + detail_id });
+  try {
+    const { detail_id } = req.params;
+    const item = await eliminarItemCarritoModel(detail_id, 1);
+    res.status(200).json(item);
   } catch (error) {
     next(error);
   }
