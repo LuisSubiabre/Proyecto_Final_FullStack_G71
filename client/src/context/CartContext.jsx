@@ -48,7 +48,6 @@ export const CartProvider = ({ children }) => {
               cartQuantity: item.quantity, // Usamos la cantidad del carrito
               created_at: item.created_at,
             }));
-            console.log("Carrito cargado:", cartItemsWithDetails);
 
             setCart(cartItemsWithDetails);
           } else {
