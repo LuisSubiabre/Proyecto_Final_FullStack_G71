@@ -9,6 +9,7 @@ import {
   closeCartController,
   getCarritoGuardado,
   addCartUserController,
+  getDetailCarrito,
 } from "../controllers/cart.controller.js";
 
 import authMiddleware from "../middlewares/auth.middleware.js";
@@ -24,6 +25,7 @@ router.put("/items/increment", authMiddleware, updateCartIncreaseController); //
 router.put("/items/decrement", authMiddleware, updateCartDecreaseController); // Decrementar cantidad de un ítem
 router.put("/close/:user_id", authMiddleware, closeCartController); // Cerrar un carrito del usuario
 
+router.get("/detail/:cart_id", authMiddleware, getDetailCarrito); // Crear un carrito
 router.get("/getCarrito/:user_id", authMiddleware, getCarritoGuardado); // Obtener carrito por usuario
 router.post("/addCart", authMiddleware, addCartUserController); // Crear un carrito
 
