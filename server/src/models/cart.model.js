@@ -73,7 +73,7 @@ export const createCartItem = async (cart_id, product_id, quantity) => {
 // Incrementar cantidad de un ítem en el carrito
 export const incrementCartItem = async (detail_id, quantity) => {
   const query =
-    "UPDATE cart_items SET quantity = quantity + $1 WHERE detail_id = $2 RETURNING *";
+    "UPDATE cart_items SET quantity = $1 WHERE detail_id = $2 RETURNING *";
   try {
     const result = await pool.query(query, [quantity, detail_id]);
     console.log("-->" + result.rows[0]);
@@ -86,7 +86,7 @@ export const incrementCartItem = async (detail_id, quantity) => {
 // Decrementar cantidad de un ítem en el carrito
 export const decrementCartItem = async (detail_id, quantity) => {
   const query =
-    "UPDATE cart_items SET quantity = quantity - $1 WHERE detail_id = $2 RETURNING *";
+    "UPDATE cart_items SET quantity = $1 WHERE detail_id = $2 RETURNING *";
   try {
     const result = await pool.query(query, [quantity, detail_id]);
     return result.rows[0];

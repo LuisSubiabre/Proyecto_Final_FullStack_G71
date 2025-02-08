@@ -11,6 +11,8 @@ import {
   getCarritoGuardado,
   addCart,
   getCartsByCartID,
+  increaseCartItemQuantity,
+  decreaseCartItemQuantity,
 } from "../service/cartService";
 import useAuth from "../hook/useAuth";
 
@@ -139,26 +141,49 @@ export const CartProvider = ({ children }) => {
   );
 
   // Incrementar la cantidad de un producto en el carrito (solo en cliente)
-  const increaseQuantity = useCallback((index) => {
-    setCart((prevCart) => {
-      const newCart = [...prevCart];
-      newCart[index].cartQuantity += 1;
-      return newCart;
-    });
-  }, []);
+  const increaseQuantity = useCallback(
+    async (index) => {
+      try {
+        const response = await increaseCartItemQuantity({
+          detail_id: cart[index].detail_id,
+          quantity: cart[index].cartQuantity + 1,
+        });
+        console.log("response:", response);
+
+        setCart((prevCart) => {
+          const newCart = [...prevCart];
+          newCart[index].cartQuantity += 1;
+          return newCart;
+        });
+      } catch (error) {
+        console.error("Error al incrementar la cantidad del producto:", error);
+      }
+    },
+    [cart]
+  );
 
   // Disminuir la cantidad de un producto en el carrito (solo en cliente)
-  const decreaseQuantity = useCallback((index) => {
-    setCart((prevCart) => {
-      const newCart = [...prevCart];
-      if (newCart[index].cartQuantity > 1) {
-        newCart[index].cartQuantity -= 1;
-      } else {
-        newCart.splice(index, 1); // Eliminar el ítem si la cantidad llega a 0
+  const decreaseQuantity = useCallback(
+    async (index) => {
+      if (cart[index].cartQuantity <= 1) {
+        console.error("La cantidad no puede ser menor a 1");
+        return;
       }
-      return newCart;
-    });
-  }, []);
+
+      const response = await decreaseCartItemQuantity({
+        detail_id: cart[index].detail_id,
+        quantity: cart[index].cartQuantity - 1,
+      });
+      console.log("response:", response);
+
+      setCart((prevCart) => {
+        const newCart = [...prevCart];
+        newCart[index].cartQuantity -= 1;
+        return newCart;
+      });
+    },
+    [cart]
+  );
 
   // Calcular el total del carrito
   const calculateTotal = useCallback(() => {

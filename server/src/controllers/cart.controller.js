@@ -105,7 +105,6 @@ export const addCartUserController = async (req, res, next) => {
 export const updateCartIncreaseController = async (req, res, next) => {
   try {
     const { detail_id, quantity } = req.body;
-
     // Incrementar la cantidad del ítem
     const updatedItem = await incrementCartItem(detail_id, quantity);
     createResponse(
