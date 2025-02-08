@@ -127,7 +127,8 @@ function ShoppingCart() {
             <hr className="my-4" />
             <div className="flex flex-col space-y-2 text-gray-800">
               <RadioGroup
-                color="primary"
+                isInvalid={true}
+                color="danger"
                 defaultValue="tienda"
                 label="Formas de envío:"
                 value={selectedEnvio}
