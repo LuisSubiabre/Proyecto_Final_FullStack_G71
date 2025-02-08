@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Input, Button, Textarea, Card } from "@nextui-org/react";
+import { Input, Button, Textarea, Card, Spinner, Alert, Select, SelectItem } from "@nextui-org/react";
 import { useDropzone } from "react-dropzone";
 import useCategories from "../../../hook/useCategories.jsx";
 import useAuth from "../../../hook/useAuth.jsx";
@@ -8,6 +8,7 @@ import { createProduct } from "../../../service/productService.js";
 const CustomInput = ({ label, type = "text", isRequired = true, ...props }) => {
     return (
         <Input
+            maxLength={35}
             isRequired={isRequired}
             clearable
             type={type}
@@ -41,6 +42,7 @@ const NewPublication = () => {
     const [previewUrl, setPreviewUrl] = useState("");
     const [formError, setFormError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
     useEffect(() => {
         if (selectedCategory) {
@@ -141,7 +143,7 @@ const NewPublication = () => {
 
             // Create product
             await createProduct(productData);
-            alert("Producto publicado exitosamente 🎉");
+            setShowSuccessAlert(true);
 
             setFormData({
                 name_product: "",
@@ -164,7 +166,7 @@ const NewPublication = () => {
         }
     };
 
-    if (loading) return <div>Cargando categorías...</div>;
+    if (loading) return <div className="text-center p-52 m-14 font-epilogue text-2xl text-[var(--color-primary-dark)]">Espera un momento Cargando el formulario...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
@@ -172,70 +174,85 @@ const NewPublication = () => {
             <h1 className="text-2xl font-bold mb-6 text-[var(--color-primary-dark)]">
                 Publica tus productos
             </h1>
+            {showSuccessAlert && (
+                <Alert
+                    variant="solid"
+                    color="success"
+                    className="m-4"
+                    onClose={() => setShowSuccessAlert(false)}
+                >
+                    Producto publicado exitosamente 🎉
+                </Alert>
+            )}
             <form className="grid grid-cols-1 sm:grid-cols-2 gap-6" onSubmit={handleSubmit}>
-                <CustomInput 
-                    label="Nombre del producto" 
+                <CustomInput
+                    label="Nombre del producto"
                     name="name_product"
                     value={formData.name_product}
                     onChange={handleInputChange}
                 />
-                <CustomInput 
-                    label="Marca" 
+                <CustomInput
+                    label="Marca"
                     name="brand"
                     value={formData.brand}
                     onChange={handleInputChange}
                 />
-                <CustomInput 
-                    label="Precio" 
-                    type="number" 
+                <CustomInput
+                    label="Precio"
+                    type="number"
                     name="price"
                     value={formData.price}
                     onChange={handleInputChange}
                 />
-                <CustomInput 
-                    label="Cantidad" 
-                    type="number" 
+                <CustomInput
+                    label="Cantidad"
+                    type="number"
                     name="quantity"
                     value={formData.quantity}
                     onChange={handleInputChange}
                 />
-                
                 <div className="flex flex-col">
-                    <select
-                        className="w-full p-2 rounded border border-gray-300"
+                    <Select
+                        isRequired
+                        variant="bordered"
+                        color="secondary"
+                        label="Categoría principal"
+                        placeholder="Selecciona una categoría"
                         value={formData.category_id}
                         onChange={handleCategoryChange}
                         required
                     >
-                        <option value="">Selecciona una categoría</option>
                         {menus.map((category) => (
-                            <option key={category.id} value={category.id}>
+                            <SelectItem key={category.id} value={category.id}>
                                 {category.title}
-                            </option>
+                            </SelectItem>
                         ))}
-                    </select>
+                    </Select>
                 </div>
 
                 <div className="flex flex-col">
-                    <select
-                        className="w-full p-2 rounded border border-gray-300"
+                    <Select
+                        isRequired
+                        variant="bordered"
+                        color="secondary"
+                        label="Subcategoría"
+                        placeholder="Selecciona una subcategoría"
                         value={formData.subcategory_id}
                         onChange={handleInputChange}
                         name="subcategory_id"
-                        required
                         disabled={!selectedCategory}
                     >
-                        <option value="">Selecciona una subcategoría</option>
                         {availableSubcategories.map((sub) => (
-                            <option key={sub.id} value={sub.id}>
+                            <SelectItem key={sub.id} value={sub.id}>
                                 {sub.title}
-                            </option>
+                            </SelectItem>
                         ))}
-                    </select>
+                    </Select>
                 </div>
 
                 <Textarea
                     isRequired
+                    maxLength={180}
                     color="secondary"
                     label="Descripción del producto"
                     placeholder="Detalles, especificaciones técnicas, uso recomendado..."
@@ -254,13 +271,13 @@ const NewPublication = () => {
                     <label htmlFor="imageUpload" className="mb-2 font-medium">
                         Sube una imagen de tu producto
                     </label>
-                    <Card bordered className="bg-slate-400 p-4">
+                    <Card bordered className="bg-white p-4 shadow-sm">
                         <div
                             {...getRootProps()}
-                            className="border-dashed border-2 border-gray-400 p-4 text-center cursor-pointer"
+                            className="border-dashed border-2 border-gray-400 p-4 text-center cursor-pointer hover:border-gray-500 transition-colors"
                         >
                             <input {...getInputProps()} />
-                            <p>
+                            <p className="text-gray-600">
                                 Arrastra una imagen aquí o haz clic para seleccionar un archivo.
                                 (Solo imágenes, máximo 3MB)
                             </p>
@@ -274,7 +291,7 @@ const NewPublication = () => {
                                     <img
                                         src={previewUrl}
                                         alt="Previsualización"
-                                        className="w-32 h-32 mt-2 object-cover mx-auto"
+                                        className="w-80 h-80 mt-2 object-cover mx-auto rounded-sm"
                                     />
                                 )}
                             </div>
@@ -286,12 +303,16 @@ const NewPublication = () => {
                 <div className="flex sm:col-span-2 justify-end">
                     <Button
                         type="submit"
-                        color="error"
-                        size="xs"
+                        color="primary"
+                        size="md"
                         disabled={isSubmitting}
                         className="w-full bg-[var(--color-highlight)] text-white hover:bg-white hover:text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)]"
                     >
-                        {isSubmitting ? "Publicando..." : "Publicar"}
+                        {isSubmitting ? (
+                            <Spinner size="sm" color="white" />
+                        ) : (
+                            "Publicar"
+                        )}
                     </Button>
                 </div>
             </form>

@@ -96,7 +96,6 @@ export default function Navbar() {
             userId={userId}
           />
         </NavbarContent>
-
         <NavbarContent justify="end">
           <Tooltip content="Ver carrito de compras" position="bottom">
             <Link
@@ -113,7 +112,6 @@ export default function Navbar() {
             </Link>
           </Tooltip>
         </NavbarContent>
-
         <NavbarMenu>
           <NavbarMenuItem>
             {/* Aquí se pueden mapear las categorías */}
