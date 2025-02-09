@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const Comments = ({ visible, product_id }) => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("No hay comentarios aún.");
 
   useEffect(() => {
     if (visible && product_id) {
@@ -13,16 +13,21 @@ const Comments = ({ visible, product_id }) => {
 
   const fetchComments = async (id) => {
     setLoading(true);
-    setError(null);
+
     try {
       const response = await fetch(
         `http://localhost:3000/reviews/product/${id}`
       );
       if (!response.ok) {
-        throw new Error("Error al obtener los comentarios");
+        setError("No hay comentarios aún.");
+        return;
       }
-      const { data } = await response.json();
-      setComments(data);
+      const result = await response.json();
+
+      if (result.success) {
+        setComments(result.data);
+        setError("");
+      }
     } catch (error) {
       setError(error.message);
     } finally {
@@ -46,14 +51,6 @@ const Comments = ({ visible, product_id }) => {
               </h2>
             </div>
 
-            {loading && (
-              <p className="text-gray-500">Cargando comentarios...</p>
-            )}
-            {error && <p className="text-red-500">Error: {error}</p>}
-            {!loading && !error && comments.length === 0 && (
-              <p className="text-gray-500">No hay comentarios aún.</p>
-            )}
-
             {/* Formulario para agregar comentarios */}
             <form className="mb-6">
               <div className="py-2 px-4 mb-4 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -75,7 +72,13 @@ const Comments = ({ visible, product_id }) => {
                 Publicar comentario
               </button>
             </form>
-
+            {loading && (
+              <p className="text-gray-500">Cargando comentarios...</p>
+            )}
+            {error && <p className="text-red-500">{error}</p>}
+            {!loading && !error && comments.length === 0 && (
+              <p className="text-gray-500">No hay comentarios aún.</p>
+            )}
             {/* Lista de comentarios */}
             {comments.map((comment) => (
               <article
