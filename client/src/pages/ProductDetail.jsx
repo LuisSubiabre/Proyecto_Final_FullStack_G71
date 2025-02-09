@@ -14,12 +14,14 @@ import {
 } from "@nextui-org/react";
 import Icon from "../components/Icons";
 import { useContext, useEffect, useState } from "react";
+import Comments from "../components/Comments.jsx";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [producto, setProducto] = useState({});
   const { addToCart } = useContext(CartContext);
   const [showAlert, setShowAlert] = useState(false);
+  const [showComments, setShowComments] = useState(false);
 
   useEffect(() => {
     fetchProductoDetalle(id);
@@ -171,7 +173,10 @@ const ProductDetail = () => {
                   </PopoverContent>
                 </Popover>
 
-                <Button className="size-40 bg-fuchsia-700 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
+                <Button
+                  onPress={() => setShowComments(!showComments)}
+                  className="size-40 bg-fuchsia-700 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full"
+                >
                   Comentarios
                 </Button>
               </div>
@@ -182,6 +187,8 @@ const ProductDetail = () => {
           </div>
         </div>
       </section>
+
+      <Comments visible={showComments} />
       <FeaturedProducts />
       <NewProducts />
     </>
