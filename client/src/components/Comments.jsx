@@ -16,7 +16,7 @@ const Comments = ({ visible, product_id }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/reviews/product/${id}`
+        `${import.meta.env.VITE_URL_BASE}/reviews/product/${id}`
       );
       if (!response.ok) {
         setError("No hay comentarios aún.");

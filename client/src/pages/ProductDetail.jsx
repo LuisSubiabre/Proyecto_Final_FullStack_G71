@@ -50,13 +50,16 @@ const ProductDetail = () => {
   const fetchProductoDetalle = async (id) => {
     console.log("fetchProductoDetalle", id);
     try {
-      const response = await fetch(`http://localhost:3000/products/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer 123`,
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_URL_BASE}/products/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer 123`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("No se pudo obtener el producto");
       }
