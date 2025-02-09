@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Icon from "./Icons";
+import { Alert } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 
 const Comments = ({ visible, product_id }) => {
   const [comments, setComments] = useState([]);
@@ -172,37 +174,45 @@ const Comments = ({ visible, product_id }) => {
               </h2>
             </div>
 
-            <div className="bg-slate-400 border-r-medium p-4 mb-6 rounded-lg">
-              {/* Formulario para agregar comentarios */}
-              <form onSubmit={handleSubmit} className="mb-6">
-                <div className="py-2 px-4 mb-4 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                  <label htmlFor="comment" className="sr-only">
-                    Tu comentario
-                  </label>
-                  <textarea
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    id="comment"
-                    rows="4"
-                    className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                    placeholder="Escribe un comentario..."
-                    required
-                  ></textarea>
-                </div>
-                {/* Selector de estrellas para el rating */}
-                <span className="block mb-2 text-sm font-semibold text-gray-900">
-                  Calificación:
-                </span>
-                <StarRating rating={newRating} setRating={setNewRating} />
-                <button
-                  type="submit"
-                  className="py-2.5 px-4 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                >
-                  Publicar comentario
-                </button>
-              </form>
-            </div>
+            {commetUserId ? (
+              <div className="bg-slate-400 border-r-medium p-4 mb-6 rounded-lg">
+                <form onSubmit={handleSubmit} className="mb-6">
+                  <div className="py-2 px-4 mb-4 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                    <label htmlFor="comment" className="sr-only">
+                      Tu comentario
+                    </label>
+                    <textarea
+                      value={newComment}
+                      onChange={(e) => setNewComment(e.target.value)}
+                      id="comment"
+                      rows="4"
+                      className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                      placeholder="Escribe un comentario..."
+                      required
+                    ></textarea>
+                  </div>
 
+                  <span className="block mb-2 text-sm font-semibold text-gray-900">
+                    Calificación:
+                  </span>
+                  <StarRating rating={newRating} setRating={setNewRating} />
+                  <button
+                    type="submit"
+                    className="py-2.5 px-4 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                  >
+                    Publicar comentario
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <Link to="/login" className="hover:animate-zoom-in-horizontal">
+                <div className="w-full flex items-center my-3">
+                  <Alert color="secondary" variant="solid">
+                    Inicia sesión para publicar un comentario.
+                  </Alert>
+                </div>
+              </Link>
+            )}
             {/* Mensajes de carga, error y lista de comentarios */}
             {loading && (
               <p className="text-gray-500">Cargando comentarios...</p>

@@ -109,7 +109,7 @@ const ProductDetail = () => {
               <span className="text-gray-900">
                 vendido por:{" "}
                 <a href="#" className="text-pink-600 underline mx-4">
-                  petcos spa
+                  {producto.marca}
                 </a>{" "}
                 <Icon name="star" className="text-yellow-500" />
                 <Icon name="star" className="text-yellow-500" />
@@ -183,9 +183,6 @@ const ProductDetail = () => {
                   Comentarios
                 </Button>
               </div>
-              <p className="mt-8 font-normal text-gray-900">
-                {/* {producto.descripcion} */}
-              </p>
             </div>
           </div>
         </div>
