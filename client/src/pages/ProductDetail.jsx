@@ -188,7 +188,7 @@ const ProductDetail = () => {
         </div>
       </section>
 
-      <Comments visible={showComments} />
+      <Comments visible={showComments} product_id={id} />
       <FeaturedProducts />
       <NewProducts />
     </>
