@@ -63,6 +63,7 @@ const updateReviewController = async (req, res, next) => {
 };
 
 const deleteReviewController = async (req, res, next) => {
+  console.log("deleteReviewController");
   try {
     const { id_review } = req.params;
     const user_id = req.body.user_id;
