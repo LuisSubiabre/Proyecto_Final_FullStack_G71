@@ -64,9 +64,10 @@ export const getAllCartsByUserController = async (req, res, next) => {
 export const addCartItemController = async (req, res, next) => {
   try {
     const { product_id, cart_id, quantity } = req.body;
-
+    console.log(quantity);
     /* si el item existe en el carrito, incrementar la cantidad */
     const existingItem = await consultaItemCarrito(cart_id, product_id);
+    console.log(existingItem);
     if (existingItem) {
       const updatedItem = await incrementCartItem(
         existingItem.detail_id,
