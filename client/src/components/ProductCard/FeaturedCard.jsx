@@ -4,8 +4,8 @@ import {
   CardBody,
   CardFooter,
   Button,
+  Tooltip,
 } from "@nextui-org/react";
-import { Link } from "react-router-dom";
 import Icon from "../Icons.jsx";
 
 const FeaturedCard = () => {
@@ -43,12 +43,17 @@ const FeaturedCard = () => {
             </p>
           </CardBody>
           <CardFooter className="flex justify-end">
-            <Link to="/shopping-cart">
-              <Button className="bg-[var(--color-highlight)] text-white hover:bg-[var(--color-primary-dark)] transition w-full sm:w-auto">
-                Agrega al carrito
-                <Icon name="cart" className="ml-2" />
-              </Button>
-            </Link>
+            <Tooltip content="Funcionalidad disponible en futuras actualizaciones">
+              <div>
+                <Button
+                  className="bg-[var(--color-highlight)] text-white hover:bg-[var(--color-primary-dark)] transition w-full sm:w-auto"
+                  isDisabled color="primary"
+                >
+                  Agregar al carrito
+                  <Icon name="cart" className="ml-2" />
+                </Button>
+              </div>
+            </Tooltip>
           </CardFooter>
         </div>
       </div>

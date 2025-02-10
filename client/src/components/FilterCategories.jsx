@@ -1,8 +1,21 @@
 import { Accordion, AccordionItem, Slider, Skeleton } from "@nextui-org/react";
+import { useState } from "react";
 import useCategories from "../hook/useCategories.jsx";
 
-const FilterCategories = () => {
+const FilterCategories = ({ onFilterBySubcategory, onFilterByPrice }) => {
     const { allSubcategories, loading, error } = useCategories();
+    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+    const [priceRange, setPriceRange] = useState([0, 50000]);
+
+    const handleSubcategoryChange = (subcategoryId) => {
+        setSelectedSubcategory(subcategoryId);
+        onFilterBySubcategory(subcategoryId);
+    };
+
+    const handlePriceChange = (value) => {
+        setPriceRange(value);
+        onFilterByPrice(value);
+    };
 
     return (
         <div className="w-72 p-4 bg-purple-300 rounded-lg shadow-md m-3">
@@ -28,7 +41,11 @@ const FilterCategories = () => {
                                 <li key={subcategory.id} className="mb-2">
                                     <label className="flex items-center text-purple-700">
                                         <input
-                                            type="checkbox"
+                                            type="radio"
+                                            name="subcategory"
+                                            value={subcategory.id}
+                                            checked={selectedSubcategory === subcategory.id}
+                                            onChange={() => handleSubcategoryChange(subcategory.id)}
                                             className="mr-2 accent-purple-500"
                                         />
                                         {subcategory.title}
@@ -49,6 +66,8 @@ const FilterCategories = () => {
                         <Slider
                             className="w-full"
                             defaultValue={[0, 50000]}
+                            value={priceRange}
+                            onChange={handlePriceChange}
                             formatOptions={{ style: "currency", currency: "CLP" }}
                             label="Rango de precios"
                             maxValue={50000}
