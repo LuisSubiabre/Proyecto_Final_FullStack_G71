@@ -5,7 +5,6 @@ export const formatPrice = (price) => {
     }
 
     if (typeof price === 'string') {
-        // Convertir la cadena a número
         price = parseFloat(price.replace(',', '.'));
     }
 
@@ -13,8 +12,6 @@ export const formatPrice = (price) => {
         console.error("El precio no es un número válido:", price);
         return "0";
     }
-
-    // Convertir a string y agregar puntos de miles manualmente
     return Math.round(price)
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
