@@ -7,6 +7,7 @@ import FavoritosContext from "../../context/FavoritosContext.jsx";
 import CartContext from "../../context/CartContext.jsx";
 import useAuth from "../../hook/useAuth.jsx";
 import useCategories from "../../hook/useCategories.jsx";
+import  { formatPrice } from "../../helpers/formatPrice.jsx";
 
 const CardComponent = ({ producto }) => {
   const { favoritos, setFavoritos } = useContext(FavoritosContext);
@@ -72,7 +73,7 @@ const CardComponent = ({ producto }) => {
   return (
     <Card className="relative max-w-sm bg-white shadow-md shadow-[--color-primary-light] border-[1.5px] border-[var(--color-primary-dark)]">
       <CardHeader>
-        <h3 className="text-lg max-h-[25px] font-epilogue text-[var(--color-primary-dark)] font-bold">
+        <h3 className="text-base max-h-[25px] font-epilogue text-[var(--color-primary-dark)] font-bold -mt-1">
           {producto.name_product}
         </h3>
       </CardHeader>
@@ -112,10 +113,10 @@ const CardComponent = ({ producto }) => {
 
       <CardBody className="flex flex-col space-y-1">
         <p className="text-[var(--color-primary-dark)] font-epilogue font-bold text-2xl text-right">
-          ${producto.price}
+        ${formatPrice(producto.price)}
         </p>
-        <p className="text-xs text-gray-500">Subcategoría: {subcategoryName}</p>
-        <p className="text-xs text-gray-500">Categoría: {categoryName}</p>
+        <p className="text-xs text-gray-500">Subcategoría: <span className="text-[var(--color-highlight)]">{subcategoryName}</span></p>
+        <p className="text-xs text-gray-500">Categoría: <span className="text-[var(--color-highlight)]">{categoryName}</span></p>
       </CardBody>
 
       <CardBody className="font-epilogue">
