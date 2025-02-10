@@ -1,14 +1,16 @@
-import { useEffect, useContext } from "react";
+import { useCallback } from "react";
 import CardComponent from "../components/ProductCard/CardComponent.jsx";
-import dataProductos from "../data/dataProductos.json";
-import FavoritosContext from "../context/FavoritosContext.jsx";
+import { getProductsByCategory } from "../service/productService.js";
+import useRandomProductsWithCache from "../hook/useRandomProductsWithCache.jsx";
 
 const NewProducts = () => {
-    const { favoritos } = useContext(FavoritosContext);
+    const fetchProducts = useCallback(() => getProductsByCategory(1), []);
 
-    useEffect(() => {
-        console.log("Favoritos:", favoritos);
-    }, [favoritos]);
+    const { products, error } = useRandomProductsWithCache(fetchProducts, "new", 3);
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <section className="p-6 bg-[var(--color-neutral-light)]">
@@ -16,8 +18,8 @@ const NewProducts = () => {
                 DESCUBRE NUESTROS NUEVOS PRODUCTOS A LA VENTA
             </h2>
             <div className="flex flex-wrap justify-around gap-2">
-                {dataProductos.map((producto) => (
-                    <CardComponent key={producto.id} producto={producto} />
+                {products.map((producto) => (
+                    <CardComponent key={producto.product_id} producto={producto} />
                 ))}
             </div>
         </section>
@@ -25,5 +27,4 @@ const NewProducts = () => {
 };
 
 export default NewProducts;
-
 

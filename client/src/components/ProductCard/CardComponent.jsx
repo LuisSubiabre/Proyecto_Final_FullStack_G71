@@ -1,103 +1,146 @@
-import { useState, useContext } from "react";
-import FavoritosContext from "../../context/FavoritosContext.jsx";
-import CartContext  from "../../context/CartContext.jsx";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Button,
-  Image,
-  Alert,
-} from "@nextui-org/react";
+import { useState, useEffect, useContext } from "react";
+import { getSubcategoryById } from "../../service/categoriesService.js";
+import { Tooltip, Card, CardHeader, CardBody, CardFooter, Button, Image, Alert } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import Icon from "../Icons.jsx";
+import FavoritosContext from "../../context/FavoritosContext.jsx";
+import CartContext from "../../context/CartContext.jsx";
+import useAuth from "../../hook/useAuth.jsx";
+import useCategories from "../../hook/useCategories.jsx";
+import  { formatPrice } from "../../helpers/formatPrice.jsx";
 
 const CardComponent = ({ producto }) => {
   const { favoritos, setFavoritos } = useContext(FavoritosContext);
   const { addToCart } = useContext(CartContext);
+  const { user } = useAuth();
+
+  const { menus: categories } = useCategories();
   const [showAlert, setShowAlert] = useState(false);
   const [isFavorite, setIsFavorite] = useState(
-    favoritos.some((fav) => fav.id === producto.id)
+    favoritos.some((fav) => fav.product_id === producto.product_id)
   );
+  const [subcategoryName, setSubcategoryName] = useState("");
+  const [categoryName, setCategoryName] = useState("Desconocida");
+
+  useEffect(() => {
+    if (producto.subcategory_id) {
+      getSubcategoryById(producto.subcategory_id)
+        .then((res) => {
+          const subcatName = res.data?.name_subcategories;
+          setSubcategoryName(subcatName ? subcatName : "Desconocida");
+        })
+        .catch((error) => {
+          console.error("Error al obtener la subcategoría:", error);
+          setSubcategoryName("Desconocida");
+        });
+    }
+  }, [producto.subcategory_id]);
+
+  useEffect(() => {
+    const category = categories.find((cat) => cat.id === producto.category_id);
+    if (category) {
+      setCategoryName(category.title);
+    }
+  }, [categories, producto.category_id]);
 
   const handleAddToCart = () => {
-    addToCart(producto);
+    addToCart({
+      product_id: producto.product_id,
+      name_product: producto.name_product,
+      price: producto.price,
+      image_url: producto.image_url,
+    });
+
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
-    }, 4000); // Oculta la alerta después de 4 segundos
+    }, 4000);
   };
 
   const handleToggleFavorite = () => {
-    if (isFavorite) {
-      // Elimina el producto de los favoritos
-      setFavoritos((prevFavoritos) =>
-        prevFavoritos.filter((fav) => fav.id !== producto.id)
-      );
-    } else {
-      // Agrega el producto a los favoritos
-      setFavoritos((prevFavoritos) => [...prevFavoritos, producto]);
+    if (user) {
+      if (isFavorite) {
+        setFavoritos((prevFavoritos) =>
+          prevFavoritos.filter((fav) => fav.product_id !== producto.product_id)
+        );
+      } else {
+        setFavoritos((prevFavoritos) => [...prevFavoritos, producto]);
+      }
+      setIsFavorite(!isFavorite);
     }
-    setIsFavorite(!isFavorite);
   };
 
   return (
     <Card className="relative max-w-sm bg-white shadow-md shadow-[--color-primary-light] border-[1.5px] border-[var(--color-primary-dark)]">
       <CardHeader>
-        <h3 className="text-lg max-h-[32px] text-center font-epilogue text-[var(--color-primary-dark)] font-semibold">
-          {producto.nombre}
+        <h3 className="text-base max-h-[25px] font-epilogue text-[var(--color-primary-dark)] font-bold -mt-1">
+          {producto.name_product}
         </h3>
       </CardHeader>
-      <CardBody className="relative">
-        <div className="relative">
+      <CardBody>
+        <div className="relative w-full max-h-[230px] flex flex-col justify-center items-center">
+          <div className="absolute top-2 left-2 font-epilogue font-semibold text-[var(--color-secondary-dark)] z-20 -mt-5 text-sm">
+            <p>Marca {producto.brand}</p>
+          </div>
           <Image
             isZoomed
-            src={producto.imagen}
-            alt={producto.nombre}
-            width="100%"
-            className="rounded-t-md w-full object-cover"
+            src={producto.image_url}
+            alt={producto.name_product}
+            className="rounded-t-md w-full max-h-[230px] object-cover"
           />
-          <button
-            onClick={handleToggleFavorite}
-            className={`absolute bottom-2 right-2 text-4xl z-10 transition-colors ${
-              isFavorite ? "text-red-500" : "text-gray-400"
-            } hover:text-red-500`}
-          >
-            <Icon name="heart" />
-          </button>
+          {user ? (
+            <Tooltip content="Agregar a favoritos">
+              <button
+                onClick={handleToggleFavorite}
+                className={`absolute bottom-2 right-2 text-4xl z-10 transition-colors ${isFavorite ? "text-red-500" : "text-gray-400"
+                  } hover:text-red-500`}
+              >
+                <Icon name="heart" />
+              </button>
+            </Tooltip>
+          ) : (
+            <Tooltip content="Debes iniciar sesión para agregar a favoritos">
+              <button
+                disabled
+                className="absolute bottom-2 right-2 text-4xl z-10 text-gray-400"
+              >
+                <Icon name="heart" />
+              </button>
+            </Tooltip>
+          )}
         </div>
       </CardBody>
-      <CardBody>
-        <p className="text-[var(--color-primary-dark)] text-right font-epilogue font-bold text-2xl">
-          ${producto.precio}
+
+      <CardBody className="flex flex-col space-y-1">
+        <p className="text-[var(--color-primary-dark)] font-epilogue font-bold text-2xl text-right">
+        ${formatPrice(producto.price)}
         </p>
+        <p className="text-xs text-gray-500">Subcategoría: <span className="text-[var(--color-highlight)]">{subcategoryName}</span></p>
+        <p className="text-xs text-gray-500">Categoría: <span className="text-[var(--color-highlight)]">{categoryName}</span></p>
       </CardBody>
+
       <CardBody className="font-epilogue">
-        <p className="text-sm text-gray-600">{producto.descripcion}</p>
-        <p className="text-xs text-gray-500 mt-1">
-          Categoría: {producto.categoria}
-        </p>
+        <p className="text-sm text-gray-600">{producto.description}</p>
       </CardBody>
       <CardFooter className="flex flex-col justify-between items-center font-arvo relative">
-        <Button
-          size="xs"
-          onPress={handleAddToCart}
-          className="w-full mb-2 bg-white text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)] hover:bg-[var(--color-primary)] hover:text-white"
-        >
-          Añade al carrito
-          <Icon name="cart" className="ml-1" />
-        </Button>
-        {showAlert && (
-          <Alert
-            className="absolute top-[110%]"
-            color="success"
-            variant="bordered"
+        <Tooltip content={!user ? "Debes iniciar sesión para añadir al carrito" : "Añadir al carrito"}>
+          <Button
+            size="xs"
+            onPress={handleAddToCart}
+            disabled={!user}
+            className={`w-full mb-1 ${user ? "bg-white text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)] hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
           >
+            Añade al carrito
+            <Icon name="cart" className="ml-1" />
+          </Button>
+        </Tooltip>
+        {showAlert && (
+          <Alert className="absolute top-[110%]" color="success" variant="bordered">
             Producto agregado al carrito con éxito.
           </Alert>
         )}
-        <Link to={`/product/${producto.id}`} className="w-full mt-2">
+        <Link to={`/product/${producto.product_id}`} className="w-full mt-0.5">
           <Button
             size="xs"
             className="w-full bg-[var(--color-highlight)] text-white hover:bg-white hover:text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)]"
@@ -111,6 +154,9 @@ const CardComponent = ({ producto }) => {
 };
 
 export default CardComponent;
+
+
+
 
 
 

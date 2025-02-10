@@ -3,17 +3,84 @@
 import { useParams } from "react-router-dom";
 import FeaturedProducts from "../components/FeaturedProducts";
 import NewProducts from "../components/NewProducts";
-import dataProductos from "../data/dataProductos.json";
-
-import { Button, Image } from "@nextui-org/react";
+import CartContext from "../context/CartContext.jsx";
+import {
+  Button,
+  Image,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Alert,
+} from "@nextui-org/react";
 import Icon from "../components/Icons";
+import { useContext, useEffect, useState } from "react";
+import Comments from "../components/Comments.jsx";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const [producto, setProducto] = useState({});
+  const { addToCart } = useContext(CartContext);
+  const [showAlert, setShowAlert] = useState(false);
+  const [showComments, setShowComments] = useState(false);
 
-  const producto = dataProductos.find(
-    (producto) => producto.id === parseInt(id)
-  );
+  useEffect(() => {
+    fetchProductoDetalle(id);
+  }, []);
+
+  const handleAddToCart = () => {
+    addToCart({
+      product_id: producto.id, // <-- Usa producto.id
+      name_product: producto.nombre, // <-- Usa producto.nombre
+      price: producto.precio, // <-- Usa producto.precio
+      image_url: producto.imagen, // <-- Usa producto.imagen
+    });
+
+    disminuirCantidad();
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 4000);
+  };
+  const disminuirCantidad = () => {
+    if (producto.cantidad > 0) {
+      setProducto({ ...producto, cantidad: producto.cantidad - 1 });
+    }
+  };
+
+  const fetchProductoDetalle = async (id) => {
+    console.log("fetchProductoDetalle", id);
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_URL_BASE}/products/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer 123`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("No se pudo obtener el producto");
+      }
+      const data = await response.json();
+      console.log("data", data);
+
+      // Ajustamos los nombres de las propiedades
+      setProducto({
+        id: data.data.product_id,
+        nombre: data.data.name_product,
+        descripcion: data.data.description,
+        marca: data.data.brand,
+        precio: data.data.price,
+        cantidad: data.data.quantity,
+        categoriaId: data.data.category_id,
+        imagen: data.data.image_url,
+      });
+    } catch (error) {
+      console.error("Error al cargar el producto", error);
+    }
+  };
   /* la linea de arriba se reemplaza por el fetch de llamada a la API */
 
   return (
@@ -42,7 +109,7 @@ const ProductDetail = () => {
               <span className="text-gray-900">
                 vendido por:{" "}
                 <a href="#" className="text-pink-600 underline mx-4">
-                  petcos spa
+                  {producto.marca}
                 </a>{" "}
                 <Icon name="star" className="text-yellow-500" />
                 <Icon name="star" className="text-yellow-500" />
@@ -65,29 +132,63 @@ const ProductDetail = () => {
                     ${producto.precio}
                   </span>
                 </p>
-                <Button className="ml-8 size-80 bg-rose-500 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
+                <Button
+                  onPress={handleAddToCart}
+                  className="ml-8 size-80 bg-rose-500 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full"
+                >
                   Agregar al carrito
                   <Icon name="cart" className="ml-1" />
                 </Button>
+                {showAlert && (
+                  <Alert
+                    className="absolute top-[110%]"
+                    color="success"
+                    variant="bordered"
+                  >
+                    Producto agregado al carrito con éxito.
+                  </Alert>
+                )}
               </div>
               <div className="flex space-x-4 mt-8">
-                <Button className="size-40 bg-blue-800 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
-                  Información
-                </Button>
-                <Button className="size-40 bg-fuchsia-700 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
-                  Disponibilidad
-                </Button>
-                <Button className="size-40 bg-fuchsia-700 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
+                <Popover showArrow offset={20} placement="bottom">
+                  <PopoverTrigger className="size-40 bg-blue-800 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
+                    <Button>Información</Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <div className="px-1 py-2">
+                      <div className="text-small font-bold">Disponibilidad</div>
+                      <div className="text-tiny">{producto.descripcion}</div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                <Popover showArrow offset={20} placement="bottom">
+                  <PopoverTrigger className="size-40 bg-fuchsia-700 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full">
+                    <Button>Disponibilidad: {producto.cantidad}</Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <div className="px-1 py-2">
+                      <div className="text-small font-bold">Disponibilidad</div>
+                      <div className="text-tiny">
+                        {producto.cantidad} en Stock
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                <Button
+                  onPress={() => setShowComments(!showComments)}
+                  className="size-40 bg-fuchsia-700 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full"
+                >
                   Comentarios
                 </Button>
               </div>
-              <p className="mt-8 font-normal text-gray-900">
-                {producto.descripcion}
-              </p>
             </div>
           </div>
         </div>
       </section>
+
+      <Comments visible={showComments} product_id={id} />
       <FeaturedProducts />
       <NewProducts />
     </>

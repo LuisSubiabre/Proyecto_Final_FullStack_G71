@@ -1,65 +1,100 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
-// Importaciones de componentes
-import Navbar from "./components/Navbar/Navbar.jsx";
-import Footer from "./components/Footer/Footer.jsx";
-import Banner from "./components/Banner";
+// Componentes y layouts
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import LoadingSpinner from "./components/LoadingSpinner.jsx";
+import DefaultLayout from "./layouts/DefaultLayout.jsx";
+import MinimalLayout from "./layouts/MinimalLayout.jsx";
 
-// Importaciones de páginas
-import Home from "./pages/Home.jsx";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
-import Category from "./pages/Category.jsx";
-import NotFound from "./pages/NotFound.jsx";
-import ShoppingCart from "./pages/ShoppingCart.jsx";
-import SiteUnderConstruction from "./pages/SiteUnderConstruction.jsx";
-import ProductDetail from "./pages/ProductDetail.jsx";
-import FavoriteProducts from "./pages/FavoriteProducts.jsx";
-import AdminUserProfile from "./pages/UserProfile/Admin/AdminUserProfile.jsx";
-import RegularUserProfile from "./pages/UserProfile/RegularUser/RegularUserProfile..jsx";
-import SellerUserProfile from "./pages/UserProfile/Seller/SellerUserProfile.jsx";
-import Publications from "./pages/UserProfile/Seller/Publications.jsx";
-
-// Componente Layout para las páginas con Banner, Navbar y Footer
-const DefaultLayout = ({ children }) => (
-  <>
-    <Banner />
-    <header className="sticky top-0 z-50">
-      <Navbar />
-    </header>
-    <main className="flex-1 overflow-y-auto">{children}</main>
-    <footer>
-      <Footer />
-    </footer>
-  </>
-);
-
-// Componente Layout sin Banner, Navbar ni Footer
-const MinimalLayout = ({ children }) => <main className="flex-1">{children}</main>;
+// Lazy load de páginas
+const Home = lazy(() => import("./pages/Home.jsx"));
+const Category = lazy(() => import("./pages/Category.jsx"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail.jsx"));
+const FavoriteProducts = lazy(() => import("./pages/FavoriteProducts.jsx"));
+const ShoppingCart = lazy(() => import("./pages/ShoppingCart.jsx"));
+const SiteUnderConstruction = lazy(() => import("./pages/SiteUnderConstruction.jsx"));
+const AdminUserProfile = lazy(() => import("./pages/UserProfile/Admin/AdminUserProfile.jsx"));
+const RegularUserProfile = lazy(() => import("./pages/UserProfile/RegularUser/RegularUserProfile..jsx"));
+const SellerUserProfile = lazy(() => import("./pages/UserProfile/Seller/SellerUserProfile.jsx"));
+const Publications = lazy(() => import("./pages/UserProfile/Seller/Publications.jsx"));
+const Login = lazy(() => import("./pages/Login.jsx"));
+const Register = lazy(() => import("./pages/Register.jsx"));
+const NotFound = lazy(() => import("./pages/NotFound.jsx"));
+const SearchResults = lazy(() => import("./pages/SearchResults.jsx"));
 
 function App() {
-
   return (
-    <div className="flex flex-col min-h-screen">
+    <Suspense fallback={<LoadingSpinner />}>
       <Routes>
+        {/* Rutas que usan DefaultLayout */}
+        <Route element={<DefaultLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/category/:id/:subcategoryId" element={<Category />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/search-results" element={<SearchResults />} />
+          <Route path="/sitio-en-construccion" element={<SiteUnderConstruction />} />
 
-        <Route path="/" element={<DefaultLayout> <Home /> </DefaultLayout>} />
-        <Route path="/category/:id/:name" element={<DefaultLayout> <Category /> </DefaultLayout>} />
-        <Route path="/product/:id" element={<DefaultLayout> <ProductDetail /> </DefaultLayout>} />
-        <Route path="/favorite-products" element={<DefaultLayout> <FavoriteProducts /> </DefaultLayout>} />
-        <Route path="/shopping-cart" element={<DefaultLayout> <ShoppingCart /> </DefaultLayout>} />
-        <Route path="/sitio-en-construccion" element={<DefaultLayout> <SiteUnderConstruction /> </DefaultLayout>} />
-        <Route path="/profile-admin" element={<DefaultLayout> <AdminUserProfile /> </DefaultLayout>} />
-        <Route path="/profile-regular" element={<DefaultLayout> <RegularUserProfile /> </DefaultLayout>} />
-        <Route path="/profile-seller" element={<DefaultLayout> <SellerUserProfile /> </DefaultLayout>} />
-        <Route path="/new-publication" element={<DefaultLayout> <Publications /> </DefaultLayout>} />
-        <Route path="/login" element={<MinimalLayout> <Login /> </MinimalLayout>} />
-        <Route path="/register" element={<MinimalLayout> <Register /> </MinimalLayout>} />
-        <Route path="*" element={<MinimalLayout> <NotFound /> </MinimalLayout>} />
+          {/* Rutas protegidas */}
+          <Route
+            path="/favorite-products"
+            element={
+              <PrivateRoute>
+                <FavoriteProducts />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/shopping-cart"
+            element={
+              <PrivateRoute>
+                <ShoppingCart />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile-admin"
+            element={
+              <PrivateRoute>
+                <AdminUserProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile-user"
+            element={
+              <PrivateRoute>
+                <RegularUserProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile-seller"
+            element={
+              <PrivateRoute>
+                <SellerUserProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/new-publication"
+            element={
+              <PrivateRoute>
+                <Publications />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+
+        {/* Rutas con MinimalLayout */}
+        <Route element={<MinimalLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
-    </div>
+    </Suspense>
   );
 }
 
 export default App;
-

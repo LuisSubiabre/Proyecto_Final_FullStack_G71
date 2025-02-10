@@ -1,45 +1,74 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
 import FilterCategories from "../components/FilterCategories.jsx";
 import CardComponent from "../components/ProductCard/CardComponent.jsx";
 import { Pagination } from "@nextui-org/react";
-import dataProductsCategories from "../data/dataProductsCategories.json";
+import { getProductsBySubcategory } from "../service/productService.js";
 
 const ITEMS_PER_PAGE = 6;
 
 const Category = () => {
-    const { name, id } = useParams();
+    const { id, subcategoryId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [error, setError] = useState(null);
+    const [selectedSubcategory, setSelectedSubcategory] = useState(subcategoryId || null);
+    const [priceRange, setPriceRange] = useState([0, 50000]); // Estado para el rango de precios
 
-    // Determinar el total de páginas
-    const totalPages = Math.ceil(dataProductsCategories.length / ITEMS_PER_PAGE);
+    useEffect(() => {
+        if (!selectedSubcategory) return;
 
-    // Obtener los productos para la página actual
+        getProductsBySubcategory(selectedSubcategory)
+            .then((response) => {
+                const productsArray = response.data || [];
+                if (productsArray.length > 0) {
+                    setProducts(productsArray);
+                    setFilteredProducts(productsArray); // Inicialmente, los productos filtrados son todos los productos
+                } else {
+                    setError("No se encontraron productos para esta subcategoría.");
+                }
+            })
+            .catch((err) => {
+                console.error("Error al obtener productos:", err);
+                setError("Error al obtener productos.");
+            });
+    }, [selectedSubcategory]);
+
+    useEffect(() => {
+        // Aplicar filtro de precio cuando cambia el rango de precios
+        const filtered = products.filter(product =>
+            product.price >= priceRange[0] && product.price <= priceRange[1]
+        );
+        setFilteredProducts(filtered);
+        setCurrentPage(1);
+    }, [priceRange, products]);
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const currentProducts = dataProductsCategories.slice(
-        startIndex,
-        startIndex + ITEMS_PER_PAGE
-    );
+    const currentProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
     return (
-        <div className="category-page p-4">
+        <div className="p-4">
             <Breadcrumb categoryName={name} categoryId={parseInt(id, 10)} />
             <div className="flex flex-col md:flex-row">
-                {/* Filtros */}
                 <div className="w-full md:w-1/4 mb-4">
-                    <FilterCategories />
+                    <FilterCategories
+                        onFilterBySubcategory={setSelectedSubcategory}
+                        onFilterByPrice={setPriceRange}
+                    />
                 </div>
-
-                {/* Productos */}
                 <div className="w-full md:w-3/4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {currentProducts.map((producto) => (
-                            <CardComponent key={producto.id} producto={producto} />
+                            <CardComponent key={producto.product_id} producto={producto} />
                         ))}
                     </div>
-
-                    {/* Paginación */}
                     <div className="mt-6 flex justify-center">
                         <Pagination
                             total={totalPages}
@@ -57,7 +86,3 @@ const Category = () => {
 };
 
 export default Category;
-
-
-
-

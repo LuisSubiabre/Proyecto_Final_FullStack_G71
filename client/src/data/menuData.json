@@ -1,101 +1,101 @@
 {
-    "admin": {
-        "avatar": "https://res.cloudinary.com/dxxrdckad/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/hombre_perfil_godyjs.jpg",
-        "menu": [
-            {
-                "id": "admin-settings",
-                "icon": "cog",
-                "label": "Ajustes de administrador",
-                "link": "/profile-admin"
-            },
-            {
-                "id": "admin-purchases",
-                "icon": "shoppingBag",
-                "label": "Total ventas",
-                "link": "/sitio-en-construccion"
-            },
-            {
-                "id": "admin-publications",
-                "icon": "folder",
-                "label": "Publicaciones",
-                "link": "/admin/publications"
-            },
-            {
-                "id": "admin-users",
-                "icon": "users",
-                "label": "Administrar usuarios",
-                "link": "/sitio-en-construccion"
-            },
-            {
-                "id": "admin-logout",
-                "icon": "signOutAlt",
-                "label": "Cerrar sesión",
-                "link": "/logout"
-            }
-        ]
-    },
-    "seller": {
-        "avatar": "https://res.cloudinary.com/dxxrdckad/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/seller_perfil_v8jnot.jpg",
-        "menu": [
-            {
-                "id": "seller-settings",
-                "icon": "cog",
-                "label": "Ajustes de vendedor",
-                "link": "/profile-seller"
-            },
-            {
-                "id": "seller-sales",
-                "icon": "dollarSign",
-                "label": "Tus ventas",
-                "link": "/sitio-en-construccion"
-            },
-            {
-                "id": "seller-publications",
-                "icon": "folder",
-                "label": "Publicaciones",
-                "link": "/sitio-en-construccion"
-            },
-            {
-                "id": "seller-new-publication",
-                "icon": "plusCircle",
-                "label": "Nueva publicación",
-                "link": "/new-publication"
-            },
-            {
-                "id": "seller-logout",
-                "icon": "signOutAlt",
-                "label": "Cerrar sesión",
-                "link": "/logout"
-            }
-        ]
-    },
-    "user": {
-        "avatar": "https://res.cloudinary.com/dxxrdckad/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/user_perfil_holyrm.avif",
-        "menu": [
-            {
-                "id": "user-settings",
-                "icon": "cog",
-                "label": "Ajustes de usuario",
-                "link": "/profile-user"
-            },
-            {
-                "id": "user-purchases",
-                "icon": "cart",
-                "label": "Tus compras",
-                "link": "/sitio-en-construccion"
-            },
-            {
-                "id": "user-favorites",
-                "icon": "heart",
-                "label": "Tus favoritos",
-                "link": "/favorite-products"
-            },
-            {
-                "id": "user-logout",
-                "icon": "signOutAlt",
-                "label": "Cerrar sesión",
-                "link": "/logout"
-            }
-        ]
-    }
+  "admin": {
+    "avatar": "https://res.cloudinary.com/libreriaalondra/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/hombre_perfil_godyjs.jpg",
+    "menu": [
+      {
+        "id": "admin-settings",
+        "icon": "cog",
+        "label": "Ajustes de administrador",
+        "link": "/profile-admin"
+      },
+      {
+        "id": "admin-purchases",
+        "icon": "shoppingBag",
+        "label": "Total ventas",
+        "link": "/sitio-en-construccion"
+      },
+      {
+        "id": "admin-publications",
+        "icon": "folder",
+        "label": "Publicaciones",
+        "link": "/admin/publications"
+      },
+      {
+        "id": "admin-users",
+        "icon": "users",
+        "label": "Administrar usuarios",
+        "link": "/sitio-en-construccion"
+      },
+      {
+        "id": "admin-logout",
+        "icon": "signOutAlt",
+        "label": "Cerrar sesión",
+        "link": "/logout"
+      }
+    ]
+  },
+  "seller": {
+    "avatar": "https://res.cloudinary.com/libreriaalondra/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/seller_perfil_v8jnot.jpg",
+    "menu": [
+      {
+        "id": "seller-settings",
+        "icon": "cog",
+        "label": "Ajustes de vendedor",
+        "link": "/profile-seller"
+      },
+      {
+        "id": "seller-sales",
+        "icon": "dollarSign",
+        "label": "Tus ventas",
+        "link": "/sitio-en-construccion"
+      },
+      {
+        "id": "seller-publications",
+        "icon": "folder",
+        "label": "Publicaciones",
+        "link": "/sitio-en-construccion"
+      },
+      {
+        "id": "seller-new-publication",
+        "icon": "plusCircle",
+        "label": "Nueva publicación",
+        "link": "/new-publication"
+      },
+      {
+        "id": "seller-logout",
+        "icon": "signOutAlt",
+        "label": "Cerrar sesión",
+        "link": "/logout"
+      }
+    ]
+  },
+  "user": {
+    "avatar": "https://res.cloudinary.com/libreriaalondra/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/user_perfil_holyrm.avif",
+    "menu": [
+      {
+        "id": "user-settings",
+        "icon": "cog",
+        "label": "Ajustes de usuario",
+        "link": "/profile-user"
+      },
+      {
+        "id": "user-purchases",
+        "icon": "cart",
+        "label": "Tus compras",
+        "link": "/sitio-en-construccion"
+      },
+      {
+        "id": "user-favorites",
+        "icon": "heart",
+        "label": "Tus favoritos",
+        "link": "/favorite-products"
+      },
+      {
+        "id": "user-logout",
+        "icon": "signOutAlt",
+        "label": "Cerrar sesión",
+        "link": "/logout"
+      }
+    ]
+  }
 }
