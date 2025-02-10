@@ -61,7 +61,7 @@ function App() {
             }
           />
           <Route
-            path="/profile-regular"
+            path="/profile-user"
             element={
               <PrivateRoute>
                 <RegularUserProfile />
