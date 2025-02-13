@@ -71,14 +71,34 @@ export const createCartItem = async (cart_id, product_id, quantity) => {
 };
 
 // Incrementar cantidad de un ítem en el carrito
-export const incrementCartItem = async (detail_id, quantity) => {
-  const query =
-    "UPDATE cart_items SET quantity = $1 WHERE detail_id = $2 RETURNING *";
+export const incrementCartItem = async (detail_id) => {
+  // Primero, obtener la cantidad actual del ítem
+  const getQuantityQuery =
+    "SELECT quantity FROM cart_items WHERE detail_id = $1";
+
   try {
-    const result = await pool.query(query, [quantity, detail_id]);
-    console.log("-->" + result.rows[0]);
+    // Obtener la cantidad actual
+    const currentQuantityResult = await pool.query(getQuantityQuery, [
+      detail_id,
+    ]);
+
+    if (currentQuantityResult.rows.length === 0) {
+      throw new Error("Ítem no encontrado en el carrito");
+    }
+
+    const currentQuantity = currentQuantityResult.rows[0].quantity;
+
+    // Calcular la nueva cantidad sumando 1
+    const newQuantity = currentQuantity + 1;
+
+    // Actualizar la cantidad en la base de datos
+    const updateQuery =
+      "UPDATE cart_items SET quantity = $1 WHERE detail_id = $2 RETURNING *";
+    const result = await pool.query(updateQuery, [newQuantity, detail_id]);
+
     return result.rows[0];
   } catch (error) {
+    console.error("Error al incrementar la cantidad del ítem:", error);
     throw error;
   }
 };

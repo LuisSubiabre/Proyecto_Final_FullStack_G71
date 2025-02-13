@@ -20,6 +20,7 @@ const SellerUserProfile = lazy(() => import("./pages/UserProfile/Seller/SellerUs
 const Publications = lazy(() => import("./pages/UserProfile/Seller/Publications.jsx"));
 const Login = lazy(() => import("./pages/Login.jsx"));
 const Register = lazy(() => import("./pages/Register.jsx"));
+const RecoverPassword= lazy(() => import("./pages/Recoverypass.jsx"));
 const NotFound = lazy(() => import("./pages/NotFound.jsx"));
 const SearchResults = lazy(() => import("./pages/SearchResults.jsx"));
 
@@ -90,6 +91,7 @@ function App() {
         <Route element={<MinimalLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/recover-password" element={<RecoverPassword />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
