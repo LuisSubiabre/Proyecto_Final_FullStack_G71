@@ -82,3 +82,4 @@ const FilterCategories = ({ onFilterBySubcategory, onFilterByPrice }) => {
 };
 
 export default FilterCategories;
+

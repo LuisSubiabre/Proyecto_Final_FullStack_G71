@@ -7,12 +7,15 @@ import "./index.css";
 import { FavoritosProvider } from "./context/FavoritosContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import { AuthContextProvider } from "./context/authContext.jsx";
+import { CategoriesProvider } from "./context/categoriesContext.jsx";
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <NextUIProvider>
       <BrowserRouter>
         <AuthContextProvider>
+          <CategoriesProvider>
           <CartProvider>
             <FavoritosProvider>
               <main className="dark text-foreground bg-background">
@@ -20,6 +23,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               </main>
             </FavoritosProvider>
           </CartProvider>
+          </CategoriesProvider>
         </AuthContextProvider>
       </BrowserRouter>
     </NextUIProvider>

@@ -17,11 +17,11 @@ const SearchResults = () => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+    const [priceRange, setPriceRange] = useState([0, 25000]);
 
     useEffect(() => {
         setLoading(true);
         if (selectedSubcategory) {
-            // Filtrar por subcategoría
             getProductsBySubcategory(selectedSubcategory)
                 .then((response) => {
                     if (response.success) {
@@ -55,9 +55,18 @@ const SearchResults = () => {
         }
     }, [searchQuery, selectedSubcategory]);
 
-    const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [priceRange]);
+
+    const filteredProducts = products.filter(
+        (product) =>
+            product.price >= priceRange[0] && product.price <= priceRange[1]
+    );
+
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const currentProducts = products.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    const currentProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
     return (
         <div className="p-4">
@@ -70,15 +79,18 @@ const SearchResults = () => {
                 </p>
             )}
             {error && <p className="text-red-500 animate-pulse text-center">{error}</p>}
-            {products.length === 0 && !loading && !error && (
+            {filteredProducts.length === 0 && !loading && !error && (
                 <p className="text-[var(--color-primary-light)]">No se encontraron productos.</p>
             )}
             <div className="flex flex-col md:flex-row">
-                <div>
-                    <FilterCategories onFilterBySubcategory={setSelectedSubcategory} />
+                <div className="justify-items-center sm:justify-items-stretch">
+                    <FilterCategories
+                        onFilterBySubcategory={setSelectedSubcategory}
+                        onFilterByPrice={setPriceRange}
+                    />
                 </div>
                 <div className="w-full">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center sm:justify-items-stretch">
                         {currentProducts.map((producto) => (
                             <CardComponent key={producto.product_id} producto={producto} />
                         ))}

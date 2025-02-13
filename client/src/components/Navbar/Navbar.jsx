@@ -11,18 +11,13 @@ import {
   Badge,
 } from "@nextui-org/react";
 import { Link } from "react-router-dom";
-
-// Componentes internos
 import DropdownMenuComponent from "./DropdownMenu.jsx";
 import Search from "../filter/Search.jsx";
 import Icon from "../Icons.jsx";
 import UserMenu from "./UserMenu.jsx";
-
-// Contextos
+import MobileMenu from "./MobileMenu.jsx";
 import CartContext from "../../context/CartContext.jsx";
 import { AuthContext } from "../../context/authContext.jsx";
-
-// Servicio para obtener el usuario por ID
 import { getUserById } from "../../service/user.js";
 
 export default function Navbar() {
@@ -58,6 +53,7 @@ export default function Navbar() {
   return (
     <div>
       <NextUINavbar
+        isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
         maxWidth="full"
         className="bg-[--color-primary-dark] border-b-0 z-50"
@@ -65,7 +61,7 @@ export default function Navbar() {
       >
         <NavbarContent>
           <NavbarMenuToggle
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
             className="sm:hidden"
           />
           <NavbarBrand>
@@ -74,7 +70,7 @@ export default function Navbar() {
                 <Image
                   isBlurred
                   alt="logo"
-                  className="w-[200px] h-16 hover:animate-pulse hover:scale-110 transition-all"
+                  className="w-[200px] h-16 hover:animate-pulse hover:scale-110 transition-all ml-20 sm:ml-0"
                   src="https://res.cloudinary.com/libreriaalondra/image/upload/v1727986358/logo_sin_fondo_o6f8m0.png"
                 />
               </Link>
@@ -87,7 +83,6 @@ export default function Navbar() {
         </NavbarContent>
 
         <NavbarContent justify="end" className="hidden sm:flex">
-          {/* Se pasan role, userName, userEmail y profilePic al UserMenu */}
           <UserMenu
             role={userRole}
             userName={userData?.username}
@@ -96,6 +91,7 @@ export default function Navbar() {
             userId={userId}
           />
         </NavbarContent>
+
         <NavbarContent justify="end">
           <Tooltip content="Ver carrito de compras" position="bottom">
             <Link
@@ -112,12 +108,18 @@ export default function Navbar() {
             </Link>
           </Tooltip>
         </NavbarContent>
-        <NavbarMenu>
+
+        <NavbarMenu className="mt-14">
           <NavbarMenuItem>
-            {/* Aquí se pueden mapear las categorías */}
+            <MobileMenu closeMenu={() => setIsMenuOpen(false)} />
           </NavbarMenuItem>
         </NavbarMenu>
       </NextUINavbar>
+
+      <div className="w-full flex md:hidden  justify-center bg-[--color-background-light] py-1 border-b-4 border-[--color-primary-dark]">
+        <Search />
+      </div>
+
       <div className="w-full hidden md:flex bg-[--color-background-light] py-1 border-b-4 border-[--color-primary-dark]">
         <DropdownMenuComponent />
       </div>

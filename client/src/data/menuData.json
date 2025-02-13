@@ -1,6 +1,5 @@
 {
   "admin": {
-    "avatar": "https://res.cloudinary.com/libreriaalondra/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/hombre_perfil_godyjs.jpg",
     "menu": [
       {
         "id": "admin-settings",
@@ -35,7 +34,6 @@
     ]
   },
   "seller": {
-    "avatar": "https://res.cloudinary.com/libreriaalondra/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/seller_perfil_v8jnot.jpg",
     "menu": [
       {
         "id": "seller-settings",
@@ -70,7 +68,6 @@
     ]
   },
   "user": {
-    "avatar": "https://res.cloudinary.com/libreriaalondra/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/user_perfil_holyrm.avif",
     "menu": [
       {
         "id": "user-settings",

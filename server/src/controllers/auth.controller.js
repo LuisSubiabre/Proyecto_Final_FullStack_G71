@@ -33,7 +33,7 @@ const login = async (req, res) => {
       token,
     });
   } catch (error) {
-    handleError(error, res);
+    handleError(res, error);
   }
 };
 
