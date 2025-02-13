@@ -6,7 +6,9 @@ import { useParams } from "react-router-dom";
 const Breadcrumb = ({ categoryName, categoryId }) => {
     const { menus, loading, error } = useCategories();
     const { subcategoryId } = useParams();
+
     const findSubcategoryName = (id) => {
+        if (!id) return null;
         for (const menu of menus) {
             const subcategory = menu.items.find((item) => item.id === parseInt(id, 10));
             if (subcategory) return subcategory.title;
@@ -34,7 +36,7 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
     };
 
     if (loading) {
-        return <Skeleton className="w-full rounded-lg h-16 m-1"> </Skeleton>;
+        return <Skeleton className="w-full rounded-lg h-16 m-1" />;
     }
 
     if (error) {
@@ -83,8 +85,9 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
             <div className="m-2">
                 <p className="text-[var(--color-neutral-dark)] font-epilogue">
                     ¡Encuentra todo lo que necesitas para la vuelta a clases en Librería Alas de Alondra!
-                    Nuestro catálogo incluye, <strong className="text-[var(--color-primary-dark)] animate-text-color-change ">{subcategoryName} </strong>
-                    de las marcas más reconocidas como Artel, Jm, Jovi, Maped, Pentel, Stabilo y más.
+                    Nuestro catálogo incluye, <strong className="text-[var(--color-primary-dark)] animate-text-color-change">
+                        {subcategoryName}
+                    </strong> de las marcas más reconocidas como Artel, Jm, Jovi, Maped, Pentel, Stabilo y más.
                     ¡Haz de este regreso a clases algo único con nuestros productos de calidad!
                 </p>
             </div>
@@ -93,5 +96,4 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
 };
 
 export default Breadcrumb;
-
 

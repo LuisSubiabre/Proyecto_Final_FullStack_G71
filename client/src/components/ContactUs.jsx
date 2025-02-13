@@ -14,7 +14,7 @@ const ContactUs = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
-    <div className=" flex-col font-bold text-[var(--color-neutral-light)] font-epilogue flex justify-center items-center gap-16 h-screen bg-[url('https://res.cloudinary.com/libreriaalondra/image/upload/v1729802397/mesa-llena-material-escolar_23-2147650803_mmmyor.jpg')] bg-contain">
+    <div className=" flex-col font-bold text-[var(--color-neutral-light)] font-epilogue flex justify-center items-center gap-16 h-screen bg-[url('https://res.cloudinary.com/libreriaalondra/image/upload/v1729802397/mesa-llena-material-escolar_23-2147650803_mmmyor.jpg')] bg-cover bg-no-repeat">
       <p className="text-[50px] mb-4">¡DESPREOCUPATE!</p>
       <p className="text-[30px] text-center">
         SI no encontraste lo que buscabas, te contactaremos de inmediato 🫰

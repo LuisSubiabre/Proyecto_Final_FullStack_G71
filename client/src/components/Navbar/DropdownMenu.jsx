@@ -31,12 +31,8 @@ const DropdownMenuComponent = () => {
                     </DropdownTrigger>
                     <DropdownMenu variant="flat" color="secondary">
                         {menu.items.map((item) => (
-                            <DropdownItem key={`${menu.id}-${item.id}`}
-                                textValue={item.title}>
-                                <Link
-                                    to={`/category/${menu.id}/${item.id}`}
-                                    className="text-inherit"
-                                >
+                            <DropdownItem key={`${menu.id}-${item.id}`} textValue={item.title}>
+                                <Link to={`/category/${menu.id}/${item.id}`} className="text-inherit">
                                     {item.title}
                                 </Link>
                             </DropdownItem>

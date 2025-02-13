@@ -42,7 +42,7 @@ const UserMenu = ({ role, userName, userEmail, profilePic }) => {
   // Se obtiene la data base del menú según el role
   let userDataJson = menuData[role];
 
-  const avatarUrl = profilePic ? profilePic : userDataJson.avatar;
+  const avatarUrl = profilePic
 
   if (role === "user") {
     userDataJson = {
