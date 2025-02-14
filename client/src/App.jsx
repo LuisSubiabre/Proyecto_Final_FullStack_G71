@@ -20,9 +20,10 @@ const SellerUserProfile = lazy(() => import("./pages/UserProfile/Seller/SellerUs
 const Publications = lazy(() => import("./pages/UserProfile/Seller/Publications.jsx"));
 const Login = lazy(() => import("./pages/Login.jsx"));
 const Register = lazy(() => import("./pages/Register.jsx"));
-const RecoverPassword= lazy(() => import("./pages/Recoverypass.jsx"));
+const RecoverPassword = lazy(() => import("./pages/Recoverypass.jsx"));
 const NotFound = lazy(() => import("./pages/NotFound.jsx"));
 const SearchResults = lazy(() => import("./pages/SearchResults.jsx"));
+const SellerPublications = lazy(() => import("./pages/UserProfile/Seller/SellerPublicactions.jsx"));
 
 function App() {
   return (
@@ -85,7 +86,16 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/seller-publication"
+            element={
+              <PrivateRoute>
+                <SellerPublications />
+              </PrivateRoute>
+            }
+          />
         </Route>
+
 
         {/* Rutas con MinimalLayout */}
         <Route element={<MinimalLayout />}>

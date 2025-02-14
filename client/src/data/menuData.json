@@ -42,6 +42,12 @@
         "link": "/profile-seller"
       },
       {
+        "id": "seller-favorites",
+        "icon": "heart",
+        "label": "Tus favoritos",
+        "link": "/favorite-products"
+      },
+      {
         "id": "seller-sales",
         "icon": "dollarSign",
         "label": "Tus ventas",
@@ -51,7 +57,7 @@
         "id": "seller-publications",
         "icon": "folder",
         "label": "Publicaciones",
-        "link": "/sitio-en-construccion"
+        "link": "/seller-publication"
       },
       {
         "id": "seller-new-publication",

@@ -12,6 +12,7 @@ import {
 } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import Icon from "../Icons.jsx";
+
 import FavoritosContext from "../../context/FavoritosContext.jsx";
 import CartContext from "../../context/CartContext.jsx";
 import useAuth from "../../hook/useAuth.jsx";
@@ -19,17 +20,17 @@ import useCategories from "../../hook/useCategories.jsx";
 import { formatPrice } from "../../helpers/formatPrice.jsx";
 
 const CardComponent = ({ producto }) => {
-  const { favoritos, setFavoritos } = useContext(FavoritosContext);
+  const { favoritos, toggleFavorite } = useContext(FavoritosContext);
   const { addToCart } = useContext(CartContext);
   const { user } = useAuth();
-
-  // Obtenemos la data de categorías desde el contexto
   const { menus: categories } = useCategories();
-  
+
   const [showAlert, setShowAlert] = useState(false);
+
   const [isFavorite, setIsFavorite] = useState(
     favoritos.some((fav) => fav.product_id === producto.product_id)
   );
+
   const [subcategoryName, setSubcategoryName] = useState("");
   const [categoryName, setCategoryName] = useState("Desconocida");
 
@@ -48,13 +49,15 @@ const CardComponent = ({ producto }) => {
   }, [producto.subcategory_id]);
 
   useEffect(() => {
-    const category = categories.find(
-      (cat) => cat.id === producto.category_id
-    );
+    const category = categories.find((cat) => cat.id === producto.category_id);
     if (category) {
       setCategoryName(category.title);
     }
   }, [categories, producto.category_id]);
+
+  useEffect(() => {
+    setIsFavorite(favoritos.some((fav) => fav.product_id === producto.product_id));
+  }, [favoritos, producto.product_id]);
 
   const handleAddToCart = () => {
     addToCart({
@@ -72,13 +75,7 @@ const CardComponent = ({ producto }) => {
 
   const handleToggleFavorite = () => {
     if (user) {
-      if (isFavorite) {
-        setFavoritos((prevFavoritos) =>
-          prevFavoritos.filter((fav) => fav.product_id !== producto.product_id)
-        );
-      } else {
-        setFavoritos((prevFavoritos) => [...prevFavoritos, producto]);
-      }
+      toggleFavorite(producto);
       setIsFavorite(!isFavorite);
     }
   };
@@ -90,6 +87,7 @@ const CardComponent = ({ producto }) => {
           {producto.name_product}
         </h3>
       </CardHeader>
+
       <CardBody>
         <div className="relative w-full max-h-[230px] flex flex-col justify-center items-center">
           <div className="absolute top-2 left-2 font-epilogue font-semibold text-[var(--color-secondary-dark)] z-20 -mt-5 text-sm">
@@ -142,6 +140,7 @@ const CardComponent = ({ producto }) => {
       <CardBody className="font-epilogue">
         <p className="text-sm text-gray-600">{producto.description}</p>
       </CardBody>
+
       <CardFooter className="flex flex-col justify-between items-center font-arvo relative">
         <Tooltip
           content={
@@ -183,9 +182,6 @@ const CardComponent = ({ producto }) => {
 };
 
 export default CardComponent;
-
-
-
 
 
 
