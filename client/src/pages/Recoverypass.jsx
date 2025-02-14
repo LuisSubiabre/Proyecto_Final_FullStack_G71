@@ -9,37 +9,33 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
+  Spinner,
 } from "@nextui-org/react";
 import Icon from "../components/Icons.jsx";
+import { recoverPassword as serviceRecoverPassword } from "../service/recoveryPass.js";
 
 const RecoverPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
     setError("");
+    setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/recover-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        setMessage("Se ha enviado un correo con tu contraseña.");
-      } else {
-        setError(data.error || "Error al recuperar la contraseña.");
-      }
+      const data = await serviceRecoverPassword({ email });
+      setMessage(data.message || "Se ha enviado un correo con tu contraseña.");
       onOpen();
     } catch (err) {
-      setError("Error de conexión con el servidor.");
+      setError(err.response?.data?.error || "Error al recuperar la contraseña.");
       onOpen();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,15 +68,21 @@ const RecoverPassword = () => {
             onChange={(e) => setEmail(e.target.value)}
             status={error ? "error" : "default"}
             classNames={{ helperText: "text-white font-bold" }}
-            startContent={<Icon name="mail" className="text-[var(--color-primary-light)]" />}
+            startContent={
+              <Icon
+                name="mail"
+                className="text-[var(--color-primary-light)]"
+              />
+            }
           />
           <Button
             fullWidth
             color="primary"
             type="submit"
             className="py-2 rounded-lg font-bold text-lg hover:bg-[var(--color-primary-dark)] hover:text-white transition"
+            disabled={loading}
           >
-            Enviar correo
+            {loading ? <Spinner color="success"  size="md" /> : "Enviar correo"}
           </Button>
         </form>
       </Card>

@@ -11,6 +11,7 @@ import {
 } from "@nextui-org/react";
 import Icon from "../components/Icons.jsx";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../service/register.js";
 
 const Register = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,34 +47,24 @@ const Register = () => {
       onOpen();
     } else {
       try {
-        const response = await fetch("http://localhost:3000/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: data.name,
-            rut: data.rut,
-            birth_date: data.birthdate,
-            email: data.email,
-            phone: data.phone,
-            password: data.password,
-            role: data.role,
-          }),
+        await registerUser({
+          username: data.name,
+          rut: data.rut,
+          birth_date: data.birthdate,
+          email: data.email,
+          phone: data.phone,
+          password: data.password,
+          role: data.role,
         });
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Error en la respuesta del servidor: ${errorText}`);
-        }
         setSuccessMessage("¡Registro exitoso! Redirigiendo al login...");
         e.target.reset();
-        setErrors({}); // Limpiar errores
+        setErrors({});
         setTimeout(() => {
           navigate("/login");
         }, 2000);
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error al registrar el usuario:", error);
         setErrors({ submit: "Error al registrar el usuario" });
         onOpen();
       }
