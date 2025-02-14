@@ -18,6 +18,10 @@ const Category = () => {
     const [priceRange, setPriceRange] = useState([0, 25000]);
 
     useEffect(() => {
+        setSelectedSubcategory(subcategoryId || null);
+    }, [subcategoryId]);
+
+    useEffect(() => {
         if (!selectedSubcategory) return;
 
         getProductsBySubcategory(selectedSubcategory)
@@ -37,8 +41,9 @@ const Category = () => {
     }, [selectedSubcategory]);
 
     useEffect(() => {
-        const filtered = products.filter(product =>
-            product.price >= priceRange[0] && product.price <= priceRange[1]
+        const filtered = products.filter(
+            (product) =>
+                product.price >= priceRange[0] && product.price <= priceRange[1]
         );
         setFilteredProducts(filtered);
         setCurrentPage(1);
@@ -50,11 +55,14 @@ const Category = () => {
 
     const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const currentProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    const currentProducts = filteredProducts.slice(
+        startIndex,
+        startIndex + ITEMS_PER_PAGE
+    );
 
     return (
         <div className="p-4">
-            <Breadcrumb categoryName={name} categoryId={parseInt(id, 10)} />
+            <Breadcrumb categoryName={"Categoria"} categoryId={parseInt(id, 10)} />
             <div className="flex flex-col md:flex-row">
                 <div className="justify-items-center sm:justify-items-stretch ">
                     <FilterCategories
