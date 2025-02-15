@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
   Navbar as NextUINavbar,
   NavbarBrand,
@@ -18,36 +18,13 @@ import UserMenu from "./UserMenu.jsx";
 import MobileMenu from "./MobileMenu.jsx";
 import CartContext from "../../context/CartContext.jsx";
 import { AuthContext } from "../../context/authContext.jsx";
-import { getUserById } from "../../service/user.js";
 import { ProfileContext } from "../../context/profileContext.jsx";
 
 export default function Navbar() {
   const { userId } = useContext(AuthContext);
-  const [userRole, setUserRole] = useState(null);
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { getTotalQuantity } = useContext(CartContext);
-  const { username, email, avatar } = useContext(ProfileContext);
-
-  useEffect(() => {
-    if (userId) {
-      getUserById(userId)
-        .then((response) => {
-          if (response.success && response.data) {
-            setUserRole(response.data.role);
-          } else {
-            setUserRole(null);
-          }
-        })
-        .catch((error) => {
-          console.error("Error al obtener el role del usuario:", error);
-
-          setUserRole(null);
-        });
-    } else {
-      setUserRole(null);
-    }
-  }, [userId]);
+  const { username, email, avatar, role } = useContext(ProfileContext);
 
   return (
     <div>
@@ -83,7 +60,7 @@ export default function Navbar() {
 
         <NavbarContent justify="end" className="hidden sm:flex">
           <UserMenu
-            role={userRole}
+            role={role}
             userName={username}
             userEmail={email}
             profilePic={avatar}
@@ -97,11 +74,7 @@ export default function Navbar() {
               to={userId ? "/shopping-cart" : "#"}
               className={userId ? "" : "pointer-events-none opacity-50"}
             >
-              <Badge
-                content={getTotalQuantity()}
-                color="primary"
-                overlap="true"
-              >
+              <Badge content={getTotalQuantity()} color="primary" overlap="true">
                 <Icon
                   name="cart"
                   size="2xl"
@@ -119,7 +92,7 @@ export default function Navbar() {
         </NavbarMenu>
       </NextUINavbar>
 
-      <div className="w-full flex md:hidden  justify-center bg-[--color-background-light] py-1 border-b-4 border-[--color-primary-dark]">
+      <div className="w-full flex md:hidden justify-center bg-[--color-background-light] py-1 border-b-4 border-[--color-primary-dark]">
         <Search />
       </div>
 
