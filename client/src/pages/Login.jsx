@@ -62,7 +62,7 @@ const Login = () => {
     <div className='bg-[url("https://res.cloudinary.com/dxxrdckad/image/upload/v1730842164/Green_and_Blue_Illustrative_World_Friendship_Day_Banner_Landscape_izseal.png")] bg-cover bg-center flex flex-col items-center justify-center min-h-screen font-osvald'>
       <div className="absolute top-4 left-4 flex items-center">
         <img
-          src="https://res.cloudinary.com/dxxrdckad/image/upload/v1734362650/logo_fondo_azul_tt5joc.png"
+          src="https://res.cloudinary.com/libreriaalondra/image/upload/v1734362650/logo_fondo_azul_tt5joc.png"
           alt="Logo"
           className="w-12 h-12 rounded-full border-2 border-white"
         />

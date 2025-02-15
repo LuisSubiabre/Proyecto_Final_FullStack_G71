@@ -1,5 +1,3 @@
-//import SiteUnderConstruction from "./SiteUnderConstruction.jsx";
-
 import { useParams } from "react-router-dom";
 import FeaturedProducts from "../components/FeaturedProducts";
 import NewProducts from "../components/NewProducts";
@@ -15,6 +13,7 @@ import {
 import Icon from "../components/Icons";
 import { useContext, useEffect, useState } from "react";
 import Comments from "../components/Comments.jsx";
+import { getProductById } from "../service/productService.js";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -24,64 +23,47 @@ const ProductDetail = () => {
   const [showComments, setShowComments] = useState(false);
 
   useEffect(() => {
-    fetchProductoDetalle(id);
-  }, []);
+    getProductoDetalle(id);
+  }, [id]);
 
   const handleAddToCart = () => {
     addToCart({
-      product_id: producto.id, // <-- Usa producto.id
-      name_product: producto.nombre, // <-- Usa producto.nombre
-      price: producto.precio, // <-- Usa producto.precio
-      image_url: producto.imagen, // <-- Usa producto.imagen
+      product_id: producto.id,
+      name_product: producto.nombre,
+      price: producto.precio,
+      image_url: producto.imagen,
     });
-
     disminuirCantidad();
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
     }, 4000);
   };
+
   const disminuirCantidad = () => {
     if (producto.cantidad > 0) {
       setProducto({ ...producto, cantidad: producto.cantidad - 1 });
     }
   };
 
-  const fetchProductoDetalle = async (id) => {
-    console.log("fetchProductoDetalle", id);
+  const getProductoDetalle = async (id) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_URL_BASE}/products/${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer 123`,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("No se pudo obtener el producto");
-      }
-      const data = await response.json();
-      console.log("data", data);
-
-      // Ajustamos los nombres de las propiedades
+      const response = await getProductById(id);
+      const data = response.data;
       setProducto({
-        id: data.data.product_id,
-        nombre: data.data.name_product,
-        descripcion: data.data.description,
-        marca: data.data.brand,
-        precio: data.data.price,
-        cantidad: data.data.quantity,
-        categoriaId: data.data.category_id,
-        imagen: data.data.image_url,
+        id: data.product_id,
+        nombre: data.name_product,
+        descripcion: data.description,
+        marca: data.brand,
+        precio: data.price,
+        cantidad: data.quantity,
+        categoriaId: data.category_id,
+        imagen: data.image_url,
       });
     } catch (error) {
       console.error("Error al cargar el producto", error);
     }
   };
-  /* la linea de arriba se reemplaza por el fetch de llamada a la API */
 
   return (
     <>
@@ -91,17 +73,24 @@ const ProductDetail = () => {
           Artel
         </p>
         <div className="text-2xl font-bold font-oswald text-[var(--color-primary-light)] my-4">
-          CATEGORÍA ESCOLAR / LAPICES Y ACCESORIOS / LÁPICES DE COLORES ARTEL{" "}
+          CATEGORÍA ESCOLAR / LAPICES Y ACCESORIOS / LÁPICES DE COLORES ARTEL
         </div>
 
         <div className="w-full my-10 rounded overflow-hidden">
           <div className="flex flex-col items-center md:flex-row">
-            <Image
-              isZoomed
-              src={producto.imagen}
-              alt={producto.nombre}
-              className="rounded-t-md object-cover w-screen"
-            />
+            {/* Usamos un condicional para asegurarnos que la imagen exista */}
+            {producto.imagen ? (
+              <Image
+                isZoomed
+                src={producto.imagen}
+                alt={producto.nombre}
+                className="rounded-t-md object-cover w-screen"
+              />
+            ) : (
+              <div className="w-screen h-64 bg-gray-200 flex items-center justify-center">
+                Cargando imagen...
+              </div>
+            )}
             <div className="flex flex-col justify-between p-12 leading-normal w-screen">
               <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                 {producto.nombre}

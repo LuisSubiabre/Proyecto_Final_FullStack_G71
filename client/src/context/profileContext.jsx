@@ -1,42 +1,51 @@
-import { useState, useEffect, createContext } from "react";
-import { getUserById } from "../service/user";
+import { useState, useEffect, createContext, useContext } from "react";
+import { getUserById } from "../service/user.js";
+import { AuthContext } from "./authContext.jsx";
 
 const ProfileContext = createContext();
 
 const ProfileContextProvider = ({ children }) => {
-  const [userId, setUserId] = useState(null);
+  // Obtenemos el userId desde AuthContext para que esté sincronizado
+  const { userId: authUserId } = useContext(AuthContext);
+  const [userId, setUserId] = useState(authUserId);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [role, setRole] = useState("");
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    setUserId(storedUserId);
-    if (storedUserId) {
-      getUserById(storedUserId)
+    if (authUserId) {
+      setUserId(authUserId);
+      getUserById(authUserId)
         .then((response) => {
           if (response.success && response.data) {
             setUsername(response.data.username);
             setAvatar(response.data.url_img_profile);
             setEmail(response.data.email);
+            setRole(response.data.role);
           } else {
             setUsername(null);
             setAvatar(null);
             setEmail(null);
+            setRole(null);
           }
         })
         .catch((error) => {
           console.error("Error al obtener datos del usuario:", error);
-        })
-        .finally(() => {});
+        });
+    } else {
+      // Si no hay usuario autenticado, reiniciamos todo
+      setUserId(null);
+      setUsername(null);
+      setAvatar(null);
+      setEmail(null);
+      setRole(null);
     }
-
-    console.log("userId", userId);
-  }, [userId]);
+  }, [authUserId]);
 
   return (
     <ProfileContext.Provider
-      value={{ username, email, avatar, setAvatar, setEmail, setUsername }}
+      value={{ userId, username, email, avatar, role, setAvatar, setEmail, setUsername }}
     >
       {children}
     </ProfileContext.Provider>
