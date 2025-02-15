@@ -1,6 +1,7 @@
 import { Avatar, Button } from "@nextui-org/react";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/authContext";
+
 import {
   getUserById,
   updateProfileImage,
@@ -14,6 +15,7 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
+import { ProfileContext } from "../context/profileContext.jsx";
 const Profile = () => {
   const { userId } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
@@ -29,6 +31,11 @@ const Profile = () => {
   const [repeatEmail, setRepeatEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const {
+    setEmail: setProfileEmail,
+    setUsername: setProfileUsername,
+    setAvatar: setProfileAvatar,
+  } = useContext(ProfileContext);
 
   // Estados para manejar los errores de validación
   const [usernameError, setUsernameError] = useState("");
@@ -131,6 +138,10 @@ const Profile = () => {
         password,
       }).then((response) => {
         if (response.success) {
+          /* Actualiza los datos del usuario en el contexto */
+          setProfileUsername(username);
+          setProfileEmail(email);
+
           setMessage("Información de usuario actualizado correctamente");
           onOpen();
         } else {
@@ -189,6 +200,7 @@ const Profile = () => {
     try {
       const response = await updateProfileImage(userId, imageUrl);
       if (response.success) {
+        setProfileAvatar(imageUrl);
         setMessage("Foto de perfil actualizada correctamente.");
         onOpen();
         // Actualiza la imagen en el estado local
