@@ -43,7 +43,7 @@ export default function Navbar() {
         })
         .catch((error) => {
           console.error("Error al obtener el role del usuario:", error);
-          console.error(userData);
+
           setUserRole(null);
           setUserData(null);
         });
