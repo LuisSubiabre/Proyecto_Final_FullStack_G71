@@ -24,7 +24,7 @@ import { ProfileContext } from "../../context/profileContext.jsx";
 export default function Navbar() {
   const { userId } = useContext(AuthContext);
   const [userRole, setUserRole] = useState(null);
-  const [userData, setUserData] = useState(null);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { getTotalQuantity } = useContext(CartContext);
   const { username, email, avatar } = useContext(ProfileContext);
@@ -35,21 +35,17 @@ export default function Navbar() {
         .then((response) => {
           if (response.success && response.data) {
             setUserRole(response.data.role);
-            setUserData(response.data);
           } else {
             setUserRole(null);
-            setUserData(null);
           }
         })
         .catch((error) => {
           console.error("Error al obtener el role del usuario:", error);
 
           setUserRole(null);
-          setUserData(null);
         });
     } else {
       setUserRole(null);
-      setUserData(null);
     }
   }, [userId]);
 
