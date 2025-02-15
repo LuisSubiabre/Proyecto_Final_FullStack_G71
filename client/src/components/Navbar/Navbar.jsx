@@ -19,13 +19,15 @@ import MobileMenu from "./MobileMenu.jsx";
 import CartContext from "../../context/CartContext.jsx";
 import { AuthContext } from "../../context/authContext.jsx";
 import { getUserById } from "../../service/user.js";
+import { ProfileContext } from "../../context/profileContext.jsx";
 
 export default function Navbar() {
   const { userId } = useContext(AuthContext);
   const [userRole, setUserRole] = useState(null);
-  const [userData, setUserData] = useState(null);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { getTotalQuantity } = useContext(CartContext);
+  const { username, email, avatar } = useContext(ProfileContext);
 
   useEffect(() => {
     if (userId) {
@@ -33,20 +35,17 @@ export default function Navbar() {
         .then((response) => {
           if (response.success && response.data) {
             setUserRole(response.data.role);
-            setUserData(response.data);
           } else {
             setUserRole(null);
-            setUserData(null);
           }
         })
         .catch((error) => {
           console.error("Error al obtener el role del usuario:", error);
+
           setUserRole(null);
-          setUserData(null);
         });
     } else {
       setUserRole(null);
-      setUserData(null);
     }
   }, [userId]);
 
@@ -85,9 +84,9 @@ export default function Navbar() {
         <NavbarContent justify="end" className="hidden sm:flex">
           <UserMenu
             role={userRole}
-            userName={userData?.username}
-            userEmail={userData?.email}
-            profilePic={userData?.url_img_profile}
+            userName={username}
+            userEmail={email}
+            profilePic={avatar}
             userId={userId}
           />
         </NavbarContent>
@@ -98,7 +97,11 @@ export default function Navbar() {
               to={userId ? "/shopping-cart" : "#"}
               className={userId ? "" : "pointer-events-none opacity-50"}
             >
-              <Badge content={getTotalQuantity()} color="primary" overlap="true">
+              <Badge
+                content={getTotalQuantity()}
+                color="primary"
+                overlap="true"
+              >
                 <Icon
                   name="cart"
                   size="2xl"
