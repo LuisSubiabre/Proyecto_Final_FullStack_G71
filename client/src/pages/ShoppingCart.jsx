@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { RadioGroup, Radio, Button } from "@nextui-org/react";
 import CartContext from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 function ShoppingCart() {
   const { cart, increaseQuantity, decreaseQuantity, calculateTotal } =
     useContext(CartContext);
   const [selectedEnvio, setSelectedEnvio] = useState("tienda");
   const [valorEnvio, setValorEnvio] = useState(0);
+  const navigate = useNavigate();
 
   // Calcular el costo adicional de envío
   const calculateShipping = (selectedMethod) => {
@@ -31,6 +33,13 @@ function ShoppingCart() {
       setSelectedEnvio("tienda");
     }
   }, [cart]);
+
+  const step2 = (e) => {
+    e.preventDefault();
+    navigate("/shopping-cart/step2", {
+      state: { total, isRetiroEnLocal: selectedEnvio === "tienda" },
+    });
+  };
 
   const subtotal = calculateTotal();
   const shippingCost = calculateShipping(selectedEnvio);
@@ -158,6 +167,7 @@ function ShoppingCart() {
             <Button
               className="w-full bg-rose-500 text-[var(--color-neutral-light)] hover:bg-[var(--color-primary)] hover:text-white rounded-full disabled:bg-gray-300"
               disabled={cart.length === 0}
+              onPress={() => step2(event)}
             >
               Continuar
             </Button>

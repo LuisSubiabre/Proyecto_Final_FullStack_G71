@@ -6,6 +6,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 import DefaultLayout from "./layouts/DefaultLayout.jsx";
 import MinimalLayout from "./layouts/MinimalLayout.jsx";
+import ShoppingCartStep2 from "./pages/ShoppingCart2.jsx";
 
 // Lazy load de páginas
 const Home = lazy(() => import("./pages/Home.jsx"));
@@ -13,17 +14,29 @@ const Category = lazy(() => import("./pages/Category.jsx"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail.jsx"));
 const FavoriteProducts = lazy(() => import("./pages/FavoriteProducts.jsx"));
 const ShoppingCart = lazy(() => import("./pages/ShoppingCart.jsx"));
-const SiteUnderConstruction = lazy(() => import("./pages/SiteUnderConstruction.jsx"));
-const AdminUserProfile = lazy(() => import("./pages/UserProfile/Admin/AdminUserProfile.jsx"));
-const RegularUserProfile = lazy(() => import("./pages/UserProfile/RegularUser/RegularUserProfile..jsx"));
-const SellerUserProfile = lazy(() => import("./pages/UserProfile/Seller/SellerUserProfile.jsx"));
-const Publications = lazy(() => import("./pages/UserProfile/Seller/Publications.jsx"));
+const SiteUnderConstruction = lazy(() =>
+  import("./pages/SiteUnderConstruction.jsx")
+);
+const AdminUserProfile = lazy(() =>
+  import("./pages/UserProfile/Admin/AdminUserProfile.jsx")
+);
+const RegularUserProfile = lazy(() =>
+  import("./pages/UserProfile/RegularUser/RegularUserProfile..jsx")
+);
+const SellerUserProfile = lazy(() =>
+  import("./pages/UserProfile/Seller/SellerUserProfile.jsx")
+);
+const Publications = lazy(() =>
+  import("./pages/UserProfile/Seller/Publications.jsx")
+);
 const Login = lazy(() => import("./pages/Login.jsx"));
 const Register = lazy(() => import("./pages/Register.jsx"));
 const RecoverPassword = lazy(() => import("./pages/Recoverypass.jsx"));
 const NotFound = lazy(() => import("./pages/NotFound.jsx"));
 const SearchResults = lazy(() => import("./pages/SearchResults.jsx"));
-const SellerPublications = lazy(() => import("./pages/UserProfile/Seller/SellerPublicactions.jsx"));
+const SellerPublications = lazy(() =>
+  import("./pages/UserProfile/Seller/SellerPublicactions.jsx")
+);
 
 function App() {
   return (
@@ -35,7 +48,10 @@ function App() {
           <Route path="/category/:id/:subcategoryId" element={<Category />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/search-results" element={<SearchResults />} />
-          <Route path="/sitio-en-construccion" element={<SiteUnderConstruction />} />
+          <Route
+            path="/sitio-en-construccion"
+            element={<SiteUnderConstruction />}
+          />
 
           {/* Rutas protegidas */}
           <Route
@@ -51,6 +67,14 @@ function App() {
             element={
               <PrivateRoute>
                 <ShoppingCart />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/shopping-cart/step2"
+            element={
+              <PrivateRoute>
+                <ShoppingCartStep2 />
               </PrivateRoute>
             }
           />
@@ -95,7 +119,6 @@ function App() {
             }
           />
         </Route>
-
 
         {/* Rutas con MinimalLayout */}
         <Route element={<MinimalLayout />}>
