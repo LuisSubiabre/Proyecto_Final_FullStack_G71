@@ -85,7 +85,7 @@
         "id": "user-purchases",
         "icon": "cart",
         "label": "Tus compras",
-        "link": "/sitio-en-construccion"
+        "link": "/my-purchases"
       },
       {
         "id": "user-favorites",

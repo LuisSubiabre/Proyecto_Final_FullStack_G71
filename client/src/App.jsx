@@ -7,6 +7,7 @@ import LoadingSpinner from "./components/LoadingSpinner.jsx";
 import DefaultLayout from "./layouts/DefaultLayout.jsx";
 import MinimalLayout from "./layouts/MinimalLayout.jsx";
 import ShoppingCartStep2 from "./pages/ShoppingCart2.jsx";
+import MyPurchases from "./pages/MyPurchases.jsx";
 
 // Lazy load de páginas
 const Home = lazy(() => import("./pages/Home.jsx"));
@@ -75,6 +76,14 @@ function App() {
             element={
               <PrivateRoute>
                 <ShoppingCartStep2 />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/my-purchases"
+            element={
+              <PrivateRoute>
+                <MyPurchases />
               </PrivateRoute>
             }
           />
