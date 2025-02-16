@@ -1,10 +1,17 @@
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Skeleton } from "@nextui-org/react";
+import { useContext } from "react";
+import {
+    Dropdown,
+    DropdownTrigger,
+    DropdownMenu,
+    DropdownItem,
+    Skeleton,
+} from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import CustomButton from "../Buttons/DesktopButtons.jsx";
-import useCategories from "../../hook/useCategories.jsx";
+import { CategoriesContext } from "../../context/categoriesContext.jsx";
 
 const DropdownMenuComponent = () => {
-    const { menus, loading, error } = useCategories();
+    const { menus, loading, error } = useContext(CategoriesContext);
 
     if (loading) {
         return (

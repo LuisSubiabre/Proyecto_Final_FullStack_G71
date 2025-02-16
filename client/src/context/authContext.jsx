@@ -3,9 +3,8 @@ import { useState, useEffect, createContext } from 'react';
 const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [userId, setUserId] = useState(null);
-
+    const [user, setUser] = useState(() => localStorage.getItem('userEmail') || null);
+    const [userId, setUserId] = useState(() => localStorage.getItem('userId') || null);
     useEffect(() => {
         const token = localStorage.getItem('token');
         const storedUser = localStorage.getItem('userEmail');
