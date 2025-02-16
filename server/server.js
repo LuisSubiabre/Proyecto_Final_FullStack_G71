@@ -13,6 +13,7 @@ import favoritesRouter from "./src/routes/favorites.route.js";
 import productsRouter from "./src/routes/products.route.js";
 import categoryRouter from "./src/routes/category.route.js";
 import reviewsRouter from "./src/routes/reviews.route.js";
+import recoverRouter from "./src/routes/recovery.route.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -42,6 +43,7 @@ app.use("/favorites", favoritesRouter);
 app.use("/products", productsRouter);
 app.use("/category", categoryRouter);
 app.use("/reviews/", reviewsRouter);
+app.use("/recover-password/", recoverRouter);
 
 // Error Handling Global
 app.use(handleError);

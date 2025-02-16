@@ -161,10 +161,18 @@ export const CartProvider = ({ children }) => {
     return cart.reduce((total, product) => total + product.cartQuantity, 0);
   }, [cart]);
 
+  // Limpiar el carrito cuando el usuario haga logout
+  useEffect(() => {
+    if (!userId) {
+      setCart([]); // Limpiar el carrito
+    }
+  }, [userId]);
+
   // Valor del contexto
   const value = useMemo(
     () => ({
       cart,
+      setCart,
       addToCart,
       increaseQuantity,
       decreaseQuantity,
@@ -173,6 +181,7 @@ export const CartProvider = ({ children }) => {
     }),
     [
       cart,
+      setCart,
       addToCart,
       increaseQuantity,
       decreaseQuantity,

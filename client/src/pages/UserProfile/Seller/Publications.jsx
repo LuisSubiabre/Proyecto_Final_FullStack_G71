@@ -5,10 +5,15 @@ import useCategories from "../../../hook/useCategories.jsx";
 import useAuth from "../../../hook/useAuth.jsx";
 import { createProduct } from "../../../service/productService.js";
 
-const CustomInput = ({ label, type = "text", isRequired = true, ...props }) => {
+const MAX_NAME_LENGTH = 255;
+const MAX_BRAND_LENGTH = 50;
+const MAX_PRICE = 999999.99;
+
+const CustomInput = ({ label, type = "text", isRequired = true, maxLength, max, ...props }) => {
     return (
         <Input
-            maxLength={35}
+            max={max}
+            maxLength={maxLength}
             isRequired={isRequired}
             clearable
             type={type}
@@ -55,6 +60,19 @@ const NewPublication = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === "price") {
+            if (value === "") {
+                setFormData(prev => ({ ...prev, price: "" }));
+                return;
+            }
+            const numericValue = parseFloat(value);
+            if (!isNaN(numericValue) && numericValue > MAX_PRICE) {
+                setFormData(prev => ({ ...prev, price: MAX_PRICE }));
+                return;
+            }
+        }
+
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -190,12 +208,14 @@ const NewPublication = () => {
                     name="name_product"
                     value={formData.name_product}
                     onChange={handleInputChange}
+                    maxLength={MAX_NAME_LENGTH}
                 />
                 <CustomInput
                     label="Marca"
                     name="brand"
                     value={formData.brand}
                     onChange={handleInputChange}
+                    maxLength={MAX_BRAND_LENGTH}
                 />
                 <CustomInput
                     label="Precio"
@@ -203,6 +223,7 @@ const NewPublication = () => {
                     name="price"
                     value={formData.price}
                     onChange={handleInputChange}
+                    max={MAX_PRICE}
                 />
                 <CustomInput
                     label="Cantidad"

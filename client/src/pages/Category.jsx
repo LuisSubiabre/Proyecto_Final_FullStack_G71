@@ -15,7 +15,11 @@ const Category = () => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [error, setError] = useState(null);
     const [selectedSubcategory, setSelectedSubcategory] = useState(subcategoryId || null);
-    const [priceRange, setPriceRange] = useState([0, 50000]); // Estado para el rango de precios
+    const [priceRange, setPriceRange] = useState([0, 25000]);
+
+    useEffect(() => {
+        setSelectedSubcategory(subcategoryId || null);
+    }, [subcategoryId]);
 
     useEffect(() => {
         if (!selectedSubcategory) return;
@@ -25,7 +29,7 @@ const Category = () => {
                 const productsArray = response.data || [];
                 if (productsArray.length > 0) {
                     setProducts(productsArray);
-                    setFilteredProducts(productsArray); // Inicialmente, los productos filtrados son todos los productos
+                    setFilteredProducts(productsArray);
                 } else {
                     setError("No se encontraron productos para esta subcategoría.");
                 }
@@ -37,9 +41,9 @@ const Category = () => {
     }, [selectedSubcategory]);
 
     useEffect(() => {
-        // Aplicar filtro de precio cuando cambia el rango de precios
-        const filtered = products.filter(product =>
-            product.price >= priceRange[0] && product.price <= priceRange[1]
+        const filtered = products.filter(
+            (product) =>
+                product.price >= priceRange[0] && product.price <= priceRange[1]
         );
         setFilteredProducts(filtered);
         setCurrentPage(1);
@@ -51,20 +55,23 @@ const Category = () => {
 
     const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const currentProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    const currentProducts = filteredProducts.slice(
+        startIndex,
+        startIndex + ITEMS_PER_PAGE
+    );
 
     return (
         <div className="p-4">
-            <Breadcrumb categoryName={name} categoryId={parseInt(id, 10)} />
+            <Breadcrumb categoryName={"Categoria"} categoryId={parseInt(id, 10)} />
             <div className="flex flex-col md:flex-row">
-                <div className="w-full md:w-1/4 mb-4">
+                <div className="justify-items-center sm:justify-items-stretch ">
                     <FilterCategories
                         onFilterBySubcategory={setSelectedSubcategory}
                         onFilterByPrice={setPriceRange}
                     />
                 </div>
                 <div className="w-full md:w-3/4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="ml-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center sm:justify-items-stretch">
                         {currentProducts.map((producto) => (
                             <CardComponent key={producto.product_id} producto={producto} />
                         ))}

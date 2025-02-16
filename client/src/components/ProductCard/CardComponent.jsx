@@ -1,24 +1,36 @@
 import { useState, useEffect, useContext } from "react";
 import { getSubcategoryById } from "../../service/categoriesService.js";
-import { Tooltip, Card, CardHeader, CardBody, CardFooter, Button, Image, Alert } from "@nextui-org/react";
+import {
+  Tooltip,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Button,
+  Image,
+  Alert,
+} from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import Icon from "../Icons.jsx";
+
 import FavoritosContext from "../../context/FavoritosContext.jsx";
 import CartContext from "../../context/CartContext.jsx";
 import useAuth from "../../hook/useAuth.jsx";
 import useCategories from "../../hook/useCategories.jsx";
-import  { formatPrice } from "../../helpers/formatPrice.jsx";
+import { formatPrice } from "../../helpers/formatPrice.jsx";
 
 const CardComponent = ({ producto }) => {
-  const { favoritos, setFavoritos } = useContext(FavoritosContext);
+  const { favoritos, toggleFavorite } = useContext(FavoritosContext);
   const { addToCart } = useContext(CartContext);
   const { user } = useAuth();
-
   const { menus: categories } = useCategories();
+
   const [showAlert, setShowAlert] = useState(false);
+
   const [isFavorite, setIsFavorite] = useState(
     favoritos.some((fav) => fav.product_id === producto.product_id)
   );
+
   const [subcategoryName, setSubcategoryName] = useState("");
   const [categoryName, setCategoryName] = useState("Desconocida");
 
@@ -43,6 +55,10 @@ const CardComponent = ({ producto }) => {
     }
   }, [categories, producto.category_id]);
 
+  useEffect(() => {
+    setIsFavorite(favoritos.some((fav) => fav.product_id === producto.product_id));
+  }, [favoritos, producto.product_id]);
+
   const handleAddToCart = () => {
     addToCart({
       product_id: producto.product_id,
@@ -59,13 +75,7 @@ const CardComponent = ({ producto }) => {
 
   const handleToggleFavorite = () => {
     if (user) {
-      if (isFavorite) {
-        setFavoritos((prevFavoritos) =>
-          prevFavoritos.filter((fav) => fav.product_id !== producto.product_id)
-        );
-      } else {
-        setFavoritos((prevFavoritos) => [...prevFavoritos, producto]);
-      }
+      toggleFavorite(producto);
       setIsFavorite(!isFavorite);
     }
   };
@@ -77,6 +87,7 @@ const CardComponent = ({ producto }) => {
           {producto.name_product}
         </h3>
       </CardHeader>
+
       <CardBody>
         <div className="relative w-full max-h-[230px] flex flex-col justify-center items-center">
           <div className="absolute top-2 left-2 font-epilogue font-semibold text-[var(--color-secondary-dark)] z-20 -mt-5 text-sm">
@@ -92,8 +103,9 @@ const CardComponent = ({ producto }) => {
             <Tooltip content="Agregar a favoritos">
               <button
                 onClick={handleToggleFavorite}
-                className={`absolute bottom-2 right-2 text-4xl z-10 transition-colors ${isFavorite ? "text-red-500" : "text-gray-400"
-                  } hover:text-red-500`}
+                className={`absolute bottom-2 right-2 text-4xl z-10 transition-colors ${
+                  isFavorite ? "text-red-500" : "text-gray-400"
+                } hover:text-red-500`}
               >
                 <Icon name="heart" />
               </button>
@@ -113,23 +125,39 @@ const CardComponent = ({ producto }) => {
 
       <CardBody className="flex flex-col space-y-1">
         <p className="text-[var(--color-primary-dark)] font-epilogue font-bold text-2xl text-right">
-        ${formatPrice(producto.price)}
+          ${formatPrice(producto.price)}
         </p>
-        <p className="text-xs text-gray-500">Subcategoría: <span className="text-[var(--color-highlight)]">{subcategoryName}</span></p>
-        <p className="text-xs text-gray-500">Categoría: <span className="text-[var(--color-highlight)]">{categoryName}</span></p>
+        <p className="text-xs text-gray-500">
+          Subcategoría:{" "}
+          <span className="text-[var(--color-highlight)]">{subcategoryName}</span>
+        </p>
+        <p className="text-xs text-gray-500">
+          Categoría:{" "}
+          <span className="text-[var(--color-highlight)]">{categoryName}</span>
+        </p>
       </CardBody>
 
       <CardBody className="font-epilogue">
         <p className="text-sm text-gray-600">{producto.description}</p>
       </CardBody>
+
       <CardFooter className="flex flex-col justify-between items-center font-arvo relative">
-        <Tooltip content={!user ? "Debes iniciar sesión para añadir al carrito" : "Añadir al carrito"}>
+        <Tooltip
+          content={
+            !user
+              ? "Debes iniciar sesión para añadir al carrito"
+              : "Añadir al carrito"
+          }
+        >
           <Button
             size="xs"
             onPress={handleAddToCart}
             disabled={!user}
-            className={`w-full mb-1 ${user ? "bg-white text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)] hover:bg-[var(--color-primary)] hover:text-white" : "bg-gray-300 text-gray-500 cursor-not-allowed"
-              }`}
+            className={`w-full mb-1 ${
+              user
+                ? "bg-white text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)] hover:bg-[var(--color-primary)] hover:text-white"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            }`}
           >
             Añade al carrito
             <Icon name="cart" className="ml-1" />
@@ -154,9 +182,6 @@ const CardComponent = ({ producto }) => {
 };
 
 export default CardComponent;
-
-
-
 
 
 

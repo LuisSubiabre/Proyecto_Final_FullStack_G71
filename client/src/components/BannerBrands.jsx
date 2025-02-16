@@ -21,7 +21,7 @@ const BannerBrands = () => {
               key={brand.id}
               isHoverable
               isPressable
-              onClick={() => handleBrandClick(brand.name)}
+              onPress={() => handleBrandClick(brand.name)}
               className="flex items-center justify-center bg-[var(--color-secondary)] p-2 w-16 h-9 md:w-28 md:h-16 lg:w-36 lg:h-20 shadow-lg rounded-lg cursor-pointer transition-transform hover:scale-105"
             >
               <img

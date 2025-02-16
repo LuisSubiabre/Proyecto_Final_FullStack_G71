@@ -1,4 +1,4 @@
-import { Spinner } from "@nextui-org/react"; // Usamos Spinner en lugar de Loading
+import { Spinner } from "@nextui-org/react";
 
 const LoadingSpinner = () => (
     <div className="flex items-center justify-center h-screen">

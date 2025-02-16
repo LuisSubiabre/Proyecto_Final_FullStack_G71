@@ -1,6 +1,5 @@
 {
   "admin": {
-    "avatar": "https://res.cloudinary.com/libreriaalondra/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/hombre_perfil_godyjs.jpg",
     "menu": [
       {
         "id": "admin-settings",
@@ -35,13 +34,18 @@
     ]
   },
   "seller": {
-    "avatar": "https://res.cloudinary.com/libreriaalondra/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/seller_perfil_v8jnot.jpg",
     "menu": [
       {
         "id": "seller-settings",
         "icon": "cog",
         "label": "Ajustes de vendedor",
         "link": "/profile-seller"
+      },
+      {
+        "id": "seller-favorites",
+        "icon": "heart",
+        "label": "Tus favoritos",
+        "link": "/favorite-products"
       },
       {
         "id": "seller-sales",
@@ -53,7 +57,7 @@
         "id": "seller-publications",
         "icon": "folder",
         "label": "Publicaciones",
-        "link": "/sitio-en-construccion"
+        "link": "/seller-publication"
       },
       {
         "id": "seller-new-publication",
@@ -70,7 +74,6 @@
     ]
   },
   "user": {
-    "avatar": "https://res.cloudinary.com/libreriaalondra/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1736775939/user_perfil_holyrm.avif",
     "menu": [
       {
         "id": "user-settings",
@@ -82,7 +85,7 @@
         "id": "user-purchases",
         "icon": "cart",
         "label": "Tus compras",
-        "link": "/sitio-en-construccion"
+        "link": "/my-purchases"
       },
       {
         "id": "user-favorites",
