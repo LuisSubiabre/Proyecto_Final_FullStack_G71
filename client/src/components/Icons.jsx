@@ -18,6 +18,7 @@ import {
   faStar,
   faHome,
   faTrash,
+  faCheck
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -48,6 +49,7 @@ const icons = {
   star: faStar,
   home: faHome,
   trash: faTrash,
+  check: faCheck,
 };
 
 const Icon = ({ name, ...props }) => {

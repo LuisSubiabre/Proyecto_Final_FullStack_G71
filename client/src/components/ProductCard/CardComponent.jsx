@@ -17,6 +17,7 @@ import FavoritosContext from "../../context/FavoritosContext.jsx";
 import CartContext from "../../context/CartContext.jsx";
 import useAuth from "../../hook/useAuth.jsx";
 import useCategories from "../../hook/useCategories.jsx";
+import useIsMobile from "../../hook/useIsMobile.jsx";
 import { formatPrice } from "../../helpers/formatPrice.jsx";
 
 const CardComponent = ({ producto }) => {
@@ -24,7 +25,10 @@ const CardComponent = ({ producto }) => {
   const { addToCart } = useContext(CartContext);
   const { user } = useAuth();
   const { menus: categories } = useCategories();
+  const isMobile = useIsMobile();
 
+  const [cartTooltipOpen, setCartTooltipOpen] = useState(false);
+  const [favTooltipOpen, setFavTooltipOpen] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
   const [isFavorite, setIsFavorite] = useState(
@@ -73,11 +77,23 @@ const CardComponent = ({ producto }) => {
     }, 4000);
   };
 
-  const handleToggleFavorite = () => {
-    if (user) {
-      toggleFavorite(producto);
-      setIsFavorite(!isFavorite);
+  const handleCartButtonClick = () => {
+    if (!user) return;
+    if (isMobile) {
+      setCartTooltipOpen((prev) => !prev);
     }
+    handleAddToCart();
+  };
+
+  const handleFavoriteButtonClick = () => {
+    if (!user) {
+      if (isMobile) {
+        setFavTooltipOpen((prev) => !prev);
+      }
+      return;
+    }
+    toggleFavorite(producto);
+    setIsFavorite(!isFavorite);
   };
 
   return (
@@ -99,27 +115,30 @@ const CardComponent = ({ producto }) => {
             alt={producto.name_product}
             className="rounded-t-md w-full max-h-[230px] object-cover"
           />
-          {user ? (
-            <Tooltip content="Agregar a favoritos">
-              <button
-                onClick={handleToggleFavorite}
-                className={`absolute bottom-2 right-2 text-4xl z-10 transition-colors ${
-                  isFavorite ? "text-red-500" : "text-gray-400"
-                } hover:text-red-500`}
-              >
-                <Icon name="heart" />
-              </button>
-            </Tooltip>
-          ) : (
-            <Tooltip content="Debes iniciar sesión para agregar a favoritos">
-              <button
-                disabled
-                className="absolute bottom-2 right-2 text-4xl z-10 text-gray-400"
-              >
-                <Icon name="heart" />
-              </button>
-            </Tooltip>
-          )}
+          <Tooltip
+            content={
+              user
+                ? "Agregar a favoritos"
+                : "Debes iniciar sesión para agregar a favoritos"
+            }
+            isOpen={isMobile ? favTooltipOpen : undefined}
+            onOpenChange={(open) => {
+              if (isMobile) setFavTooltipOpen(open);
+            }}
+          >
+            <button
+              onClick={handleFavoriteButtonClick}
+              className={`absolute bottom-2 right-2 text-4xl z-10 transition-colors ${
+                user
+                  ? isFavorite
+                    ? "text-red-500"
+                    : "text-gray-400 hover:text-red-500"
+                  : "text-gray-400"
+              }`}
+            >
+              <Icon name="heart" />
+            </button>
+          </Tooltip>
         </div>
       </CardBody>
 
@@ -148,10 +167,14 @@ const CardComponent = ({ producto }) => {
               ? "Debes iniciar sesión para añadir al carrito"
               : "Añadir al carrito"
           }
+          isOpen={isMobile ? cartTooltipOpen : undefined}
+          onOpenChange={(open) => {
+            if (isMobile) setCartTooltipOpen(open);
+          }}
         >
           <Button
             size="xs"
-            onPress={handleAddToCart}
+            onPress={handleCartButtonClick}
             disabled={!user}
             className={`w-full mb-1 ${
               user
@@ -159,7 +182,9 @@ const CardComponent = ({ producto }) => {
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
           >
-            Añade al carrito
+            {user
+              ? "Añade al carrito"
+              : "Debes iniciar sesión para añadir al carrito"}
             <Icon name="cart" className="ml-1" />
           </Button>
         </Tooltip>
