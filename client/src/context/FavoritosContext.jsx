@@ -32,10 +32,14 @@ export const FavoritosProvider = ({ children }) => {
             return;
         }
 
-        const isFav = favoritos.some((fav) => fav.product_id === producto.product_id);
+        const isFav = favoritos.some(
+            (fav) => fav.product_id === producto.product_id
+        );
 
         if (isFav) {
-            const favToRemove = favoritos.find((f) => f.product_id === producto.product_id);
+            const favToRemove = favoritos.find(
+                (f) => f.product_id === producto.product_id
+            );
             try {
                 await deleteFavoriteById(favToRemove.favorites_id);
                 setFavoritos((prev) =>
@@ -50,7 +54,10 @@ export const FavoritosProvider = ({ children }) => {
                     user_id: userId,
                     product_id: producto.product_id,
                 });
-                setFavoritos((prev) => [...prev, newFavorite]);
+                setFavoritos((prev) => [
+                    ...prev,
+                    { ...producto, favorites_id: newFavorite.favorites_id },
+                ]);
             } catch (error) {
                 console.error("Error al agregar favorito:", error);
             }
