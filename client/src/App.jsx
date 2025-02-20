@@ -8,6 +8,7 @@ import DefaultLayout from "./layouts/DefaultLayout.jsx";
 import MinimalLayout from "./layouts/MinimalLayout.jsx";
 import ShoppingCartStep2 from "./pages/ShoppingCart2.jsx";
 import MyPurchases from "./pages/MyPurchases.jsx";
+import ChangeToRole from "./components/ChangeToRole.jsx";
 
 // Lazy load de páginas
 const Home = lazy(() => import("./pages/Home.jsx"));
@@ -55,6 +56,23 @@ function App() {
           />
 
           {/* Rutas protegidas */}
+          <Route
+            path="/change-to-user"
+            element={
+              <PrivateRoute>
+                <ChangeToRole newRole="user" />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/change-to-seller"
+            element={
+              <PrivateRoute>
+                <ChangeToRole newRole="seller" />
+              </PrivateRoute>
+            }
+          />
+
           <Route
             path="/favorite-products"
             element={

@@ -45,7 +45,17 @@ const ProfileContextProvider = ({ children }) => {
 
   return (
     <ProfileContext.Provider
-      value={{ userId, username, email, avatar, role, setAvatar, setEmail, setUsername }}
+      value={{
+        userId,
+        username,
+        email,
+        avatar,
+        role,
+        setAvatar,
+        setEmail,
+        setUsername,
+        setRole,
+      }}
     >
       {children}
     </ProfileContext.Provider>
