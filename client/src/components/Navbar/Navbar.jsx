@@ -69,10 +69,17 @@ export default function Navbar() {
         </NavbarContent>
 
         <NavbarContent justify="end">
-          <Tooltip content="Ver carrito de compras" position="bottom">
+          <Tooltip
+            content={
+              !userId
+                ? "Debes iniciar sesión para añadir productos"
+                : "Ver carrito de compras"
+            }
+            position="bottom"
+          >
             <Link
               to={userId ? "/shopping-cart" : "#"}
-              className={userId ? "" : "pointer-events-none opacity-50"}
+              className={userId ? "" : " opacity-50"}
             >
               <Badge content={getTotalQuantity()} color="primary" overlap="true">
                 <Icon
@@ -83,6 +90,7 @@ export default function Navbar() {
               </Badge>
             </Link>
           </Tooltip>
+
         </NavbarContent>
 
         <NavbarMenu className="mt-14">

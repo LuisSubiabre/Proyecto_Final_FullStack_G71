@@ -121,20 +121,19 @@ const CardComponent = ({ producto }) => {
                 ? "Agregar a favoritos"
                 : "Debes iniciar sesión para agregar a favoritos"
             }
-            isOpen={isMobile ? favTooltipOpen : undefined}
+            isOpen={isMobile ? favTooltipOpen : false}
             onOpenChange={(open) => {
               if (isMobile) setFavTooltipOpen(open);
             }}
           >
             <button
               onClick={handleFavoriteButtonClick}
-              className={`absolute bottom-2 right-2 text-4xl z-10 transition-colors ${
-                user
+              className={`absolute bottom-2 right-2 text-4xl z-10 transition-colors ${user
                   ? isFavorite
                     ? "text-red-500"
                     : "text-gray-400 hover:text-red-500"
                   : "text-gray-400"
-              }`}
+                }`}
             >
               <Icon name="heart" />
             </button>
@@ -167,7 +166,7 @@ const CardComponent = ({ producto }) => {
               ? "Debes iniciar sesión para añadir al carrito"
               : "Añadir al carrito"
           }
-          isOpen={isMobile ? cartTooltipOpen : undefined}
+          isOpen={isMobile ? cartTooltipOpen : false}
           onOpenChange={(open) => {
             if (isMobile) setCartTooltipOpen(open);
           }}
@@ -176,11 +175,10 @@ const CardComponent = ({ producto }) => {
             size="xs"
             onPress={handleCartButtonClick}
             disabled={!user}
-            className={`w-full mb-1 ${
-              user
+            className={`w-full mb-1 ${user
                 ? "bg-white text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)] hover:bg-[var(--color-primary)] hover:text-white"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
+              }`}
           >
             {user
               ? "Añade al carrito"
@@ -193,14 +191,15 @@ const CardComponent = ({ producto }) => {
             Producto agregado al carrito con éxito.
           </Alert>
         )}
-        <Link to={`/product/${producto.product_id}`} className="w-full mt-0.5">
-          <Button
-            size="xs"
-            className="w-full bg-[var(--color-highlight)] text-white hover:bg-white hover:text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)]"
-          >
-            Ver detalle del producto <strong>AQUÍ</strong>
-          </Button>
-        </Link>
+        <Button
+          as={Link}
+          to={`/product/${producto.product_id}`}
+          size="xs"
+          className="w-full bg-[var(--color-highlight)] text-white hover:bg-white hover:text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)]"
+        >
+          Ver detalle del producto <strong>AQUÍ</strong>
+        </Button>
+
       </CardFooter>
     </Card>
   );

@@ -54,10 +54,8 @@ const FavoriteCard = ({ producto }) => {
       image_url: producto.image_url,
     });
 
-    // Simulamos una espera para mostrar el spinner y luego el visto bueno
     setTimeout(() => {
       setCartStatus("success");
-      // Después de 2 segundos volvemos al icono original
       setTimeout(() => {
         setCartStatus("idle");
       }, 2000);

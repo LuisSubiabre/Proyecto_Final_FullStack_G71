@@ -25,7 +25,7 @@ const SearchBar = () => {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyUp={handleKeyPress}
                 placeholder="Aquí encontrarás lo que buscas"
                 className="flex-1 p-2.5 text-sm bg-white text-gray-700 placeholder-gray-400 border-none focus:outline-none"
             />
