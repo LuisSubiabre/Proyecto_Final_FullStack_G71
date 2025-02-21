@@ -66,6 +66,12 @@
         "link": "/new-publication"
       },
       {
+        "id": "/change-to-user",
+        "icon": "changeRole",
+        "label": "Cambiar a usuario",
+        "link": "/change-to-user"
+      },
+      {
         "id": "seller-logout",
         "icon": "signOutAlt",
         "label": "Cerrar sesión",
@@ -85,13 +91,19 @@
         "id": "user-purchases",
         "icon": "cart",
         "label": "Tus compras",
-        "link": "/sitio-en-construccion"
+        "link": "/my-purchases"
       },
       {
         "id": "user-favorites",
         "icon": "heart",
         "label": "Tus favoritos",
         "link": "/favorite-products"
+      },
+      {
+        "id": "/change-to-seller",
+        "icon": "changeRole",
+        "label": "Cambiar a vendedor",
+        "link": "/change-to-seller"
       },
       {
         "id": "user-logout",

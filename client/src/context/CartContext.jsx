@@ -172,6 +172,7 @@ export const CartProvider = ({ children }) => {
   const value = useMemo(
     () => ({
       cart,
+      setCart,
       addToCart,
       increaseQuantity,
       decreaseQuantity,
@@ -180,6 +181,7 @@ export const CartProvider = ({ children }) => {
     }),
     [
       cart,
+      setCart,
       addToCart,
       increaseQuantity,
       decreaseQuantity,

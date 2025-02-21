@@ -1,10 +1,11 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  define: {
-    'process.env': {}, // Esto evita que las librerías fallen al intentar acceder a process.env
+  base: "/", // Cambia esto si tu aplicación está en un subdirectorio
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
   },
-})
+});

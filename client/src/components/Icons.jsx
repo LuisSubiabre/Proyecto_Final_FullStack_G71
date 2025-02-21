@@ -19,6 +19,7 @@ import {
   faHome,
   faTrash,
   faCheck,
+  faRepeat,
   faCircleXmark
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -51,6 +52,7 @@ const icons = {
   home: faHome,
   trash: faTrash,
   check: faCheck,
+  changeRole: faRepeat,
   circleXmark: faCircleXmark,
 };
 

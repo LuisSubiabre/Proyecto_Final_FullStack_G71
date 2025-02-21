@@ -6,6 +6,9 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 import DefaultLayout from "./layouts/DefaultLayout.jsx";
 import MinimalLayout from "./layouts/MinimalLayout.jsx";
+import ShoppingCartStep2 from "./pages/ShoppingCart2.jsx";
+import MyPurchases from "./pages/MyPurchases.jsx";
+import ChangeToRole from "./components/ChangeToRole.jsx";
 import ChatBotComponent from './components/ChatBot.jsx';
 
 // Lazy load de páginas
@@ -14,11 +17,21 @@ const Category = lazy(() => import("./pages/Category.jsx"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail.jsx"));
 const FavoriteProducts = lazy(() => import("./pages/FavoriteProducts.jsx"));
 const ShoppingCart = lazy(() => import("./pages/ShoppingCart.jsx"));
-const SiteUnderConstruction = lazy(() => import("./pages/SiteUnderConstruction.jsx"));
-const AdminUserProfile = lazy(() => import("./pages/UserProfile/Admin/AdminUserProfile.jsx"));
-const RegularUserProfile = lazy(() => import("./pages/UserProfile/RegularUser/RegularUserProfile..jsx"));
-const SellerUserProfile = lazy(() => import("./pages/UserProfile/Seller/SellerUserProfile.jsx"));
-const Publications = lazy(() => import("./pages/UserProfile/Seller/Publications.jsx"));
+const SiteUnderConstruction = lazy(() =>
+  import("./pages/SiteUnderConstruction.jsx")
+);
+const AdminUserProfile = lazy(() =>
+  import("./pages/UserProfile/Admin/AdminUserProfile.jsx")
+);
+const RegularUserProfile = lazy(() =>
+  import("./pages/UserProfile/RegularUser/RegularUserProfile..jsx")
+);
+const SellerUserProfile = lazy(() =>
+  import("./pages/UserProfile/Seller/SellerUserProfile.jsx")
+);
+const Publications = lazy(() =>
+  import("./pages/UserProfile/Seller/Publications.jsx")
+);
 const Login = lazy(() => import("./pages/Login.jsx"));
 const Register = lazy(() => import("./pages/Register.jsx"));
 const RecoverPassword = lazy(() => import("./pages/Recoverypass.jsx"));
@@ -40,6 +53,23 @@ function App() {
 
           {/* Rutas protegidas */}
           <Route
+            path="/change-to-user"
+            element={
+              <PrivateRoute>
+                <ChangeToRole newRole="user" />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/change-to-seller"
+            element={
+              <PrivateRoute>
+                <ChangeToRole newRole="seller" />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
             path="/favorite-products"
             element={
               <PrivateRoute>
@@ -52,6 +82,22 @@ function App() {
             element={
               <PrivateRoute>
                 <ShoppingCart />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/shopping-cart/step2"
+            element={
+              <PrivateRoute>
+                <ShoppingCartStep2 />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/my-purchases"
+            element={
+              <PrivateRoute>
+                <MyPurchases />
               </PrivateRoute>
             }
           />
@@ -96,7 +142,6 @@ function App() {
             }
           />
         </Route>
-
 
         {/* Rutas con MinimalLayout */}
         <Route element={<MinimalLayout />}>
