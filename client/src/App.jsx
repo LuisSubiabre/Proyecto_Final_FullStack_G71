@@ -6,6 +6,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 import DefaultLayout from "./layouts/DefaultLayout.jsx";
 import MinimalLayout from "./layouts/MinimalLayout.jsx";
+import ChatBotComponent from './components/ChatBot.jsx';
 
 // Lazy load de páginas
 const Home = lazy(() => import("./pages/Home.jsx"));
@@ -105,6 +106,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <ChatBotComponent />
     </Suspense>
   );
 }
