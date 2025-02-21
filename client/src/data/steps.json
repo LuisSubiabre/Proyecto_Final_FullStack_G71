@@ -1,0 +1,162 @@
+[
+    {
+        "id": "welcome",
+        "message": "¡Hola! Soy Papelería Alondra-Bot 🤖, ¿en qué puedo ayudarte?",
+        "trigger": "options-intro"
+    },
+    {
+        "id": "options-intro",
+        "message": "Selecciona uno de los siguientes productos o información:",
+        "trigger": "options-list"
+    },
+    {
+        "id": "options-list",
+        "options": [
+            {
+                "value": "cuadernos",
+                "label": "Cuadernos 📒",
+                "trigger": "cuadernos"
+            },
+            {
+                "value": "lapices",
+                "label": "Lápices ✏️",
+                "trigger": "lapices"
+            },
+            {
+                "value": "blocks",
+                "label": "Blocks 📚",
+                "trigger": "blocks"
+            },
+            {
+                "value": "mayor",
+                "label": "Comprar al por mayor 🛒",
+                "trigger": "mayor"
+            },
+            {
+                "value": "info",
+                "label": "Información general ℹ️",
+                "trigger": "info"
+            }
+        ]
+    },
+    {
+        "id": "cuadernos",
+        "message": "Tenemos cuadernos de todo tipo y diseños hermosos. ¿Necesitas algo más?",
+        "trigger": "algo-mas"
+    },
+    {
+        "id": "lapices",
+        "message": "¡Genial! Tenemos lápices de grafito, portaminas y de colores. ¿Necesitas algo más?",
+        "trigger": "algo-mas"
+    },
+    {
+        "id": "blocks",
+        "message": "Perfecto, contamos con block de dibujo y block de notas. ¿Te ayudo con algo más?",
+        "trigger": "algo-mas"
+    },
+    {
+        "id": "mayor",
+        "message": "¿Quieres comprar productos al por mayor? ¡Excelente! Déjame tus datos de contacto (correo o teléfono) para comunicarnos contigo:",
+        "trigger": "user-contact"
+    },
+    {
+        "id": "user-contact",
+        "user": true,
+        "trigger": "gracias-contacto"
+    },
+    {
+        "id": "gracias-contacto",
+        "message": "¡Perfecto! Recibimos tu información: {previousValue}. En breve te contactaremos. ¿Necesitas algo más?",
+        "trigger": "algo-mas"
+    },
+    {
+        "id": "info",
+        "message": "¿Qué información te gustaría saber?",
+        "trigger": "info-options"
+    },
+    {
+        "id": "info-options",
+        "options": [
+            {
+                "value": "horario",
+                "label": "Horario 🕒",
+                "trigger": "horario"
+            },
+            {
+                "value": "tiendaFisica",
+                "label": "Tienda Física 🏬",
+                "trigger": "tienda-fisica"
+            },
+            {
+                "value": "pagos",
+                "label": "Tipos de pago 💳",
+                "trigger": "pagos"
+            },
+            {
+                "value": "descuentos",
+                "label": "Descuentos 💸",
+                "trigger": "descuentos"
+            },
+            {
+                "value": "otros",
+                "label": "Otros 🤔",
+                "trigger": "otros"
+            }
+        ]
+    },
+    {
+        "id": "horario",
+        "message": "Nuestro horario de atención es de lunes a viernes de 9:00 a 18:00 y sábados de 10:00 a 14:00. ¿Te ayudo con algo más?",
+        "trigger": "algo-mas"
+    },
+    {
+        "id": "tienda-fisica",
+        "message": "¡Sí! Tenemos una tienda física ubicada en la calle Ejemplo #123. ¡Visítanos cuando gustes! ¿Necesitas algo más?",
+        "trigger": "algo-mas"
+    },
+    {
+        "id": "pagos",
+        "message": "Aceptamos efectivo, tarjetas de débito/crédito y transferencias bancarias. ¿Te ayudo con algo más?",
+        "trigger": "algo-mas"
+    },
+    {
+        "id": "descuentos",
+        "message": "Ofrecemos descuentos especiales en compras al por mayor y promociones semanales. ¿Te ayudo con algo más?",
+        "trigger": "algo-mas"
+    },
+    {
+        "id": "otros",
+        "message": "¡Claro! Cuéntame qué más necesitas saber:",
+        "trigger": "user-otros"
+    },
+    {
+        "id": "user-otros",
+        "user": true,
+        "trigger": "respuesta-otros"
+    },
+    {
+        "id": "respuesta-otros",
+        "message": "Entiendo. \"{previousValue}\". ¿Te ayudo con algo más?",
+        "trigger": "algo-mas"
+    },
+    {
+        "id": "algo-mas",
+        "options": [
+            {
+                "value": "si",
+                "label": "Sí",
+                "trigger": "options-list"
+            },
+            {
+                "value": "no",
+                "label": "No",
+                "trigger": "despedida"
+            }
+        ]
+    },
+    {
+        "id": "despedida",
+        "message": "¡Genial! Aquí estaré si necesitas más ayuda. ¡Hasta luego! 🤗",
+        "end": true
+    }
+]

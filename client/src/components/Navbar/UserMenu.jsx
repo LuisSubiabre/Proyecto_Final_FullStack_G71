@@ -4,6 +4,7 @@ import {
   DropdownMenu,
   DropdownItem,
   User,
+  Tooltip,
 } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import Icon from "../Icons";
@@ -23,12 +24,14 @@ const UserMenu = ({ role, userName, userEmail, profilePic }) => {
           >
             Iniciar sesión
           </Link>
+          <Tooltip content="Click AQUÍ para registrarte" placement="bottom">
           <Link
             to="/register"
             className="lg:text-[12px] md:text-[10px] sm:text-[6px] hover:underline font-arvo hover:text-[--color-primary-light]"
           >
             ¿No tienes cuenta?
           </Link>
+          </Tooltip>
         </div>
         <img
           src="https://res.cloudinary.com/libreriaalondra/image/upload/v1727986331/icono_inicio_sesion_l2ekm0.png"

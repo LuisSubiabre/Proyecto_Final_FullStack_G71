@@ -9,6 +9,7 @@ import MinimalLayout from "./layouts/MinimalLayout.jsx";
 import ShoppingCartStep2 from "./pages/ShoppingCart2.jsx";
 import MyPurchases from "./pages/MyPurchases.jsx";
 import ChangeToRole from "./components/ChangeToRole.jsx";
+import ChatBotComponent from './components/ChatBot.jsx';
 
 // Lazy load de páginas
 const Home = lazy(() => import("./pages/Home.jsx"));
@@ -36,9 +37,7 @@ const Register = lazy(() => import("./pages/Register.jsx"));
 const RecoverPassword = lazy(() => import("./pages/Recoverypass.jsx"));
 const NotFound = lazy(() => import("./pages/NotFound.jsx"));
 const SearchResults = lazy(() => import("./pages/SearchResults.jsx"));
-const SellerPublications = lazy(() =>
-  import("./pages/UserProfile/Seller/SellerPublicactions.jsx")
-);
+const SellerPublications = lazy(() => import("./pages/UserProfile/Seller/SellerPublicactions.jsx"));
 
 function App() {
   return (
@@ -50,10 +49,7 @@ function App() {
           <Route path="/category/:id/:subcategoryId" element={<Category />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/search-results" element={<SearchResults />} />
-          <Route
-            path="/sitio-en-construccion"
-            element={<SiteUnderConstruction />}
-          />
+          <Route path="/sitio-en-construccion" element={<SiteUnderConstruction />} />
 
           {/* Rutas protegidas */}
           <Route
@@ -155,6 +151,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <ChatBotComponent />
     </Suspense>
   );
 }
