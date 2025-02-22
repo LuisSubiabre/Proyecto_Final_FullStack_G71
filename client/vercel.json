@@ -14,7 +14,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; form-action 'self'; object-src 'none'"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://g71-backend.onrender.com https://res.cloudinary.com/libreriaalondra/; form-action 'self'; object-src 'none'"
         },
         {
           "key": "X-Frame-Options",
@@ -42,4 +42,3 @@
     }
   ]
 }
-
