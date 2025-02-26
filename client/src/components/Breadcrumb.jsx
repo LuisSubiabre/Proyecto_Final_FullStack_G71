@@ -3,10 +3,11 @@ import Icon from "./Icons";
 import useCategories from "../hook/useCategories.jsx";
 import { useParams } from "react-router-dom";
 
-const Breadcrumb = ({ categoryName, categoryId }) => {
+const Breadcrumb = ({ categoryName, categoryId, subcategoryName: propSubcategoryName, productName }) => {
     const { menus, loading, error } = useCategories();
     const { subcategoryId } = useParams();
 
+    // Busca el nombre de la subcategoría si no se pasa como prop
     const findSubcategoryName = (id) => {
         if (!id) return null;
         for (const menu of menus) {
@@ -16,19 +17,30 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
         return null;
     };
 
-    const subcategoryName = findSubcategoryName(subcategoryId);
+    const effectiveSubcategoryName = propSubcategoryName || findSubcategoryName(subcategoryId);
 
-    const findCategoryPath = (name, id, subcategoryName) => {
+    // Construye el array de migas de pan, deshabilitando categoría y producto
+    const findCategoryPath = (categoryName, categoryId, effectiveSubcategoryName, productName) => {
         let path = [
-            { label: "Home", href: "/", icon: "home" }
+            { label: "Home", href: "/", icon: "home" },
         ];
 
-        const menu = menus.find((menu) => menu.id === id);
-
+        const menu = menus.find((menu) => menu.id === categoryId);
         if (menu) {
-            path.push({ label: menu.title, href: `/category/${id}` });
-            if (subcategoryName) {
-                path.push({ label: subcategoryName, href: `/category/${id}/${subcategoryId}` });
+            // Categoría sin enlace
+            path.push({ label: menu.title, href: null });
+
+            // Subcategoría con enlace (si quieres deshabilitarla también, pon href: null)
+            if (effectiveSubcategoryName) {
+                path.push({
+                    label: effectiveSubcategoryName,
+                    href: `/category/${categoryId}/${subcategoryId || ""}`,
+                });
+            }
+
+            // Producto sin enlace
+            if (productName) {
+                path.push({ label: productName, href: null });
             }
         }
 
@@ -43,10 +55,16 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
         return <p className="text-center text-red-500">{error}</p>;
     }
 
-    const categoryPath = findCategoryPath(categoryName, categoryId, subcategoryName);
+    const categoryPath = findCategoryPath(
+        categoryName,
+        categoryId,
+        effectiveSubcategoryName,
+        productName
+    );
 
     return (
         <>
+            {/* Breadcrumb de NextUI */}
             <Breadcrumbs
                 className="mt-4"
                 classNames={{
@@ -60,16 +78,15 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
                 variant="solid"
             >
                 {categoryPath.map((item, index) => {
-                    const isDisabled = index === 1;
-
+                    // Si no tiene href, se considera deshabilitado
+                    const isDisabled = !item.href;
                     return (
                         <BreadcrumbItem
                             key={index}
-                            href={!isDisabled ? item.href : undefined}
+                            href={item.href || undefined}
                             current={index === categoryPath.length - 1}
                         >
                             {item.icon && <Icon name={item.icon} className="mr-2" />}
-
                             {isDisabled ? (
                                 <Tooltip content="Este enlace está deshabilitado por el momento" placement="top">
                                     <span className="opacity-50 cursor-not-allowed">{item.label}</span>
@@ -82,13 +99,17 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
                 })}
             </Breadcrumbs>
 
+            {/* Texto descriptivo un poco más largo */}
             <div className="m-2">
                 <p className="text-[var(--color-neutral-dark)] font-epilogue">
-                    ¡Encuentra todo lo que necesitas para la vuelta a clases en Librería Alas de Alondra!
-                    Nuestro catálogo incluye, <strong className="text-[var(--color-primary-dark)] animate-text-color-change">
-                        {subcategoryName}
-                    </strong> de las marcas más reconocidas como Artel, Jm, Jovi, Maped, Pentel, Stabilo y más.
-                    ¡Haz de este regreso a clases algo único con nuestros productos de calidad!
+                    {categoryName
+                        ? `Explora los mejores productos en ${categoryName}`
+                        : "Explora nuestros mejores productos"}
+                    {effectiveSubcategoryName && ` / ${effectiveSubcategoryName}`}.
+                    {" "}
+                    Descubre nuestra variedad de artículos cuidadosamente seleccionados
+                    para llevar creatividad y eficiencia a tu día a día. 
+                    <span className="font-bold font-oswald animate-text-color-change text-lg"> {productName && ` Detalle: ${productName}.`} </span>
                 </p>
             </div>
         </>
@@ -96,4 +117,3 @@ const Breadcrumb = ({ categoryName, categoryId }) => {
 };
 
 export default Breadcrumb;
-

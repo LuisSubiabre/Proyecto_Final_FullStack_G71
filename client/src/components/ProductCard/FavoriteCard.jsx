@@ -31,6 +31,7 @@ const FavoriteCard = ({ producto }) => {
 
   // Estado para controlar el estatus del botón de carrito
   const [cartStatus, setCartStatus] = useState("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleToggleFavorite = () => {
     if (user) {
@@ -39,27 +40,29 @@ const FavoriteCard = ({ producto }) => {
     }
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!user) return;
     if (isMobile) setCartTooltipOpen((prev) => !prev);
 
-    // Cambiar estado a loading
     setCartStatus("loading");
+    setErrorMessage(""); // Limpiamos cualquier mensaje de error anterior
 
-    // Llamamos a la función para agregar al carrito
-    addToCart({
-      product_id: producto.product_id,
-      name_product: producto.product_name,
-      price: producto.price,
-      image_url: producto.image_url,
-    });
-
-    setTimeout(() => {
+    try {
+      await addToCart({
+        product_id: producto.product_id,
+        name_product: producto.product_name,
+        price: producto.price,
+        image_url: producto.image_url,
+      });
       setCartStatus("success");
       setTimeout(() => {
         setCartStatus("idle");
       }, 2000);
-    }, 1000);
+    } catch (error) {
+      console.error("Error al agregar al carrito:", error);
+      setErrorMessage("Error al agregar el producto al carrito, intenta nuevamente.");
+      setCartStatus("idle");
+    }
   };
 
   const handleDetailClick = () => {
@@ -87,10 +90,10 @@ const FavoriteCard = ({ producto }) => {
           {user ? (
             <Tooltip
               content="Eliminar de favoritos"
-              isOpen={isMobile ? favTooltipOpen : undefined}
-              onOpenChange={(open) => {
-                if (isMobile) setFavTooltipOpen(open);
-              }}
+              {...(isMobile && {
+                isOpen: favTooltipOpen,
+                onOpenChange: setFavTooltipOpen,
+              })}
             >
               <button
                 onClick={handleToggleFavorite}
@@ -115,22 +118,24 @@ const FavoriteCard = ({ producto }) => {
           <p className="text-sm font-epilogue text-[var(--color-primary-dark)]">
             ${formatPrice(producto.price)}
           </p>
+          {errorMessage && (
+            <p className="text-xs text-red-500 mt-1">{errorMessage}</p>
+          )}
         </div>
 
         <CardFooter className="p-0 flex gap-2 mt-2 justify-end">
           {user ? (
             <Tooltip
               content="Añadir al carrito"
-              isOpen={isMobile ? cartTooltipOpen : undefined}
-              onOpenChange={(open) => {
-                if (isMobile) setCartTooltipOpen(open);
-              }}
+              {...(isMobile && {
+                isOpen: cartTooltipOpen,
+                onOpenChange: setCartTooltipOpen,
+              })}
             >
               <Button
                 size="sm"
                 onPress={handleAddToCart}
                 className="p-2 bg-white text-[var(--color-highlight)] border border-[var(--color-highlight)] hover:bg-[var(--color-primary)] hover:text-white"
-                // Deshabilitamos el botón mientras no esté en estado idle
                 disabled={cartStatus !== "idle"}
               >
                 {cartStatus === "idle" && <Icon name="cart" />}
@@ -150,23 +155,24 @@ const FavoriteCard = ({ producto }) => {
             </Tooltip>
           )}
 
-          <Link to={`/product/${producto.product_id}`}>
-            <Tooltip
-              content="Ver detalle del producto"
-              isOpen={isMobile ? detailTooltipOpen : undefined}
-              onOpenChange={(open) => {
-                if (isMobile) setDetailTooltipOpen(open);
-              }}
+          <Tooltip
+            content="Ver detalle del producto"
+            {...(isMobile && {
+              isOpen: detailTooltipOpen,
+              onOpenChange: setDetailTooltipOpen,
+            })}
+          >
+            <Button
+              as={Link}
+              to={`/product/${producto.product_id}`}
+              size="sm"
+              onPress={handleDetailClick}
+              className="p-2 mr-2 bg-[var(--color-highlight)] text-white hover:bg-white hover:text-[var(--color-highlight)] border border-[var(--color-highlight)]"
             >
-              <Button
-                size="sm"
-                onPress={handleDetailClick}
-                className="p-2 mr-2 bg-[var(--color-highlight)] text-white hover:bg-white hover:text-[var(--color-highlight)] border border-[var(--color-highlight)]"
-              >
-                <Icon name="search" />
-              </Button>
-            </Tooltip>
-          </Link>
+              <Icon name="search" />
+            </Button>
+          </Tooltip>
+
         </CardFooter>
       </CardBody>
     </Card>
@@ -174,3 +180,6 @@ const FavoriteCard = ({ producto }) => {
 };
 
 export default FavoriteCard;
+
+
+
