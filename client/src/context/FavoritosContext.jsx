@@ -40,25 +40,34 @@ export const FavoritosProvider = ({ children }) => {
             const favToRemove = favoritos.find(
                 (f) => f.product_id === producto.product_id
             );
+            setFavoritos((prev) =>
+                prev.filter((fav) => fav.product_id !== producto.product_id)
+            );
             try {
                 await deleteFavoriteById(favToRemove.favorites_id);
-                setFavoritos((prev) =>
-                    prev.filter((fav) => fav.product_id !== producto.product_id)
-                );
             } catch (error) {
+                setFavoritos((prev) => [...prev, favToRemove]);
                 console.error("Error al eliminar favorito:", error);
             }
         } else {
+            const newFavoriteLocal = { ...producto, favorites_id: "temp-id" };
+            setFavoritos((prev) => [...prev, newFavoriteLocal]);
             try {
                 const newFavorite = await createFavorite({
                     user_id: userId,
                     product_id: producto.product_id,
                 });
-                setFavoritos((prev) => [
-                    ...prev,
-                    { ...producto, favorites_id: newFavorite.favorites_id },
-                ]);
+                setFavoritos((prev) =>
+                    prev.map((fav) =>
+                        fav.product_id === producto.product_id
+                            ? { ...fav, favorites_id: newFavorite.favorites_id }
+                            : fav
+                    )
+                );
             } catch (error) {
+                setFavoritos((prev) =>
+                    prev.filter((fav) => fav.product_id !== producto.product_id)
+                );
                 console.error("Error al agregar favorito:", error);
             }
         }

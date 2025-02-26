@@ -9,7 +9,7 @@ const DefaultLayout = () => (
         <header className="sticky top-0 z-50">
             <Navbar />
         </header>
-        <main className="flex-1 overflow-y-auto">
+        <main id="scrollable-main" className="flex-1 overflow-y-auto">
             <Outlet />
         </main>
         <footer>
@@ -19,3 +19,4 @@ const DefaultLayout = () => (
 );
 
 export default DefaultLayout;
+

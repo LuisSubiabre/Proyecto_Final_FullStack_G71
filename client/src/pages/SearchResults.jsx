@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { Pagination } from "@nextui-org/react";
 import { searchProductsByDescription, getProductsBySubcategory } from "../service/productService.js";
@@ -19,6 +19,8 @@ const SearchResults = () => {
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
     const [priceRange, setPriceRange] = useState([0, 25000]);
 
+    const containerRef = useRef(null);
+
     useEffect(() => {
         setLoading(true);
         if (selectedSubcategory) {
@@ -36,7 +38,6 @@ const SearchResults = () => {
                     setLoading(false);
                 });
         } else if (searchQuery) {
-            // Buscar productos por descripción
             searchProductsByDescription(searchQuery)
                 .then((response) => {
                     if (response.success) {
@@ -59,6 +60,12 @@ const SearchResults = () => {
         setCurrentPage(1);
     }, [priceRange]);
 
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    }, [currentPage]);
+
     const filteredProducts = products.filter(
         (product) =>
             product.price >= priceRange[0] && product.price <= priceRange[1]
@@ -69,7 +76,7 @@ const SearchResults = () => {
     const currentProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
     return (
-        <div className="p-4">
+        <div ref={containerRef} className="p-4">
             <h1 className="text-2xl font-bold m-4 text-[var(--color-primary-dark)] font-oswald animate-text-color-change">
                 Resultados de búsqueda
             </h1>

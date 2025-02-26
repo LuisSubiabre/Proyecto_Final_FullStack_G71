@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
 import FilterCategories from "../components/FilterCategories.jsx";
@@ -16,14 +16,17 @@ const Category = () => {
     const [error, setError] = useState(null);
     const [selectedSubcategory, setSelectedSubcategory] = useState(subcategoryId || null);
     const [priceRange, setPriceRange] = useState([0, 25000]);
-
+    
+    // Ref para el contenedor del componente
+    const containerRef = useRef(null);
+    
     useEffect(() => {
         setSelectedSubcategory(subcategoryId || null);
     }, [subcategoryId]);
-
+    
     useEffect(() => {
         if (!selectedSubcategory) return;
-
+    
         getProductsBySubcategory(selectedSubcategory)
             .then((response) => {
                 const productsArray = response.data || [];
@@ -39,7 +42,7 @@ const Category = () => {
                 setError("Error al obtener productos.");
             });
     }, [selectedSubcategory]);
-
+    
     useEffect(() => {
         const filtered = products.filter(
             (product) =>
@@ -48,23 +51,31 @@ const Category = () => {
         setFilteredProducts(filtered);
         setCurrentPage(1);
     }, [priceRange, products]);
-
+    
+    // Al cambiar la página, desplazamos el contenedor para que aparezca al inicio
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    }, [currentPage]);
+    
     if (error) {
         return <div>Error: {error}</div>;
     }
-
+    
     const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const currentProducts = filteredProducts.slice(
         startIndex,
         startIndex + ITEMS_PER_PAGE
     );
-
+    
     return (
-        <div className="p-4">
+        // Agregamos scroll-mt-16 para que al hacer scrollIntoView se respete un margen superior
+        <div ref={containerRef} className="p-4 scroll-mt-16">
             <Breadcrumb categoryName={"Categoria"} categoryId={parseInt(id, 10)} />
             <div className="flex flex-col md:flex-row">
-                <div className="justify-items-center sm:justify-items-stretch ">
+                <div className="justify-items-center sm:justify-items-stretch">
                     <FilterCategories
                         onFilterBySubcategory={setSelectedSubcategory}
                         onFilterByPrice={setPriceRange}
@@ -93,3 +104,4 @@ const Category = () => {
 };
 
 export default Category;
+

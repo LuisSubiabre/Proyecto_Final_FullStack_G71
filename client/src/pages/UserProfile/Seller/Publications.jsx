@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
-import { Input, Button, Textarea, Card, Spinner, Alert, Select, SelectItem } from "@nextui-org/react";
+import {
+    Input,
+    Button,
+    Textarea,
+    Card,
+    Spinner,
+    Alert,
+    Select,
+    SelectItem
+} from "@nextui-org/react";
 import { useDropzone } from "react-dropzone";
 import useCategories from "../../../hook/useCategories.jsx";
 import useAuth from "../../../hook/useAuth.jsx";
@@ -19,14 +28,22 @@ const CustomInput = ({ label, type = "text", isRequired = true, maxLength, max, 
             type={type}
             label={label}
             variant="bordered"
+            color="secondary"
             classNames={{
                 label: "font-medium text-black",
+                input: "text-black",
             }}
-            color="secondary"
+            css={{
+                "& input": { color: "black !important" },
+                "& input::placeholder": { color: "black !important" },
+            }}
             {...props}
         />
     );
 };
+
+
+
 
 const NewPublication = () => {
     const { menus, loading, error } = useCategories();
@@ -41,17 +58,16 @@ const NewPublication = () => {
         subcategory_id: "",
         image_url: "",
     });
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState("");
     const [availableSubcategories, setAvailableSubcategories] = useState([]);
     const [imageFile, setImageFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState("");
     const [formError, setFormError] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+    const [publishStatus, setPublishStatus] = useState("idle");
 
     useEffect(() => {
         if (selectedCategory) {
-            const category = menus.find(menu => menu.id === parseInt(selectedCategory));
+            const category = menus.find((menu) => String(menu.id) === selectedCategory);
             setAvailableSubcategories(category ? category.items : []);
         } else {
             setAvailableSubcategories([]);
@@ -60,32 +76,38 @@ const NewPublication = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-
         if (name === "price") {
             if (value === "") {
-                setFormData(prev => ({ ...prev, price: "" }));
+                setFormData((prev) => ({ ...prev, price: "" }));
                 return;
             }
             const numericValue = parseFloat(value);
             if (!isNaN(numericValue) && numericValue > MAX_PRICE) {
-                setFormData(prev => ({ ...prev, price: MAX_PRICE }));
+                setFormData((prev) => ({ ...prev, price: MAX_PRICE }));
                 return;
             }
         }
-
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
-            [name]: value
+            [name]: value,
         }));
     };
 
-    const handleCategoryChange = (e) => {
-        const categoryId = e.target.value;
-        setSelectedCategory(categoryId);
-        setFormData(prev => ({
+    const handleCategoryChange = (keySet) => {
+        const key = Array.from(keySet)[0] || "";
+        setSelectedCategory(key);
+        setFormData((prev) => ({
             ...prev,
-            category_id: categoryId,
-            subcategory_id: ""
+            category_id: key,
+            subcategory_id: "",
+        }));
+    };
+
+    const handleSubcategoryChange = (keySet) => {
+        const key = Array.from(keySet)[0] || "";
+        setFormData((prev) => ({
+            ...prev,
+            subcategory_id: key,
         }));
     };
 
@@ -121,29 +143,28 @@ const NewPublication = () => {
 
     const uploadToCloudinary = async (file) => {
         const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
+        formData.append("file", file);
+        formData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
         try {
             const response = await fetch(
                 `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
                 {
-                    method: 'POST',
+                    method: "POST",
                     body: formData,
                 }
             );
             const data = await response.json();
             return data.secure_url;
         } catch (error) {
-            console.error('Error uploading to Cloudinary:', error);
-            throw new Error('Error al subir la imagen');
+            console.error("Error uploading to Cloudinary:", error);
+            throw new Error("Error al subir la imagen");
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
         setFormError("");
-
+        setPublishStatus("loading");
         try {
             if (!imageFile) {
                 throw new Error("Debes subir una imagen del producto.");
@@ -156,12 +177,11 @@ const NewPublication = () => {
                 price: parseFloat(formData.price),
                 quantity: parseInt(formData.quantity),
                 category_id: parseInt(formData.category_id),
-                subcategory_id: parseInt(formData.subcategory_id)
+                subcategory_id: parseInt(formData.subcategory_id),
             };
 
-            // Create product
             await createProduct(productData);
-            setShowSuccessAlert(true);
+            setPublishStatus("success");
 
             setFormData({
                 name_product: "",
@@ -171,20 +191,27 @@ const NewPublication = () => {
                 quantity: "",
                 category_id: "",
                 subcategory_id: "",
-                image_url: ""
+                image_url: "",
             });
             setImageFile(null);
             setPreviewUrl("");
-            setSelectedCategory(null);
+            setSelectedCategory("");
 
+            setTimeout(() => {
+                setPublishStatus("idle");
+            }, 5000);
         } catch (error) {
             setFormError(error.message || "Error al publicar el producto");
-        } finally {
-            setIsSubmitting(false);
+            setPublishStatus("idle");
         }
     };
 
-    if (loading) return <div className="text-center p-52 m-14 font-epilogue text-2xl text-[var(--color-primary-dark)]">Espera un momento Cargando el formulario...</div>;
+    if (loading)
+        return (
+            <div className="text-center p-52 m-14 font-epilogue text-2xl text-[var(--color-primary-dark)]">
+                Espera un momento, cargando el formulario...
+            </div>
+        );
     if (error) return <div>Error: {error}</div>;
 
     return (
@@ -192,16 +219,7 @@ const NewPublication = () => {
             <h1 className="text-2xl font-bold mb-6 text-[var(--color-primary-dark)]">
                 Publica tus productos
             </h1>
-            {showSuccessAlert && (
-                <Alert
-                    variant="solid"
-                    color="success"
-                    className="m-4"
-                    onClose={() => setShowSuccessAlert(false)}
-                >
-                    Producto publicado exitosamente 🎉
-                </Alert>
-            )}
+            {formError && <p className="text-red-500 text-sm mb-4">{formError}</p>}
             <form className="grid grid-cols-1 sm:grid-cols-2 gap-6" onSubmit={handleSubmit}>
                 <CustomInput
                     label="Nombre del producto"
@@ -239,18 +257,16 @@ const NewPublication = () => {
                         color="secondary"
                         label="Categoría principal"
                         placeholder="Selecciona una categoría"
-                        value={formData.category_id}
-                        onChange={handleCategoryChange}
-                        required
+                        selectedKeys={formData.category_id ? new Set([formData.category_id]) : new Set()}
+                        onSelectionChange={handleCategoryChange}
                     >
                         {menus.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
+                            <SelectItem key={String(category.id)} value={String(category.id)}>
                                 {category.title}
                             </SelectItem>
                         ))}
                     </Select>
                 </div>
-
                 <div className="flex flex-col">
                     <Select
                         isRequired
@@ -258,19 +274,17 @@ const NewPublication = () => {
                         color="secondary"
                         label="Subcategoría"
                         placeholder="Selecciona una subcategoría"
-                        value={formData.subcategory_id}
-                        onChange={handleInputChange}
-                        name="subcategory_id"
+                        selectedKeys={formData.subcategory_id ? new Set([formData.subcategory_id]) : new Set()}
+                        onSelectionChange={handleSubcategoryChange}
                         disabled={!selectedCategory}
                     >
                         {availableSubcategories.map((sub) => (
-                            <SelectItem key={sub.id} value={sub.id}>
+                            <SelectItem key={String(sub.id)} value={String(sub.id)}>
                                 {sub.title}
                             </SelectItem>
                         ))}
                     </Select>
                 </div>
-
                 <Textarea
                     isRequired
                     maxLength={180}
@@ -287,7 +301,6 @@ const NewPublication = () => {
                         label: "font-medium text-black",
                     }}
                 />
-
                 <div className="flex flex-col sm:col-span-2">
                     <label htmlFor="imageUpload" className="mb-2 font-medium">
                         Sube una imagen de tu producto
@@ -306,7 +319,8 @@ const NewPublication = () => {
                         {imageFile && (
                             <div className="mt-4">
                                 <p className="text-sm font-medium">
-                                    Archivo seleccionado: {imageFile.name} ({(imageFile.size / 1024 / 1024).toFixed(2)} MB)
+                                    Archivo seleccionado: {imageFile.name} (
+                                    {(imageFile.size / 1024 / 1024).toFixed(2)} MB)
                                 </p>
                                 {previewUrl && (
                                     <img
@@ -320,22 +334,34 @@ const NewPublication = () => {
                     </Card>
                     {formError && <p className="text-red-500 text-sm mt-2">{formError}</p>}
                 </div>
-
                 <div className="flex sm:col-span-2 justify-end">
                     <Button
                         type="submit"
                         color="primary"
                         size="md"
-                        disabled={isSubmitting}
+                        disabled={publishStatus !== "idle"}
                         className="w-full bg-[var(--color-highlight)] text-white hover:bg-white hover:text-[var(--color-highlight)] border-[1.5px] border-[var(--color-highlight)]"
                     >
-                        {isSubmitting ? (
-                            <Spinner size="sm" color="white" />
-                        ) : (
-                            "Publicar"
+                        {publishStatus === "idle" && "Publicar"}
+                        {publishStatus === "loading" && (
+                            <>
+                                <Spinner size="sm" color="white" /> Cargando producto...
+                            </>
+                        )}
+                        {publishStatus === "success" && (
+                            <>
+                                ✅ Producto publicado con éxito 🎉
+                            </>
                         )}
                     </Button>
                 </div>
+                {publishStatus === "success" && (
+                    <div className="sm:col-span-2">
+                        <Alert variant="solid" color="primary">
+                            Puedes ver tu producto publicado accediendo al menú de usuario en la opción de publicaciones.
+                        </Alert>
+                    </div>
+                )}
             </form>
         </div>
     );
