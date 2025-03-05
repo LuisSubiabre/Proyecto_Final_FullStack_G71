@@ -39,7 +39,6 @@ const Comments = ({ visible, product_id }) => {
 
       if (result.success) {
         setComments(result.data);
-
         setError("");
       }
     } catch (error) {
@@ -93,8 +92,8 @@ const Comments = ({ visible, product_id }) => {
 
       const result = await response.json();
       if (result.success) {
-        // Agregar el nuevo comentario a la lista
-        setComments([...comments, result.data]);
+        // Volver a cargar los comentarios desde el servidor
+        fetchComments(product_id);
         // Limpiar el campo de comentario y el rating
         setNewComment("");
         setNewRating(5);
@@ -232,9 +231,12 @@ const Comments = ({ visible, product_id }) => {
                 <footer className="flex justify-between items-center mb-2">
                   <div className="flex items-center">
                     <p className="inline-flex items-center mr-3 text-sm font-semibold text-gray-900 dark:text-white">
+                      {/* Añadir un timestamp a la URL de la imagen para evitar la caché */}
                       <img
                         className="mr-2 w-6 h-6 rounded-full"
-                        src={comment.url_img_profile}
+                        src={`${
+                          comment.url_img_profile
+                        }?${new Date().getTime()}`}
                         alt={comment.username}
                       />
                       <span className="text-gray-600">{comment.username}</span>
