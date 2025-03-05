@@ -10,12 +10,13 @@ const MyPurchases = () => {
   const allCart = async () => {
     try {
       const response = await getAllCartsByUser(userId);
-      console.log("Respuesta de getAllCartsByUser:", response); // 🔍 Verifica la respuesta en consola
+      // console.log("Respuesta de getAllCartsByUser:", response); // 🔍 Verifica la respuesta en consola
 
       const groupedCarts = response.data.reduce((acc, item) => {
         if (!acc[item.cart_id]) {
           acc[item.cart_id] = {
             cart_id: item.cart_id,
+            cart_status: item.status,
             products: [],
           };
         }
@@ -48,28 +49,37 @@ const MyPurchases = () => {
           </h3>
           <div className="bg-purple-900">
             <Accordion>
-              {carritos.map((cart) => (
-                <AccordionItem
-                  key={cart.cart_id}
-                  title={`Orden Número: ${cart.cart_id}`}
-                >
-                  <ul className="space-y-2">
-                    {cart.products.map((product, index) => (
-                      <li key={index} className="border-b py-2">
-                        <p>
-                          <strong>Producto:</strong> {product.name_product}
-                        </p>
-                        <p>
-                          <strong>Cantidad:</strong> {product.quantity}
-                        </p>
-                        <p>
-                          <strong>Precio:</strong> ${product.price}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </AccordionItem>
-              ))}
+              {carritos.map(
+                (cart) => (
+                  console.log(cart),
+                  (
+                    <AccordionItem
+                      key={cart.cart_id}
+                      title={`Orden Número: ${cart.cart_id} Estado: ${
+                        cart.cart_status === "carrito_cerrado"
+                          ? "Finalizado"
+                          : "Carrito Actual"
+                      }`}
+                    >
+                      <ul className="space-y-2">
+                        {cart.products.map((product, index) => (
+                          <li key={index} className="border-b py-2">
+                            <p>
+                              <strong>Producto:</strong> {product.name_product}
+                            </p>
+                            <p>
+                              <strong>Cantidad:</strong> {product.quantity}
+                            </p>
+                            <p>
+                              <strong>Precio:</strong> ${product.price}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionItem>
+                  )
+                )
+              )}
             </Accordion>
           </div>
         </div>
