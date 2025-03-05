@@ -39,6 +39,7 @@ const Comments = ({ visible, product_id }) => {
 
       if (result.success) {
         setComments(result.data);
+
         setError("");
       }
     } catch (error) {
@@ -233,7 +234,7 @@ const Comments = ({ visible, product_id }) => {
                     <p className="inline-flex items-center mr-3 text-sm font-semibold text-gray-900 dark:text-white">
                       <img
                         className="mr-2 w-6 h-6 rounded-full"
-                        src="https://i.pravatar.cc/40?img=5"
+                        src={comment.url_img_profile}
                         alt={comment.username}
                       />
                       <span className="text-gray-600">{comment.username}</span>
