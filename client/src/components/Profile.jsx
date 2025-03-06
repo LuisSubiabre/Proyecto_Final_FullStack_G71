@@ -278,7 +278,7 @@ const Profile = () => {
                   <input
                     type="text"
                     placeholder="Nombre Completo"
-                    className="w-full p-3 border bg-white border-gray-300 rounded-lg"
+                    className="w-full p-3 border bg-black border-gray-300 rounded-lg"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
@@ -292,7 +292,7 @@ const Profile = () => {
                   <input
                     type="tel"
                     placeholder="Teléfono"
-                    className="w-full p-3 border bg-white border-gray-300 rounded-lg"
+                    className="w-full p-3 border bg-black border-gray-300 rounded-lg"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required
@@ -306,7 +306,7 @@ const Profile = () => {
                   <input
                     type="email"
                     placeholder="Correo"
-                    className="w-full p-3 border bg-white border-gray-300 rounded-lg"
+                    className="w-full p-3 border bg-black border-gray-300 rounded-lg"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -322,7 +322,7 @@ const Profile = () => {
                   <input
                     type="email"
                     placeholder="Repite el Correo"
-                    className="w-full p-3 border bg-white border-gray-300 rounded-lg"
+                    className="w-full p-3 border bg-black border-gray-300 rounded-lg"
                     value={repeatEmail}
                     onChange={(e) => setRepeatEmail(e.target.value)}
                     required
@@ -333,7 +333,7 @@ const Profile = () => {
                   <input
                     type="password"
                     placeholder="Contraseña"
-                    className="w-full p-3 border bg-white border-gray-300 rounded-lg"
+                    className="w-full p-3 border bg-black border-gray-300 rounded-lg"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -349,7 +349,7 @@ const Profile = () => {
                   <input
                     type="password"
                     placeholder="Repite la Contraseña"
-                    className="w-full p-3 border bg-white border-gray-300 rounded-lg"
+                    className="w-full p-3 border bg-black border-gray-300 rounded-lg"
                     value={repeatPassword}
                     onChange={(e) => setRepeatPassword(e.target.value)}
                     required
